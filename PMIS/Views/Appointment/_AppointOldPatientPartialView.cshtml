@@ -1,0 +1,51 @@
+﻿@using PMIS.ViewModels
+@model PatientAppointmentOldViewModel
+
+ @using (Html.BeginForm("CreateAppointmentOld", "Appointment", FormMethod.Post, new { @id = "old-patient-form",@role="form" }))
+ {
+
+     @Html.AntiForgeryToken()
+     @Html.ValidationSummary(true)
+
+     @Html.HiddenFor(m => m.PatientId, new { @id = "patientId" })
+
+     <div class="row mt-3">
+         <div class="col-lg">
+             <div class="form-group row">
+                 <label class="col-sm-3 col-form-label required">Search Fullname:</label>
+                 <div class="col-sm-9">
+                     @Html.TextBoxFor(m => m.PatientName, new { @class = "form-control", @id = "patientname", @placeholder = "Search Patient Fullname" })
+                                       
+                 </div>
+             </div>
+                                
+             <div class="form-group row">
+                 <label class="col-sm-3 col-form-label required">Select Doctor:</label>
+                 <div class="col-sm-9">
+                     @Html.DropDownListFor(m => m.PhysId, Model.PhysicianListItems, "-------------Select Doctor--------", new { @class = "form-control" })
+                     @Html.ValidationMessageFor(m => m.PhysId, null, new { @class = "text-danger" })            
+                 </div>
+             </div>
+                                
+             <div class="form-group row">
+                 <label class="col-sm-3 col-form-label required">Appointment Date:</label>
+                 <div class="col-sm-9">
+                                        
+                     <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                         @Html.TextBoxFor(m => m.AppointDate, new {@class = "form-control datetimepicker-input", @data_target = "#datetimepicker4",@value=Model.AppointDate})
+                         <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                             <div class="input-group-text"><i class="fa fa-calendar"></i>
+                             </div>
+                         </div>
+
+                                           
+                     </div>
+                     @Html.ValidationMessageFor(m => m.AppointDate, null, new { @class = "text-danger" })
+                 </div>
+                                  
+             </div>
+
+
+         </div>
+     </div>
+ }

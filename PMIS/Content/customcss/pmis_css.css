@@ -1,0 +1,81 @@
+﻿
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+select:focus,
+.uneditable-input:focus {
+    border-color: rgba(126, 239, 104, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
+    outline: 0 none;
+}
+
+table.dataTable thead {
+    background-color:#f9f9f9;
+}
+table.dataTable tbody tr.even:hover,table.dataTable tbody tr.even td.highlighted {
+    background-color: #ECFFB3;
+}
+table.dataTable tbody tr.odd:hover,table.dataTable tbody tr.odd td.highlighted {
+    background-color: #E6FF99;
+}
+table.dataTable tr.even:hover {
+    background-color: #ECFFB3;
+}
+
+#tablePatient_filter input {
+    width: 280px;
+}
+#table-physician input {
+    width: 280px;
+}
+
+.required:after
+{
+    content: " *";
+    font-size: 15px;
+    font-weight: bold;
+    color: Red;
+    vertical-align: middle;
+}
+.modal {
+    position: absolute;
+    top: 35px;
+    right: 100px;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    overflow-y: auto;
+}
+.card-tools i {
+    margin-right: 10px;
+}
+.card-tools h3 {
+    font-size: 20px;
+    color: cornflowerblue;
+    display: inline-block;
+    margin: 0;
+}
+
+.appointinfo-date {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 10px;
+}
+.appointinfo-date select {
+    display: inline-block;
+    margin: 0;
+    margin-right: 10px;
+    width: 350px;
+  
+}

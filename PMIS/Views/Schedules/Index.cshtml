@@ -1,0 +1,43 @@
+﻿<div class="row">
+    <div class="col-lg">
+        <div class="card" style="min-height: 530px;">
+            <div class="card-header">
+                <h3 class="card-title">Manage Schedules</h3>
+                <div class="card-tools">
+                    <button class="btn btn-sm bg-blue btn-flat"><i class="far fa-plus"></i> Create Schedule</button>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm compact table-hover table-bordered nowrap" id="table-schedules" style="width: 100%;">
+                        <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th>DATE SCHEDULE</th>
+                            <th>TIME</th>
+                            <th>STATUS</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                   
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var sched={
+            schedIndex:"@Url.Action("Index","Schedules")"
+        }
+
+    </script>
+
+    @Scripts.Render("~/Scripts/js_sched.js")
+}

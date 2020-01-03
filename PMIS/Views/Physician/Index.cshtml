@@ -1,0 +1,61 @@
+﻿
+
+<div class="row">
+    <div class="col-lg">
+        <div class="card" style="min-height: 530px;">
+            <div class="card-header">
+                <h3 class="card-title">Manage Doctor Profiles</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-sm table-bordered compact nowrap" id="table-physician">
+                    <thead class="bg-cyan">
+                        <tr>
+                            <th>ID</th>
+                            <th>FULLNAME</th>
+                            <th>ABBREVIATION</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal-createphysician">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Create Doctor Profile</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               
+            </div>
+           
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var physician= {
+            physicianIndex: "@Url.Action("Index","Physician")",
+            createphysician: "@Url.Action("CreatePhysician","Physician")",
+            getallphysician: "@Url.Action("GetAllPhysician","Physician")",
+            removephysician:"@Url.Action("RemovePhysician","Physician")"
+            }
+
+    </script>
+
+    @Scripts.Render("~/Scripts/js_Physician.js")
+}

@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PMISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="No" />
+          </Key>
+          <Property Name="No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppointDate" Type="datetime" />
+          <Property Name="Pat_Id" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phys_id" Type="int" />
+          <Property Name="PriorNo" Type="int" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Pat_Id" />
+          </Key>
+          <Property Name="Pat_Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="30" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="30" />
+          <Property Name="Middle" Type="nvarchar" MaxLength="30" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="DoB" Type="datetime" />
+          <Property Name="AddStreetBrgy" Type="nvarchar" MaxLength="50" />
+          <Property Name="Muncity" Type="nvarchar" MaxLength="50" />
+          <Property Name="Province" Type="nvarchar" MaxLength="50" />
+          <Property Name="CivilStat" Type="nvarchar" MaxLength="20" />
+          <Property Name="Occupation" Type="nvarchar" MaxLength="50" />
+          <Property Name="Company" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactCell" Type="nvarchar" MaxLength="20" />
+          <Property Name="ContactPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Height" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Weight" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="BType" Type="nchar" MaxLength="10" />
+          <Property Name="GuardianName" Type="nvarchar" MaxLength="50" />
+          <Property Name="GuardianContact" Type="nvarchar" MaxLength="20" />
+          <Property Name="GuardianRelation" Type="nvarchar" MaxLength="20" />
+          <Property Name="DateRegister" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Physician">
+          <Key>
+            <PropertyRef Name="Phys_id" />
+          </Key>
+          <Property Name="Phys_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Phys_Fullname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phys_Abr" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Appointment_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Pat_Id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="Pat_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Physician">
+          <End Role="Physician" Type="Self.Physician" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Physician">
+              <PropertyRef Name="Phys_id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="Phys_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Generate_PatCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="series" Type="int" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="PMISModelStoreContainer">
+          <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Physician" EntityType="Self.Physician" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Appointment_Patient" Association="Self.FK_Appointment_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Physician" Association="Self.FK_Appointment_Physician">
+            <End Role="Physician" EntitySet="Physician" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PMISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Pat_Id" />
+          </Key>
+          <Property Name="Pat_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Lastname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Firstname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Middle" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CivilStat" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DoB" Type="DateTime" Precision="3" />
+          <Property Name="Occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddStreetBrgy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Muncity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactCell" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Height" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Weight" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="BType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="GuardianName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GuardianContact" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="GuardianRelation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DateRegister" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Appointments" Relationship="PMISModel.FK_Appointment_Patient" FromRole="Patient" ToRole="Appointment" />
+        </EntityType>
+        <EntityContainer Name="PMISEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <FunctionImport Name="Generate_PatCode" ReturnType="Collection(Int32)">
+          <Parameter Name="series" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Physicians" EntityType="PMISModel.Physician" />
+          <EntitySet Name="Appointments" EntityType="PMISModel.Appointment" />
+          <AssociationSet Name="FK_Appointment_Patient" Association="PMISModel.FK_Appointment_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Physician" Association="PMISModel.FK_Appointment_Physician">
+            <End Role="Physician" EntitySet="Physicians" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Physician">
+          <Key>
+            <PropertyRef Name="Phys_id" />
+          </Key>
+          <Property Name="Phys_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Phys_Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phys_Abr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Appointments" Relationship="PMISModel.FK_Appointment_Physician" FromRole="Physician" ToRole="Appointment" />
+        </EntityType>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="No" />
+          </Key>
+          <Property Name="No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppointDate" Type="DateTime" Precision="3" />
+          <Property Name="Pat_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phys_id" Type="Int32" />
+          <Property Name="PriorNo" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Patient" Relationship="PMISModel.FK_Appointment_Patient" FromRole="Appointment" ToRole="Patient" />
+          <NavigationProperty Name="Physician" Relationship="PMISModel.FK_Appointment_Physician" FromRole="Appointment" ToRole="Physician" />
+        </EntityType>
+        <Association Name="FK_Appointment_Patient">
+          <End Type="PMISModel.Patient" Role="Patient" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PMISModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Pat_Id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="Pat_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Physician">
+          <End Type="PMISModel.Physician" Role="Physician" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PMISModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Physician">
+              <PropertyRef Name="Phys_id" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="Phys_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PMISModelStoreContainer" CdmEntityContainer="PMISEntities">
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="PMISModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="Pat_Id" ColumnName="Pat_Id" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Middle" ColumnName="Middle" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CivilStat" ColumnName="CivilStat" />
+                <ScalarProperty Name="DoB" ColumnName="DoB" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="AddStreetBrgy" ColumnName="AddStreetBrgy" />
+                <ScalarProperty Name="Muncity" ColumnName="Muncity" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="ContactCell" ColumnName="ContactCell" />
+                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="BType" ColumnName="BType" />
+                <ScalarProperty Name="GuardianName" ColumnName="GuardianName" />
+                <ScalarProperty Name="GuardianContact" ColumnName="GuardianContact" />
+                <ScalarProperty Name="GuardianRelation" ColumnName="GuardianRelation" />
+                <ScalarProperty Name="DateRegister" ColumnName="DateRegister" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Generate_PatCode" FunctionName="PMISModel.Store.Generate_PatCode" />
+          <EntitySetMapping Name="Physicians">
+            <EntityTypeMapping TypeName="PMISModel.Physician">
+              <MappingFragment StoreEntitySet="Physician">
+                <ScalarProperty Name="Phys_Abr" ColumnName="Phys_Abr" />
+                <ScalarProperty Name="Phys_Fullname" ColumnName="Phys_Fullname" />
+                <ScalarProperty Name="Phys_id" ColumnName="Phys_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="PMISModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PriorNo" ColumnName="PriorNo" />
+                <ScalarProperty Name="Phys_id" ColumnName="Phys_id" />
+                <ScalarProperty Name="Pat_Id" ColumnName="Pat_Id" />
+                <ScalarProperty Name="AppointDate" ColumnName="AppointDate" />
+                <ScalarProperty Name="No" ColumnName="No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

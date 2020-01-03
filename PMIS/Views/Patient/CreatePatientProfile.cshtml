@@ -1,0 +1,153 @@
+﻿@using PMIS.ViewModels
+@model PatientDetailsViewModel
+
+<div class="container-fluid">
+
+    <div class="col-lg">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    Create New Patient Profile [Basic Information ]
+                </h3>
+
+
+                <div class="card-tools">
+                    <span class="info-box-text text-danger">
+                        All fields marked with an * are required
+                    </span>
+                </div>
+            </div>
+
+
+
+            @using (Html.BeginForm("CreatePatientProfile", "Patient", FormMethod.Post, new { @role = "form", id = "form-patient" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label required">Lastname </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control required", @placeholder = "Enter Lastname" })
+                            @Html.ValidationMessageFor(m => m.Lastname, null, new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label required">Firstname </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control required", @placeholder = "Enter Firsname" })
+                            @Html.ValidationMessageFor(m => m.Firstname, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Middle Name </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.Middle, new { @class = "form-control", @placeholder = "Enter Middle Name" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label required">Gender </label>
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(m => m.Gender, new SelectList(Model.GenderDictionary, "Value", "Key"), "-------------Select Gender--------", new { @class = "form-control custom-select" })
+                            @Html.ValidationMessageFor(m => m.Gender, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*<div class="form-group row">
+                            <label class="col-sm-2 col-form-label required">Civil Status</label>
+                            <div class="col-sm-6">
+                                @Html.DropDownListFor(m => m.CivilStat, new SelectList(Model.CivilStatDictionary, "Value", "Key"), "----------Select Civil Status--------", new { @class = "form-control custom-select" })
+                            </div>
+                        </div>*@
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label required">Date of Birth</label>
+                        <div class="col-sm-3">
+
+                            @Html.DropDownListFor(m => m.monthint, Enumerable.Range(1, 12).Select(i => new SelectListItem() { Value = i.ToString(), Text = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(i) }), "Month", new { @class = "form-control required custom-select" })
+                            @Html.ValidationMessageFor(m => m.monthint, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-1">
+                            @Html.DropDownListFor(m => m.dateint, Enumerable.Range(1, 31).Select(i => new SelectListItem() { Value = i.ToString(), Text = i.ToString() }), "Date", new { @class = "form-control required custom-select text-center" })
+                            @Html.ValidationMessageFor(m => m.dateint, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.DropDownListFor(m => m.yearint, Enumerable.Range(1910, 114).Select(i => new SelectListItem() { Value = i.ToString(), Text = i.ToString() }), "Year", new { @class = "form-control required custom-select text-center" })
+                            @Html.ValidationMessageFor(m => m.yearint, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Street /Brgy. </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.AddStreetBrgy, new { @class = "form-control", placeholder = "Street / Brgy " })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label required">Municipality/City </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.Municipality, new { @class = "form-control required", placeholder = "Municipality /City " })
+                            @Html.ValidationMessageFor(m => m.Municipality, null, new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label required">Province </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.Province, new { @class = "form-control required", placeholder = "Province " })
+                            @Html.ValidationMessageFor(m => m.Province, null, new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Contact (Cell) </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.ContactCell, new { @class = "form-control", placeholder = "Contact No" })
+                            @Html.ValidationMessageFor(m => m.ContactCell, null, new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="card-footer">
+                    <div class="col-sm-4 offset-4">
+                        <button type="button" class="btn btn-info" id="savepatientinfo">Save Info </button>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var patientProfile = {
+            indexPatientProfile: "@Url.Action("Index","Patient")",
+            createPatientProfile: "@Url.Action("CreatePatientProfile","Patient")"
+
+        }
+    </script>
+
+    @Scripts.Render("~/Scripts/js_Patient.js")
+}

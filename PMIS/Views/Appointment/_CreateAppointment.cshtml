@@ -1,0 +1,41 @@
+﻿
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg">
+            <ul class="nav nav-tabs" id="appointment-Tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="custom-content-old-patient-tab" data-toggle="pill" href="#custom-content-old-patient" role="tab" aria-controls="custom-content-old-patient" aria-selected="true">Old Patient</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="custom-content-new-patient-tab" data-toggle="pill" href="#custom-content-new-patient" role="tab" aria-controls="custom-content-new-patient" aria-selected="false">New Patient</a>
+                </li>
+
+            </ul>
+
+
+
+            <div class="tab-content" id="appointment-TabContent">
+
+                <div class="tab-pane fade show pl-2 active" id="custom-content-old-patient" role="tabpanel" aria-labelledby="custom-content-old-patient">
+                    @{Html.RenderAction("LoadAppointOldPatientPartialView","Appointment");}
+                   
+                </div>
+
+                <div class="tab-pane fade pl-2" id="custom-content-new-patient" role="tabpanel" aria-labelledby="custom-content-new-patient">
+
+                    @{Html.RenderAction("LoadAppointNewPatientPartialView","Appointment");}
+                </div>
+            </div>
+
+            <div class="tab-custom-content">
+                <div class="col-md-6 offset-md-4">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btn-saveAppointment">Save </button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

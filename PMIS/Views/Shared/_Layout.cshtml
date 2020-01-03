@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Patient Informations System </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    @Styles.Render("~/Styles/Css")
+    @Styles.Render("~/stylebundles/fullcalendarcss")
+    @Styles.Render("~/adminstyle")
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition sidebar-mini">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        @Html.Partial("NavBar")
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+
+        @Html.Partial("SideBar_Left")
+
+        <!-- Content Wrapper. Contains page content -->
+        
+       
+        <div class="content-wrapper">
+            
+        @Html.Partial("_Content_Header")
+            
+        <section class="content">
+                
+            @RenderBody()
+
+        </section>
+
+          
+        </div>
+
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+                <b>Version</b> 3.0.1
+            </div>
+            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            reserved.
+        </footer>
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+<!-- ./wrapper -->
+    
+
+    @Scripts.Render("~/bundles/javascript")
+
+    @Scripts.Render("~/bundles/AjaxExtensions")
+    
+    @Scripts.Render("~/scriptbundles/fullcalendarjs")
+
+    @RenderSection("scripts", required: false)
+    
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            //debugger;
+
+            var url = window.location;
+
+            var controller = url.pathname.split('/')[1];
+
+            //console.log(controller);
+
+            $('ul.nav-sidebar a').removeClass('active');
+
+            $('ul.nav-sidebar a').filter(function() {
+
+                //console.log(this.pathname.split('/')[1]);
+
+                return this.pathname.split('/')[1] === controller;
+
+            }).addClass('active');
+
+            $('ul.nav-treeview a').filter(function() {
+
+                return this.pathname.split('/')[1] == controller;
+
+
+            }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+
+        });
+
+    </script>
+
+</body>
+</html>
