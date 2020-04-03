@@ -1,0 +1,44 @@
+﻿@model PMIS.ViewModels.AppointmentOptionsViewModel
+
+<div class="container-fluid">
+   @{
+       using (Html.BeginForm("AppointmentOptions","Appointment",FormMethod.Post,new {@role="form",@id="form-appointoption"}))
+       {
+          @Html.AntiForgeryToken()
+
+           @Html.ValidationSummary(true)
+           @Html.HiddenFor(m=>m.AppNo)
+           <div class="row mt-3">
+               <div class="col-lg">
+            
+                   <div class="form-group">
+                       <label class="col-form-label"> Select Appointment Options</label>
+                       @Html.DropDownListFor(m => m.AppOptions, new List<SelectListItem>
+                       {
+                           new SelectListItem {Text = "Cancel", Value = "Cancel"},
+                           new SelectListItem {Text = "Remove", Value = "Remove"},
+                           new SelectListItem {Text = "Replace", Value = "Replace"},
+                           new SelectListItem {Text = "Serve", Value = "Serve"}
+
+                       }, "--- Pls Select Options---", new {@class = "form-control custom-select appointOptions"})
+                       @Html.ValidationMessageFor(m => m.AppOptions, null, new { @class = "text-danger" })
+                   </div>
+
+                   <div class="form-group" id="replacement">
+                       <label class="col-form-label"> Replace By: </label>
+                       <input type="text" class="form-control" placeholder="Search Patient Firstname or Lastname" id="patientname">
+                   </div>
+               </div>
+           </div>
+
+           <div class="row">
+               <div class="col-md-6 offset-md-4">
+                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                   <button type="button" class="btn btn-primary" id="btn-saveAppointmentOption">Proceed </button>
+               </div>
+           </div>
+
+            @Html.HiddenFor(m=>m.RepIdNo,new {@id= "patientId" })
+       }
+   }
+</div>

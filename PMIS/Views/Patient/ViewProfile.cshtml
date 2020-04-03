@@ -1,0 +1,182 @@
+﻿@model PMIS.ViewModels.PatientProfileViewModel
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+
+            <div class="card card-primary card-outline">
+                <div class="card-body">
+                    <h3 class="profile-username text-center">@($"{Model.PatientDetails.Lastname},{Model.PatientDetails.Firstname}")</h3>
+                    <p class="text-muted text-center">@Model.PatientId</p>
+
+                    <h5 class="text-center text-blue mt-2"> Doctor's In-charge</h5>
+                    <ul class="list-group list-group-unbordered mb-3">
+                        
+
+                        @{
+                            if (Model.Listofdoctors.Any())
+                            {
+                                foreach (var item in Model.Listofdoctors)
+                                {
+                                    <li class="list-group-item">
+                                        <b>DR. @item.PhysName</b>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li class="list-group-item">
+                                    <p class="text-center text-danger">No Doctor -Incharge Found</p>
+                                </li>
+                            }
+                        }
+
+
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <span class="text-info"> Last Visited:</span>
+                 @(Model.Lastvisited!=null?Model.Lastvisited.AppointDate.Value.ToString("MMM-dd-yyyy") :"No Visit Found")
+                     
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item"><a class="nav-link active" href="#basic-info" data-toggle="tab">BASIC INFO</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#advance-info" data-toggle="tab">ADVANCE INFO</a></li>
+
+                    </ul>
+
+
+                </div>
+
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="basic-info">
+                            <div class="basic-info">
+                                <strong><i class="fas fa-map-marker-alt mr-1"></i> Address:</strong>
+
+                                <p class="text-muted">
+                                    @($"{Model.PatientDetails.AddStreetBrgy},{Model.PatientDetails.Municipality},{Model.PatientDetails.Province}")
+                                </p>
+
+                                <hr>
+                                <strong><i class="fas fa-venus-mars mr-1"></i> Gender:</strong>
+
+                                <p class="text-muted">
+                                    @Model.PatientDetails.Gender
+                                </p>
+
+                                <hr>
+                                <strong><i class="fas fa-birthday-cake mr-1"></i> Date of Birth:</strong>
+
+                                <p class="text-muted">
+                                    @Model.PatientDetails.DateofBirth.ToString("yyyy MMMM dd")
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-user-md mr-1"></i> Occupation:</strong>
+
+                                <p class="text-muted">
+                                    @Model.PatientDetails.Occupation
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-building mr-1"></i> Company:</strong>
+
+                                <p class="text-muted">
+                                    @Model.PatientDetails.Company
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-phone-alt mr-1"></i> Contacts:</strong>
+
+                                <p class="text-muted">
+                                    @{
+                                        if (!String.IsNullOrEmpty(Model.PatientDetails.ContactCell) && !String.IsNullOrEmpty(Model.PatientDetails.ContactTell))
+                                        {
+                                            @($"{Model.PatientDetails.ContactCell} / {Model.PatientDetails.ContactTell}")
+                                        }
+                                        else
+                                        {
+                                            @Model.PatientDetails.ContactCell;
+                                        }
+                                    }
+                                </p>
+
+                                <hr>
+
+
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="advance-info">
+                            <div class="advance-info">
+
+                                <strong><i class="fas fa-text-height mr-1"></i> Height (cm.):</strong>
+
+                                <p class="text-muted">
+                                    @(Model.PatientDetails.Height != null ? string.Concat(Model.PatientDetails.Height, " cm") : String.Empty)
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-weight mr-1"></i> Weight (kls.):</strong>
+
+                                <p class="text-muted">
+                                    @(Model.PatientDetails.Weight != null? string.Concat(Model.PatientDetails.Weight, " cm") : String.Empty)
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-dna mr-1"></i> Blood Type:</strong>
+
+                                <p class="text-muted">
+                                   @Model.PatientDetails.BloodType
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-users-medical mr-1"></i> Guardian Name:</strong>
+
+                                <p class="text-muted">
+                                    @Model.PatientDetails.GuardianName
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-users-medical mr-1"></i> Guardian Contact No:</strong>
+
+                                <p class="text-muted">
+                                    @Model.PatientDetails.GuardianContact
+                                </p>
+
+                                <hr>
+                                <strong><i class="fas fa-users-medical mr-1"></i> Guardian Relation:</strong>
+
+                                <p class="text-muted">
+                                    @Model.PatientDetails.GuardianRelation
+                                </p>
+
+                                <hr>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

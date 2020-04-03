@@ -1,14 +1,10 @@
-﻿<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link navbar-warning">
-        <img src="@Url.Content("~/Content/dist/img/AdminLTELogo.png")"
-             alt="AdminLTE Logo"
-             class="brand-image img-circle elevation-3"
-             style="opacity: .8">
-        <span class="brand-text font-weight-bold text-black-50">PMIS</span>
-    </a>
-    <!-- Sidebar -->
-    <div class="sidebar">
+﻿
+
+<!-- Sidebar -->
+<div class="sidebar">
+    
+    @if (Request.IsAuthenticated)
+    {
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
@@ -24,7 +20,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="@Url.Action("Index","Dashboard")" class="nav-link">
+                    <a href="@Url.Action("Index", "Dashboard")" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -33,15 +29,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="@Url.Action("Index","Patient")" class="nav-link">
+                    <a href="@Url.Action("Index", "Patient")" class="nav-link">
                         <i class="nav-icon fas fa-procedures"></i>
-                          <p>
-                           Patients
+                        <p>
+                            Patients
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="@Url.Action("Index","Physician")" class="nav-link">
+                    <a href="@Url.Action("Index", "Physician")" class="nav-link">
                         <i class="nav-icon far fa-user-md"></i>
                         <p>
                             Doctors
@@ -50,26 +46,35 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="@Url.Action("Index","Appointment")" class="nav-link">
+                    <a href="@Url.Action("Index", "Appointment")" class="nav-link">
                         <i class="nav-icon fad fa-calendar-check"></i>
                         <p>
                             Appointments
                         </p>
                     </a>
                 </li>
-                
-                @*<li class="nav-item">
-                    <a href="@Url.Action("Index","Schedules")" class="nav-link">
-                        <i class="nav-icon fal fa-calendar-star"></i>
+
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "PatientRecord")" class="nav-link">
+                        <i class="nav-icon fal fa-file-medical-alt"></i>
                         <p>
-                            Schedules
+                            Medical Records
                         </p>
                     </a>
-                </li>*@
+                </li>
+
+                <li class="nav-item">
+                    <a href="@Url.Action("UsersIndex", "Account")" class="nav-link">
+                        <i class="nav-icon fal fa-user-alt"></i>
+                        <p>
+                            Users
+                        </p>
+                    </a>
+                </li>
 
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-</aside>
+    }
+
+</div>

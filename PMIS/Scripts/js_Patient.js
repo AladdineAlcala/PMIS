@@ -1,12 +1,5 @@
 ﻿
 
-const toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 5000
-});
-
 
 $(document).ready(function () {
 
@@ -33,7 +26,8 @@ $(document).ready(function () {
 
         $('ul.nav-sidebar a.patient').addClass('active');
 
-        window.location.href = patientProfile.createPatientProfile;
+
+        window.location.href = '/Patient/CreatePatientProfile';
 
     }
 
@@ -62,7 +56,7 @@ $(document).ready(function () {
 
         ,
         "ajax": {
-            "url": patientProfile.getPatientlist,
+            "url": '/Patient/GetAllPatientsAsync',
             "type": "Get",
             "datatype":"json"
         }
@@ -114,8 +108,8 @@ $(document).ready(function () {
                 "render": function () {
 
                     return '<div class="btn-group btn-group-sm">' +
-                            '<a href="#" class="btn btn-warning"><i class="fas fa-eye"></i></a>' +
-                            '<a href="#" class="btn btn-success"><i class="fas fa-edit"></i></a>' +
+                            '<a href="#" class="btn btn-warning" id="view-profile"><i class="fas fa-eye"></i></a>' +
+                            '<a href="#" class="btn btn-success" id="edit-patient"><i class="fas fa-edit"></i></a>' +
                             '<a href="#" class="btn btn-danger" id="remove-patient"><i class="fas fa-trash"></i></a>' +
                             '</div>'
                             ;
@@ -227,6 +221,8 @@ $(document).ready(function () {
     });
 
 
+
+
    
 
 
@@ -260,7 +256,7 @@ $(document).on('click', '#remove-patient', function(e) {
                         if (data.success) {
                             
                             toast.fire({
-                                type: 'info',
+                                type: 'success',
                                 title: 'Record Succesfully Deleted.'
                             });
 
@@ -274,4 +270,99 @@ $(document).on('click', '#remove-patient', function(e) {
             }
             
     });
+});
+
+
+$(document).on('click','#edit-patient',function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var id = $(this).closest('tr').attr('data-patientId');
+
+    window.location.href = "/Patient/EditPatient/" + id;
+
+
+});
+
+$(document).on('click', '#btn-updatepatientprofile', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var ele = $('#patientInfo-TabContent');
+
+    var activeform = ele.closest('div').find('.show.active').find('form');
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Updating Information on this Patient..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed operation!'
+
+    }).then((result) => {
+
+            if (result.value) {
+
+                var formUrl = activeform.attr('action');
+                var id = activeform.attr('id');
+                var form = $('[id*=' + id + ']');
+
+                console.log(form);
+
+                $.validator.unobtrusive.parse(form);
+
+                form.validate();
+
+                if (form.valid()) {
+
+                    $.ajax({
+                        type: 'Post',
+                        url: formUrl,
+                        data: form.serialize(),
+                        datatype: 'json',
+                        cache: false,
+                        success: function (data) {
+
+                            if (data.success) {
+
+                                toast.fire({
+                                    type: 'success',
+                                    title: 'Record Succesfully Updated.'
+                                });
+
+                            } else {
+
+                                Swal.fire('Unable to update record!', 'Please try again', 'info');
+                            }
+
+
+                        }
+                        ,
+                        error: function (xhr, ajaxOptions, thrownError) {
+
+                            Swal.fire('Error adding record!', 'Please try again or check record', 'error');
+                        }
+
+                    }).done(function () {
+
+                        window.location.href = "/Patient/Index";
+
+
+                    }); //end ajax
+                }
+
+            }
+
+        }
+    );
+
+});
+
+$(document).on('click', '#view-profile', function(e) {
+    e.preventDefault();
+
+    window.location.href = '/Patient/ViewProfile/' + $(this).closest('tr').attr('data-patientId');
+
 });

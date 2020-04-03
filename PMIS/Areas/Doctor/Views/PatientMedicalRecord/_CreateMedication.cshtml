@@ -1,0 +1,36 @@
+﻿@using PMIS.ViewModels
+@model MedicationViewModel
+
+<div class="container-fluid" style="min-height: 350px;">
+    
+    @using (Html.BeginForm("CreateMedication", "PatientMedicalRecord", FormMethod.Post, new { role = "form", id = "form_docAddMedication"}))
+    {
+
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(m=>m.Id)
+        @Html.HiddenFor(m=>m.RecordNo,new {@id="recNo"})
+        @Html.HiddenFor(m=>m.operation)
+
+        <div class="row">
+            <div class="col-lg">
+
+                <div class="form-group">
+
+                    @Html.TextAreaFor(m => m.Medication, new {@class = "form-control", @id = "compose-medication", rows = "5", style = "resize:none;"})
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-5 offset-5">
+                <button type="reset" class="btn btn-default" id="modalClose"><i class="fas fa-times"></i> Discard</button>
+                <button type="submit" class="btn btn-primary" id="save-docmedication"><i class="far fa-envelope"></i> Save </button>
+            </div>
+        </div>
+    }
+   
+
+</div>

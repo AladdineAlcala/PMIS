@@ -12,10 +12,22 @@ namespace PMIS
     {
         protected void Application_Start()
         {
+            //RouteTable.Routes.MapHubs("~/SignalR2");
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+
+
+            ClearRazorEngines();
+        }
+
+        private static void ClearRazorEngines()
+        {
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new RazorViewEngine());
         }
     }
 }

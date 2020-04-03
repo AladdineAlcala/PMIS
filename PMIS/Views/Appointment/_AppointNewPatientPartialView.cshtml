@@ -12,12 +12,40 @@
     <div class="row mt-3">
 
         <div class="col-lg">
+            
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label required">Select Doctor:</label>
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(m => m.PhysId, Model.PhysicianListItems, "-------------Select Doctor--------", new {@class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.PhysId, null, new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label required">Appointment Date:</label>
+                <div class="col-sm-9">
+
+                    <div class="input-group date" id="datetimepicker5" data-target-input="nearest">
+                        @Html.TextBoxFor(m => m.AppointDate, new {@class = "form-control datetimepicker-input", @data_target = "#datetimepicker5", @value = Model.AppointDate})
+                        <div class="input-group-append" data-target="#datetimepicker5" data-toggle="datetimepicker">
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    @Html.ValidationMessageFor(m => m.AppointDate, null, new {@class = "text-danger"})
+                </div>
+
+            </div>
+
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label required">Lastname </label>
 
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control required", @placeholder = "Enter Lastname" })
-                    @Html.ValidationMessageFor(m => m.Lastname, null, new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.Lastname, new {@class = "form-control required", @placeholder = "Enter Lastname"})
+                    @Html.ValidationMessageFor(m => m.Lastname, null, new {@class = "text-danger"})
                 </div>
 
             </div>
@@ -26,8 +54,8 @@
                 <label class="col-sm-3 col-form-label required">Firstname </label>
 
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control required", @placeholder = "Enter Firsname" })
-                    @Html.ValidationMessageFor(m => m.Firstname, null, new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.Firstname, new {@class = "form-control required", @placeholder = "Enter Firsname"})
+                    @Html.ValidationMessageFor(m => m.Firstname, null, new {@class = "text-danger"})
                 </div>
             </div>
 
@@ -35,15 +63,15 @@
                 <label class="col-sm-3 col-form-label">Middle Name </label>
 
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(m => m.Middle, new { @class = "form-control", @placeholder = "Enter Middle Name" })
+                    @Html.TextBoxFor(m => m.Middle, new {@class = "form-control", @placeholder = "Enter Middle Name"})
                 </div>
             </div>
-            
+
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label required">Gender </label>
                 <div class="col-sm-9">
-                    @Html.DropDownListFor(m => m.Gender, new SelectList(Model.GenderDictionary, "Value", "Key"), "-------------Select Gender--------", new { @class = "form-control custom-select" })
-                    @Html.ValidationMessageFor(m => m.Gender, null, new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.Gender, new SelectList(Model.GenderDictionary, "Value", "Key"), "-------------Select Gender--------", new {@class = "form-control custom-select"})
+                    @Html.ValidationMessageFor(m => m.Gender, null, new {@class = "text-danger"})
                 </div>
             </div>
 
@@ -58,23 +86,23 @@
                 <label class="col-sm-3 col-form-label required">Date of Birth</label>
                 <div class="col-sm-4">
 
-                    @Html.DropDownListFor(m => m.monthint, Enumerable.Range(1, 12).Select(i => new SelectListItem() { Value = i.ToString(), Text = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(i) }), "Month", new { @class = "form-control required custom-select" })
-                    @Html.ValidationMessageFor(m => m.monthint, null, new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.monthint, Enumerable.Range(1, 12).Select(i => new SelectListItem() {Value = i.ToString(), Text = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(i)}), "Month", new {@class = "form-control required custom-select"})
+                    @Html.ValidationMessageFor(m => m.monthint, null, new {@class = "text-danger"})
                 </div>
                 <div class="col-sm-2">
-                    @Html.DropDownListFor(m => m.dateint, Enumerable.Range(1, 31).Select(i => new SelectListItem() { Value = i.ToString(), Text = i.ToString() }), "Date", new { @class = "form-control required custom-select text-center" })
-                    @Html.ValidationMessageFor(m => m.dateint, null, new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.dateint, Enumerable.Range(1, 31).Select(i => new SelectListItem() {Value = i.ToString(), Text = i.ToString()}), "Date", new {@class = "form-control required custom-select text-center"})
+                    @Html.ValidationMessageFor(m => m.dateint, null, new {@class = "text-danger"})
                 </div>
                 <div class="col-sm-3">
-                    @Html.DropDownListFor(m => m.yearint, Enumerable.Range(1910, 114).Select(i => new SelectListItem() { Value = i.ToString(), Text = i.ToString() }), "Year", new { @class = "form-control required custom-select text-center" })
-                    @Html.ValidationMessageFor(m => m.yearint, null, new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.yearint, Enumerable.Range(1910, 114).Select(i => new SelectListItem() {Value = i.ToString(), Text = i.ToString()}), "Year", new {@class = "form-control required custom-select text-center"})
+                    @Html.ValidationMessageFor(m => m.yearint, null, new {@class = "text-danger"})
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Street /Brgy. </label>
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(m => m.AddStreetBrgy, new { @class = "form-control", placeholder = "Street / Brgy " })
+                    @Html.TextBoxFor(m => m.AddStreetBrgy, new {@class = "form-control", placeholder = "Street / Brgy "})
                 </div>
 
             </div>
@@ -82,8 +110,8 @@
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label required">Municipality/City </label>
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(m => m.Municipality, new { @class = "form-control required", placeholder = "Municipality /City " })
-                    @Html.ValidationMessageFor(m => m.Municipality, null, new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.Municipality, new {@class = "form-control required", placeholder = "Municipality /City "})
+                    @Html.ValidationMessageFor(m => m.Municipality, null, new {@class = "text-danger"})
                 </div>
 
             </div>
@@ -91,45 +119,21 @@
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label required">Province </label>
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(m => m.Province, new { @class = "form-control required", placeholder = "Province " })
-                    @Html.ValidationMessageFor(m => m.Province, null, new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.Province, new {@class = "form-control required", placeholder = "Province "})
+                    @Html.ValidationMessageFor(m => m.Province, null, new {@class = "text-danger"})
                 </div>
 
             </div>
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Contact (Cell) </label>
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(m => m.ContactCell, new { @class = "form-control", placeholder = "Contact No" })
-                    @Html.ValidationMessageFor(m => m.ContactCell, null, new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.ContactCell, new {@class = "form-control", placeholder = "Contact No"})
+                    @Html.ValidationMessageFor(m => m.ContactCell, null, new {@class = "text-danger"})
                 </div>
 
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label required">Select Doctor:</label>
-                <div class="col-sm-9">
-                    @Html.DropDownListFor(m => m.PhysId, Model.PhysicianListItems, "-------------Select Doctor--------", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.PhysId, null, new { @class = "text-danger" })                      
-                </div>
-            </div>
-                                
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label required">Appointment Date:</label>
-                <div class="col-sm-9">
-                                        
-                    <div class="input-group date" id="datetimepicker5" data-target-input="nearest">
-                        @Html.TextBoxFor(m => m.AppointDate, new {@class = "form-control datetimepicker-input", @data_target = "#datetimepicker5",@value=Model.AppointDate})
-                        <div class="input-group-append" data-target="#datetimepicker5" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i>
-                            </div>
-                        </div>
 
-                                           
-                    </div>
-                    @Html.ValidationMessageFor(m => m.AppointDate, null, new { @class = "text-danger" })
-                </div>
-                                  
-            </div>
 
         </div>
 

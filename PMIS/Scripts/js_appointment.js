@@ -1,23 +1,23 @@
 ﻿//$(function() { 
 
 //});
+
 var count;
-
-const toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 5000
-});
+var appoint_date;
+var phyId = null;
 
 
-function appointcounter(id) {
+function appointcounter(id, appointdate) {
+
+    //console.log(id);
+    //console.log(appointdate);
+
 
     $.ajax({
         type: 'Get',
         url: '/Appointment/GetAppointCount',
         ajaxasync: true,
-        data: { id: id },
+        data: { id: id, appdate: appointdate },
         dataType: 'json',
         cache: false,
         success: function (data) {
@@ -97,9 +97,9 @@ function AutocompleteName() {
 
 (function ($) {
 
- 
-    $('#add-appointment').prop("disabled", true);
-   appointcounter(null);
+    appoint_date = moment(new Date($('#appiont-date').html())).format('YYYY-MM-DD HH:mm');
+
+    appointcounter(null, appoint_date);
 
     ////Custom date validation overide for date formats
     $.validator.methods.date = function (value, element) {
@@ -140,7 +140,10 @@ function AutocompleteName() {
     calendar.render();
 
 
+    $('#add-appointment').prop("disabled", true);
 
+
+    document.getElementsByClassName('appointOptions').selectedIndex = 0;
 
 })(jQuery);
 
@@ -185,7 +188,7 @@ $(document).on('click', '#btn-saveAppointment', function (e) {
     var ele = $('#appointment-TabContent');
 
     var appoint = ele.closest('div').find('.show.active').find('form');
-
+    //const pId = $('#select-doctor').val();
     //alert(appoint.attr('action'));
 
     Swal.fire({
@@ -221,24 +224,40 @@ $(document).on('click', '#btn-saveAppointment', function (e) {
                     cache: false,
                     success: function (data) {
 
-                        $('#modal-createAppointment').modal('hide');
+                        if (data.success) {
 
-                        toast.fire({
-                            type: 'info',
-                            title: 'Record Succesfully Added.'
-                        });
+                            $('#modal-createAppointment').modal('hide');
+
+                            toast.fire({
+                                type: 'success',
+                                title: 'Record Succesfully Added.'
+                            });
+
+                        } else {
+
+                            Swal.fire('Unable to add record!', 'Please try again or check if has already appointment', 'info');
+                        }
 
 
                     }
                     ,
                     error: function (xhr, ajaxOptions, thrownError) {
-                        Swal.fire('Error adding record!', 'Please try again', 'error');
+
+                        Swal.fire('Error adding record!', 'Please try again or check record', 'error');
                     }
 
                 }).done(function (data) {
 
-                    //$('#tableAppoint').load(data.url);
-                    //reload table appointment
+                    if (data.success) {
+
+                        //reload table appointment
+                        $('#tableAppoint').load(data.url);
+
+                        //refresh counter
+                        appointcounter(phyId, appoint_date);
+
+                    }
+
 
                 }); //end ajax
             }
@@ -254,18 +273,20 @@ $(document).on('change', '#select-doctor', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-   
+
     var norows = document.getElementById('no-rows-alert');
-    var phyId = null;
     var hasrows = false;
+
     phyId = $(this).val();
+
+    appoint_date = moment(new Date($('#appiont-date').html())).format('YYYY-MM-DD HH:mm');
 
     if ($(this).val() !== "") {
 
         $.ajax({
             type: "Get",
             url: appointment.getAppointmentbyDoctorId,
-            data: { id: phyId },
+            data: { id: phyId, appdate: appoint_date },
             contentType: 'application/html;charset=utf8',
             datatype: 'html',
             cache: false,
@@ -274,7 +295,7 @@ $(document).on('change', '#select-doctor', function (e) {
 
                 $('#tableAppoint').html(result);
 
-                appointcounter(phyId);
+                appointcounter(phyId, appoint_date);
 
                 hasrows = true;
 
@@ -292,17 +313,17 @@ $(document).on('change', '#select-doctor', function (e) {
 
         $('#tableAppoint').children().remove();
 
-        norows.style.display = hasrows?'none' : 'inherit';
+        norows.style.display = hasrows ? 'none' : 'inherit';
         if (!hasrows) {
             setTimeout(function () {
                 norows.style.display = 'none';
-            },1500);
+            }, 1500);
         }
 
         $('#appoint-count').html(0);
 
 
-        $('#add-appointment').prop("disabled", false);
+        $('#add-appointment').prop("disabled", true);
     }
 
 
@@ -312,4 +333,146 @@ $(document).on('change', '#select-doctor', function (e) {
     //$('#tableAppiont').load(data.url);
 
 
+});
+
+$(document).on('click', '#btn-medicalrecords', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+
+    window.location.href = '/PatientRecord/MedicalHistory/' + $(this).attr('data-patientId') + '/' + $('#select-doctor').val();
+
+});
+
+
+$(document).on('click', '#btnconsultationoption', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const appointNo = $(this).closest('tr').attr('data-patNo');
+ 
+    $.ajax({
+        type: 'Get',
+        url:'/Appointment/AppointmentOptions',
+        contentType: 'application/html;charset=utf8',
+        data: {appno:appointNo},
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            var modal = $('#modal-appointoptions');
+            modal.find('.modal-body').html(result);
+
+            AutocompleteName();
+
+            $('#replacement').hide();
+
+            modal.modal({
+                    backdrop: 'static',
+                    keyboard: false
+                },
+                'show');
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
+    });
+
+
+});
+
+$(document).on('change', '.appointOptions', function(e) {
+    e.preventDefault();
+
+    $('#replacement').hide();
+
+    if ($(this).val() === "Replace") {
+        $('#replacement').show();
+    }
+
+});
+
+
+$(document).on('click', '#btn-saveAppointmentOption', function (e) {
+    e.preventDefault();
+
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm saving Appointment Option..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Proceed operation..!'
+
+    }).then((result) => {
+
+            if (result.value) {
+
+                var formUrl = $('#form-appointoption').attr('action');
+                var form = $('[id*=form-appointoption]');
+
+                //console.log(form);
+
+                $.validator.unobtrusive.parse(form);
+
+                form.validate();
+
+                if (form.valid()) {
+
+                    $.ajax({
+                        type: 'Post',
+                        url: formUrl,
+                        data: form.serialize(),
+                        datatype: 'json',
+                        cache: false,
+                        success: function (data) {
+
+                            if (data.success) {
+
+                                $('#modal-appointoptions').modal('hide');
+
+                                toast.fire({
+                                    type: 'success',
+                                    title: 'Record Succesfully Modified.'
+                                });
+
+                            } else {
+
+                                Swal.fire('Unable to add record!', 'Please try again or check if has already appointment', 'info');
+                            }
+
+
+                        }
+                        ,
+                        error: function (xhr, ajaxOptions, thrownError) {
+
+                            Swal.fire('Error adding record!', 'Please try again or check record', 'error');
+                        }
+
+                    }).done(function (data) {
+
+                        if (data.success) {
+
+                            //console.log(data.url);
+                            //reload table 
+                            //reload table appointment
+                            $('#tableAppoint').load(data.url);
+
+                            //refresh counter
+                            appointcounter(phyId, appoint_date);
+
+                        }
+
+
+                    }); //end ajax
+                }
+
+            }
+        }
+    );
+
+    
 });

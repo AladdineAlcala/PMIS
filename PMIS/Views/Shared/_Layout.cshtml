@@ -11,8 +11,10 @@
     @Styles.Render("~/stylebundles/fullcalendarcss")
     @Styles.Render("~/adminstyle")
 
+  
+
     <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    @*<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">*@
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -23,16 +25,34 @@
         @Html.Partial("NavBar")
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
+        
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-link navbar-warning">
+                <img src="@Url.Content("~/Content/dist/img/AdminLTELogo.png")"
+                     alt="PMIS V2.0"
+                     class="brand-image img-circle elevation-3"
+                     style="opacity: .8">
+                <span class="brand-text font-weight-bold text-black-50">PMIS</span>
+            </a>
+            
+            @Html.Partial("SideBar_Left")
 
-        @Html.Partial("SideBar_Left")
+            <!-- /.sidebar -->
+        </aside>
+        
+        
 
         <!-- Content Wrapper. Contains page content -->
         
        
         <div class="content-wrapper">
             
-        @Html.Partial("_Content_Header")
-            
+        @if (Request.IsAuthenticated)
+        {
+            @Html.Partial("_Content_Header")
+        }
+
         <section class="content">
                 
             @RenderBody()
@@ -42,21 +62,19 @@
           
         </div>
 
-        <!-- /.content-wrapper -->
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 3.0.1
             </div>
-            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
+            <strong>PMIS.@DateTime.Now.Year</strong>
         </footer>
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
+
     </div>
 <!-- ./wrapper -->
+    
+    <div id="spinn-loader">
+        Loading data Pls. wait....
+    </div>
     
 
     @Scripts.Render("~/bundles/javascript")
@@ -64,14 +82,28 @@
     @Scripts.Render("~/bundles/AjaxExtensions")
     
     @Scripts.Render("~/scriptbundles/fullcalendarjs")
+    
+    
+    <script type="text/javascript" src="@Url.Content("~/Content/signalR/jquery.signalR-2.4.1.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/js_signalAppointment.js")"></script>
+    
 
     @RenderSection("scripts", required: false)
     
     <script type="text/javascript">
 
+        const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000
+        });
+
+
         $(document).ready(function() {
             //debugger;
-
             var url = window.location;
 
             var controller = url.pathname.split('/')[1];
@@ -95,6 +127,17 @@
 
             }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
 
+
+
+
+        });
+
+
+        $(document).on('keypress', '.number-only', function (event) {
+
+            if ((event.which !== 46 || $(this).val().indexOf('.') !== -1) && (event.which < 48 || event.which > 57) && (event.which !== 48)) {
+                event.preventDefault();
+            }
         });
 
     </script>

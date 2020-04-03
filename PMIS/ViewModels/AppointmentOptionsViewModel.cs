@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace PMIS.ViewModels
+{
+
+    public enum AppointOptions
+    {
+        Cancel=1,
+        Remove,
+        Replace,
+        Served
+    }
+
+    public class AppointmentOptionsViewModel
+    {
+        public int AppNo { get; set; }
+        [Required(ErrorMessage = "Please enter appointment option.")]
+        public AppointOptions AppOptions  { get; set; }
+        public string RepIdNo { get; set; }
+    }
+}

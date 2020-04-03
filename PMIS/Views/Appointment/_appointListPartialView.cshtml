@@ -3,22 +3,49 @@
 @model IEnumerable<AppointmentScheduleViewModel>
 
 @{
+
     if (Model.Any())
     {
-        int i = 0;
+        int i = 1;
         foreach (var item in Model)
         {
-            i = i + 1;
 
-            <tr>
-                <td>@i</td>
+            <tr data-patNo="@item.No">
+
+                <td>@(item.Iscancelled ? "" : i.ToString())</td>
+
+
                 <td>@item.PatientName</td>
-                <td></td>
-                <td></td>
+                <td>@(item.Iscancelled ? "Cancelled" : item.Stat)</td>
+                <td class="text-center">
+
+                    <button class="btn btn-success btn-sm" data-patientId="@item.PatientNo" id="btnconsultationoption">
+                        <i class="fal fa-lightbulb-on"></i>
+
+                    </button>
+
+                    <button class="btn btn-info btn-sm" data-patientId="@item.PatientNo" id="btn-medicalrecords">
+                        <i class="fal fa-file-medical-alt"></i>
+
+                    </button>
+
+
+
+                </td>
             </tr>
+
+            if (item.Iscancelled == false)
+            {
+                i = i + 1;
+            }
+
         }
 
     }
-
-   
+    else
+    {
+        <tr>
+            <td colspan="4" class="text-center bg-gradient-danger"> No Record Found</td>
+        </tr>
+    }
 }

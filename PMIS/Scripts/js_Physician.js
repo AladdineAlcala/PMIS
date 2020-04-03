@@ -1,11 +1,4 @@
 ﻿
-const toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 5000
-});
-
 
 $(document).ready(function () {
 
@@ -141,7 +134,7 @@ $(document).on('click','#btn-savePhysician',function(e) {
             var formUrl = $('#create-physician').attr('action');
             var form = $('[id*=create-physician]');
 
-            console.log(form);
+            //console.log(form);
 
             $.validator.unobtrusive.parse(form);
             form.validate();

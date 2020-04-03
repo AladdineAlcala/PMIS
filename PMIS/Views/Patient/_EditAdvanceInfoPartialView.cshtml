@@ -1,0 +1,113 @@
+﻿
+@model PMIS.ViewModels.PatientDetailsAdvanceInfoViewModel
+
+<div class="row mt-3">
+    <div class="col-lg">
+        
+        @using (Html.BeginForm("EditAdvance", "Patient", FormMethod.Post, new { @id = "formpatientadvanceinfo", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(m=>m.PatientId)
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Civil Status</label>
+                <div class="col-sm-6">
+                    @Html.DropDownListFor(m => m.CivilStat, new SelectList(Model.CivilStatDictionary, "Value", "Key"), "----------Select Civil Status--------", new { @class = "form-control custom-select" })
+              
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Contact No Tel. </label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.ContactTell, new { @class = "form-control", @placeholder = "Contact No Tel." })
+                    @Html.ValidationMessageFor(m => m.ContactTell, null, new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">Occupation </label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Occupation, new { @class = "form-control", @placeholder = "Occupation" })
+              
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">Company </label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.Company, new { @class = "form-control", @placeholder = "Company" })
+
+                </div>
+
+            </div>
+
+            
+        
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">Height (in cm.)</label>
+                <div class="col-sm-3">
+                   
+                    @Html.TextBoxFor(m => m.Height, new {@class = "form-control number-only", @placeholder = "Height (cm)"})
+                   
+                </div>         
+                <div class="col-sm-1 align-self-center">
+                    <p class="text-muted mb-0 pb-0"> cm.</p>
+                </div>
+            </div>
+        
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">Weight (in kls.)</label>
+                <div class="col-sm-3">
+                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control number-only", @placeholder = "Weight (kls)" })
+                </div>         
+                <div class="col-sm-1 align-self-center">
+                    <p class="text-muted mb-0 pb-0"> kls.</p>
+                </div>
+            </div>
+        
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">Blood Type</label>
+                <div class="col-sm-3">
+                    @Html.TextBoxFor(m => m.BloodType, new { @class = "form-control", @placeholder = "Blood Type" })
+                </div>         
+           
+            </div>
+        
+        
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">Guardian Name </label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.GuardianName, new { @class = "form-control", @placeholder = "Guardian Name" })
+              
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">Guardian Contact No </label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.GuardianContact, new { @class = "form-control", @placeholder = "Guardian Contact No." })
+
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Relation to Guardian </label>
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.GuardianRelation, new { @class = "form-control", @placeholder = "Relation to Guardian" })
+              
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>
+

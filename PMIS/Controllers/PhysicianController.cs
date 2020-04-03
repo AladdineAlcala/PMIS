@@ -9,14 +9,16 @@ using PMIS.ViewModels;
 
 namespace PMIS.Controllers
 {
+    [Authorize]
     public class PhysicianController : Controller
     {
-        private readonly PMISEntities _pmisEntities;
-        private readonly PhycisianServices _phycisianservices;
-        public PhysicianController()
+        
+        private readonly IPhycisianServices _phycisianservices;
+        private readonly IUnitOfWork _unitOfWork;
+        public PhysicianController(IPhycisianServices physervices,IUnitOfWork iunitofwork)
         {
-            _pmisEntities=new PMISEntities();
-            _phycisianservices = new PhycisianServices();
+            this._phycisianservices = physervices;
+            this._unitOfWork = iunitofwork;
         }
         // GET: Physician
         public ActionResult Index()
@@ -50,8 +52,8 @@ namespace PMIS.Controllers
 
             };
 
-            _pmisEntities.Physicians.Add(physician);
-            _pmisEntities.SaveChanges();
+            _phycisianservices.AddPhysician(physician);
+            _unitOfWork.Commit();
 
             return Json(new {success=true},JsonRequestBehavior.AllowGet);
 
@@ -60,19 +62,20 @@ namespace PMIS.Controllers
         [HttpPost]
         public ActionResult RemovePhysician(int id)
         {
-            var physician = _pmisEntities.Physicians.Find(id);
+            bool success = false;
 
+            var physician = _phycisianservices.GetPhysician_By_Id(id);
+            if (physician != null)
+            {
+                _phycisianservices.RemovePhysician(physician);
+                _unitOfWork.Commit();
+                success = true;
+            };
 
-            _pmisEntities.Physicians.Remove(physician);
-            _pmisEntities.SaveChanges();
-
-            return Json(new {success=true}, JsonRequestBehavior.AllowGet);
+            return Json(new {success=success}, JsonRequestBehavior.AllowGet);
         }
 
       
-        protected override void Dispose(bool disposing)
-        {
-            _pmisEntities.Dispose();
-        }
+       
     }
 }

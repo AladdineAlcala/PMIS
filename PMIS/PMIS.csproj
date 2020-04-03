@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
@@ -47,11 +48,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -59,6 +80,54 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.3.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.3.1\lib\net45\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.1\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC5.3.3.0\lib\net45\Ninject.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -70,6 +139,30 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -87,32 +180,12 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -131,18 +204,36 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Doctor\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Doctor\Controllers\DocAppointmentController.cs" />
+    <Compile Include="Areas\Doctor\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Doctor\Controllers\PatientMedicalRecordController.cs" />
+    <Compile Include="Areas\Doctor\DoctorAreaRegistration.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PatientComplaintsController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\PatientRecordController.cs" />
     <Compile Include="Controllers\PhysicianController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HelperClass\Utilities.cs" />
+    <Compile Include="Hubs\AppointHub.cs" />
     <Compile Include="Model\Appointment.cs">
+      <DependentUpon>PMISEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\IdentityModel.cs" />
+    <Compile Include="Model\MedicalRecord.cs">
+      <DependentUpon>PMISEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Medication.cs">
       <DependentUpon>PMISEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Patient.cs">
@@ -166,20 +257,46 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PMISEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\User_Physician.cs">
+      <DependentUpon>PMISEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceLayer\AppointmentServices.cs" />
+    <Compile Include="ServiceLayer\IAppointmentServices.cs" />
+    <Compile Include="ServiceLayer\IPatientRecordServices.cs" />
+    <Compile Include="ServiceLayer\IPatientServices.cs" />
+    <Compile Include="ServiceLayer\IPhycisianServices.cs" />
+    <Compile Include="ServiceLayer\IUnitOfWork.cs" />
+    <Compile Include="ServiceLayer\IUserPhysicianService.cs" />
+    <Compile Include="ServiceLayer\PatientRecordServices.cs" />
     <Compile Include="ServiceLayer\PatientServices.cs" />
     <Compile Include="ServiceLayer\PhycisianServices.cs" />
+    <Compile Include="ServiceLayer\UnitOfWork.cs" />
+    <Compile Include="ServiceLayer\UserPhysicianService.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentOptionsViewModel.cs" />
     <Compile Include="ViewModels\AppointmentScheduleViewModel.cs" />
     <Compile Include="ViewModels\AppointmentViewModel.cs" />
+    <Compile Include="ViewModels\MedicalRecordViewModel.cs" />
+    <Compile Include="ViewModels\MedicationViewModel.cs" />
     <Compile Include="ViewModels\PatientAppointmentNewViewModel.cs" />
     <Compile Include="ViewModels\PatientAppointmentOldViewModel.cs" />
+    <Compile Include="ViewModels\PatientChartViewModel.cs" />
+    <Compile Include="ViewModels\PatientDetailsAdvanceInfoViewModel.cs" />
+    <Compile Include="ViewModels\PatientDetailsBasicInfoViewModel.cs" />
     <Compile Include="ViewModels\PatientDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PatientMedicalRecordDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PatientPhysicianDistinctViewModel.cs" />
+    <Compile Include="ViewModels\PatientProfileViewModel.cs" />
     <Compile Include="ViewModels\PatientViewModel.cs" />
     <Compile Include="ViewModels\PhysicianDetailsViewModel.cs" />
-    <Compile Include="ViewModels\ScheduleViewModel.cs" />
+    <Compile Include="ViewModels\UsersConnectionViewModel.cs" />
+    <Compile Include="ViewModels\UsersViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Scripts\js_doc_appoint.js" />
+    <Content Include="Areas\Scripts\js_doc_medicalrecords.js" />
     <Content Include="Content\ajaxextensions\jquery-validate.js" />
     <Content Include="Content\ajaxextensions\jquery.unobtrusive-ajax.js" />
     <Content Include="Content\ajaxextensions\jquery.validate.unobtrusive.js" />
@@ -236,6 +353,8 @@
     <Content Include="Content\dist\js\pages\dashboard.js" />
     <Content Include="Content\dist\js\pages\dashboard2.js" />
     <Content Include="Content\dist\js\pages\dashboard3.js" />
+    <Content Include="Content\Images\Spinner-1.gif" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
@@ -9178,9 +9297,13 @@
     <Content Include="Content\plugins\toastr\toastr.css" />
     <Content Include="Content\plugins\toastr\toastr.min.css" />
     <Content Include="Content\plugins\toastr\toastr.min.js" />
+    <Content Include="Content\signalR\jquery.signalR-2.4.1.js" />
+    <Content Include="Content\signalR\jquery.signalR-2.4.1.min.js" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Spinner-1.gif" />
     <Content Include="Model\PMISEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PMISEntities.edmx</DependentUpon>
@@ -9193,9 +9316,58 @@
     </Content>
     <Content Include="Scripts\js_appointment.js" />
     <Content Include="Scripts\js_global.js" />
-    <Content Include="Scripts\js_Patient.js" />
+    <Content Include="Scripts\js_medrecord.js" />
+    <Content Include="Scripts\js_patient.js" />
     <Content Include="Scripts\js_Physician.js" />
     <Content Include="Scripts\js_sched.js" />
+    <Content Include="Content\plugins\respond\respond.js" />
+    <Content Include="Content\plugins\respond\respond.matchmedia.addListener.js" />
+    <Content Include="Content\plugins\respond\respond.matchmedia.addListener.min.js" />
+    <Content Include="Content\plugins\respond\respond.min.js" />
+    <Content Include="Content\LoginTemplate\css\main.css" />
+    <Content Include="Content\LoginTemplate\css\util.css" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Content\LoginTemplate\fonts\iconic\css\material-design-iconic-font.css" />
+    <Content Include="Content\LoginTemplate\fonts\iconic\css\material-design-iconic-font.min.css" />
+    <Content Include="Content\LoginTemplate\fonts\iconic\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="Content\LoginTemplate\images\icons\favicon.ico" />
+    <Content Include="Content\LoginTemplate\index.html" />
+    <Content Include="Content\LoginTemplate\js\main.js" />
+    <Content Include="Content\LoginTemplate\vendor\animate\animate.css" />
+    <Content Include="Content\LoginTemplate\vendor\animsition\css\animsition.css" />
+    <Content Include="Content\LoginTemplate\vendor\animsition\css\animsition.min.css" />
+    <Content Include="Content\LoginTemplate\vendor\animsition\js\animsition.js" />
+    <Content Include="Content\LoginTemplate\vendor\animsition\js\animsition.min.js" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\js\popper.js" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\js\popper.min.js" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\js\tooltip.js" />
+    <Content Include="Content\LoginTemplate\vendor\countdowntime\countdowntime.js" />
+    <Content Include="Content\LoginTemplate\vendor\css-hamburgers\hamburgers.css" />
+    <Content Include="Content\LoginTemplate\vendor\css-hamburgers\hamburgers.min.css" />
+    <Content Include="Content\LoginTemplate\vendor\daterangepicker\daterangepicker.css" />
+    <Content Include="Content\LoginTemplate\vendor\daterangepicker\daterangepicker.js" />
+    <Content Include="Content\LoginTemplate\vendor\daterangepicker\moment.js" />
+    <Content Include="Content\LoginTemplate\vendor\daterangepicker\moment.min.js" />
+    <Content Include="Content\LoginTemplate\vendor\jquery\jquery-3.2.1.min.js" />
+    <Content Include="Content\LoginTemplate\vendor\perfect-scrollbar\perfect-scrollbar.css" />
+    <Content Include="Content\LoginTemplate\vendor\perfect-scrollbar\perfect-scrollbar.min.js" />
+    <Content Include="Content\LoginTemplate\vendor\select2\select2.css" />
+    <Content Include="Content\LoginTemplate\vendor\select2\select2.js" />
+    <Content Include="Content\LoginTemplate\vendor\select2\select2.min.css" />
+    <Content Include="Content\LoginTemplate\vendor\select2\select2.min.js" />
+    <Content Include="Scripts\js_signalAppointment.js" />
+    <Content Include="Scripts\js_users.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -9215,6 +9387,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Doctor\Models\" />
+    <Folder Include="Areas\Doctor\Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -9371,6 +9545,23 @@
     <Content Include="Model\PMISEntities.edmx.diagram">
       <DependentUpon>PMISEntities.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Doctor\Views\web.config" />
+    <Content Include="Areas\Doctor\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Doctor\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Doctor\Views\Shared\_Doc_Layout.cshtml" />
+    <Content Include="Areas\Doctor\Views\Shared\_navbar.cshtml" />
+    <Content Include="Areas\Doctor\Views\Shared\_BreadCrumbs.cshtml" />
+    <Content Include="Areas\Doctor\Views\DocAppointment\_appointListPartialView.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\Index.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\MedicalHistory.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_RecordListPartialView.cshtml" />
+    <Content Include="Areas\Doctor\Views\DocAppointment\Index.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\New_MedicalRecord.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_AddPatientRecordPartialView.cshtml" />
+    <Content Include="Areas\Doctor\Views\DocPatientMedicalRecord\Index.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_GetRecord.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_CreateMedication.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_ModifyPatientRecord.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\SideBar_Left.cshtml" />
     <Content Include="Views\Shared\NavBar.cshtml" />
@@ -9386,6 +9577,85 @@
     <Content Include="Views\Appointment\_appointListPartialView.cshtml" />
     <Content Include="Views\Appointment\_AppointOldPatientPartialView.cshtml" />
     <Content Include="Views\Appointment\_AppointNewPatientPartialView.cshtml" />
+    <Content Include="Views\PatientRecord\Index.cshtml" />
+    <Content Include="Views\PatientRecord\MedicalHistory.cshtml" />
+    <Content Include="Views\PatientRecord\_AddPatientRecordPartialView.cshtml" />
+    <Content Include="Views\PatientRecord\_RecordListPartialView.cshtml" />
+    <Content Include="Views\PatientRecord\_GetAllPhysicianforPatientPartialView.cshtml" />
+    <Content Include="Views\Patient\EditPatient.cshtml" />
+    <Content Include="Views\Patient\_EditBasicInfoPartialView.cshtml" />
+    <Content Include="Views\Patient\_EditAdvanceInfoPartialView.cshtml" />
+    <Content Include="Views\Appointment\_AppointmentOptions.cshtml" />
+    <Content Include="Views\Patient\ViewProfile.cshtml" />
+    <Content Include="Views\Shared\_LogUserPartialView.cshtml" />
+    <Content Include="Views\Account\LogIn.cshtml" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\LoginTemplate\fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\LoginTemplate\fonts\iconic\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="Content\LoginTemplate\fonts\iconic\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\iconic\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="Content\LoginTemplate\fonts\iconic\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-Black.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-BlackItalic.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-Bold.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-BoldItalic.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-ExtraBold.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-ExtraBoldItalic.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-ExtraLight.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-ExtraLightItalic.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-Italic.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-Light.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-LightItalic.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-Medium.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-MediumItalic.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-Regular.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-SemiBold.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-SemiBoldItalic.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-Thin.ttf" />
+    <Content Include="Content\LoginTemplate\fonts\poppins\Poppins-ThinItalic.ttf" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\LoginTemplate\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Areas\Doctor\Views\Shared\_LoginDocsPartialView.cshtml" />
+    <Content Include="Views\Account\UsersIndex.cshtml" />
+    <Content Include="Views\Account\_NewUser.cshtml" />
+    <Content Include="Views\Account\_AddRoleUser.cshtml" />
+    <Content Include="Views\PatientRecord\_GetRecord.cshtml" />
+    <Content Include="Views\PatientRecord\_CreateMedication.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\plugins\filterizr\ActiveFilter.d.ts" />
@@ -9518,7 +9788,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -30,8 +30,8 @@ namespace PMIS.ViewModels
         [RegularExpression(@"^(09|\+639)\d{9}$", ErrorMessage = "Entered phone format is not valid.")]
         public string ContactCell { get; set; }
         public string ContactTell { get; set; }
-        public string Height { get; set; }
-        public string Weight { get; set; }
+        public Decimal Height { get; set; }
+        public Decimal Weight { get; set; }
         public string BloodType { get; set; }
         public string GuardianName { get; set; }
         public string GuardianContact { get; set; }

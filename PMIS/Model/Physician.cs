@@ -17,7 +17,9 @@ namespace PMIS.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Physician()
         {
+            this.MedicalRecords = new HashSet<MedicalRecord>();
             this.Appointments = new HashSet<Appointment>();
+            this.User_Physician = new HashSet<User_Physician>();
         }
     
         public int Phys_id { get; set; }
@@ -25,6 +27,10 @@ namespace PMIS.Model
         public string Phys_Abr { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User_Physician> User_Physician { get; set; }
     }
 }

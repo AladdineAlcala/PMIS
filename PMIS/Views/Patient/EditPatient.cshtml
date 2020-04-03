@@ -1,0 +1,64 @@
+﻿@model PMIS.Model.Patient
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg">
+            
+            <div class="card card-primary card-outline">
+                
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i fas-fa-medical-user>
+                            Edit Patient
+                        </i>
+                    </h3>
+                </div>
+                
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="patientInfo-Tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="custom-content-basicinfo-tab" data-toggle="pill" href="#custom-content-basicinfo" role="tab" aria-controls="custom-content-basicinfo" aria-selected="true">Basic Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-content-advanceinfo-tab" data-toggle="pill" href="#custom-content-advanceinfo" role="tab" aria-controls="custom-content-advanceinfo" aria-selected="false">Additional Information</a>
+                        </li>
+
+                    </ul>
+
+
+
+                    <div class="tab-content" id="patientInfo-TabContent">
+
+                        <div class="tab-pane fade show pl-2 active" id="custom-content-basicinfo" role="tabpanel" aria-labelledby="custom-content-basicinfo">
+                
+                            @{Html.RenderAction("GetBasicInfo", "Patient",@Model); }
+
+
+                        </div>
+
+                        <div class="tab-pane fade pl-2" id="custom-content-advanceinfo" role="tabpanel" aria-labelledby="custom-content-advanceinfo">
+
+                            @{Html.RenderAction("GetAdvanceInfo","Patient",@Model);}
+                        </div>
+                    </div>
+
+                    <div class="tab-custom-content">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btn-updatepatientprofile">Update </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    
+    @Scripts.Render("~/Scripts/js_patient.js")
+}

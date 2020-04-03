@@ -20,6 +20,7 @@ namespace PMIS.Model
         public Nullable<int> Phys_id { get; set; }
         public Nullable<int> PriorNo { get; set; }
         public Nullable<bool> Status { get; set; }
+        public Nullable<bool> IsCancelled { get; set; }
     
         public virtual Patient Patient { get; set; }
         public virtual Physician Physician { get; set; }

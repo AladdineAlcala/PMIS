@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using PMIS.Model;
@@ -8,13 +11,18 @@ using PMIS.ViewModels;
 
 namespace PMIS.ServiceLayer
 {
-    public class PatientServices
+    public class PatientServices: IPatientServices,IDisposable
     {
-        private PMISEntities pmisEntities=null;
+        private PMISEntities _pmisEntities;
 
-        public PatientServices()
+        //public PatientServices()
+        //{
+        //    _pmisEntities=new PMISEntities();
+        //}
+
+        public PatientServices(PMISEntities pmisEntities)
         {
-            pmisEntities=new PMISEntities();
+            this._pmisEntities = pmisEntities;
         }
 
 
@@ -41,9 +49,9 @@ namespace PMIS.ServiceLayer
             return civilstatdictionary;
         }
 
-        public IQueryable<PatientDetailsViewModel> GetAllPatients()
+        public async Task<IEnumerable<PatientDetailsViewModel>>  GetAllPatients()
         {
-            return pmisEntities.Patients.Select(t => new PatientDetailsViewModel()
+            return await _pmisEntities.Patients.Select(t => new PatientDetailsViewModel()
             {
                 PatientId   = t.Pat_Id,
                 Firstname = t.Firstname,
@@ -55,19 +63,134 @@ namespace PMIS.ServiceLayer
                 Province = t.Province,
                 DateofBirth = (DateTime) t.DoB,
                 ContactCell = t.ContactCell
-            });
+            }).ToListAsync();
         }
 
 
         public IQueryable<PatientViewModel> GetPatientAutoComplete()
         {
-            return pmisEntities.Patients.Select(t => new PatientViewModel()
+            return _pmisEntities.Patients.Select(t => new PatientViewModel()
             {
                 PatientId = t.Pat_Id,
                 PatientName = t.Lastname + " " + t.Firstname
             }).OrderBy(t=>t.PatientName);
         }
 
-        
+        public void InsertPatient(Patient patient)
+        {
+            _pmisEntities.Patients.Add(patient);
+          
+        }
+
+        public void RemovePatient(Patient patient)
+        {
+            _pmisEntities.Patients.Remove(patient);
+        }
+
+
+        public Patient GetPatientById(string id)
+        {
+            return _pmisEntities.Patients.FirstOrDefault(t=>t.Pat_Id==id);
+        }
+
+
+        public void UpdatePatient(Patient patient)
+        {
+            _pmisEntities.Patients.Attach(patient);
+
+           _pmisEntities.Entry(patient).State=EntityState.Modified;
+        }
+
+        public PatientDetailsViewModel GetPatientDetailsById(string patientid)
+        {
+            return _pmisEntities.Patients.Select(t => new PatientDetailsViewModel()
+            {
+                PatientId = t.Pat_Id,
+                Firstname = t.Firstname,
+                Lastname = t.Lastname,
+                Middle = t.Middle,
+                Gender = t.Gender,
+                AddStreetBrgy = t.AddStreetBrgy,
+                Municipality = t.Muncity,
+                Province = t.Province,
+                DateofBirth = (DateTime) t.DoB,
+                ContactCell = t.ContactCell,
+                ContactTell = t.ContactPhone,
+                Height = (decimal) t.Height != null ? (decimal) t.Height : 0,
+                Weight = (decimal)t.Weight != null ? (decimal)t.Weight : 0,
+                BloodType = t.BType,
+                Occupation = t.Occupation,
+                Company = t.Company,
+                GuardianName = t.GuardianName,
+                GuardianContact = t.GuardianContact,
+                GuardianRelation = t.GuardianRelation
+
+
+            }).FirstOrDefault(t => t.PatientId == patientid);
+        }
+
+
+        public List<PhysicianDetailsViewModel> GetDoctorsByPatient(string id)
+        {
+
+            return (from mr in _pmisEntities.MedicalRecords
+                join p in _pmisEntities.Physicians on mr.Phys_id equals p.Phys_id
+                where mr.Pat_Id == id
+                group new { mr, p } by new { mr.Pat_Id, mr.Phys_id, p.Phys_Fullname }
+                into mrp
+                select new PhysicianDetailsViewModel()
+                {
+                    PhysId = mrp.Key.Phys_id,
+                    PhysName = mrp.Key.Phys_Fullname
+
+                }).ToList();
+
+
+        }
+
+      
+
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                    _pmisEntities?.Dispose();
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~PatientServices() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+             GC.SuppressFinalize(this);
+        }
+
+      
+
+
+        #endregion
+
+
     }
 }

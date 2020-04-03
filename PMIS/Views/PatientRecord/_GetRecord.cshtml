@@ -1,0 +1,85 @@
+﻿@using PMIS.Model
+@model MedicalRecord
+
+@Html.HiddenFor(m=>m.RecordNo,new {@id="recNo"})
+
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="nav-icon fal fa-file-medical-alt"> </i>
+            Patient Record
+        </h3>
+        <div class="card-tools">
+            
+            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" id="return_to_list" data-container="body" title="Return to List">
+                <i class="fas fa-reply"></i>
+            </button>
+        </div>
+    </div> 
+    
+    <!--card header-->
+    
+    <div class="card-body p-0">
+        <div class="mailbox-read-info">
+            <h5>Subjective: </h5>
+            
+            <h6><span class="mailbox-read-time float-right">@Model.RecordDate.Value.ToString("yy-MMM-dd ddd tt")</span></h6>
+        </div>
+       
+        
+        <div class="mailbox-read-message with-border border-bottom">
+           
+            @(new HtmlString(Model.RecordDetails))
+
+        </div>
+        
+      
+        <div class="mailbox-read-info">
+            <h5>Current Medication : </h5>
+           
+        </div>
+
+        <!-- /.mailbox-read-info -->
+        <div class="mailbox-controls with-border text-center">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm" id="medication" data-toggle="tooltip" data-container="body" title="Add Medication">
+                    <i class="far fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
+                    <i class="fas fa-reply"></i>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
+                    <i class="fas fa-share"></i>
+                </button>
+            </div>
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                <i class="fas fa-print"></i>
+            </button>
+        </div>
+        <!-- /.mailbox-controls -->
+
+
+        <div class="mailbox-read-message">
+
+
+            @{
+                Medication first = null;
+                foreach (var t in Model.Medications)
+                {
+                    if (t.RecordNo == Model.RecordNo)
+                    {
+                        first = t;
+                        break;
+                    }
+                }
+            }
+
+            @(new HtmlString(first!=null? first.MedicationDesc:String.Empty))
+
+        </div>
+
+
+    </div>
+   
+</div>

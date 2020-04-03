@@ -1,4 +1,38 @@
 ﻿
+.spinner {
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    text-align: center;
+    z-index: 1234;
+    overflow: auto;
+    width: 100px;
+    height: 102px;
+}
+
+div#spinn-loader {
+    display: none;
+    width: 200px;
+    height: 200px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background: url('../Images/Spinner-1.gif')no-repeat center white;
+    /*background: url(../Images/ajax-spinloader2.gif) no-repeat center white;*/
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+    font: normal 16px Tahoma, Geneva, sans-serif;
+    border: 1px solid #666;
+    margin-left: -50px;
+    margin-top: -50px;
+    z-index: 1234;
+    overflow: auto;
+}
+
+
 textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -20,6 +54,14 @@ select:focus,
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
     outline: 0 none;
 }
+
+
+@media(max-width: 768px) {
+    .modal-dialog {
+        min-height: calc(100vh - 20px);
+    }
+}
+
 
 table.dataTable thead {
     background-color:#f9f9f9;
@@ -78,4 +120,70 @@ table.dataTable tr.even:hover {
     margin-right: 10px;
     width: 350px;
   
+}
+
+.user-block.date-block {
+    display: block;
+    margin-left: 10px;
+   
+}
+.date-block {
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: -1px;
+    color: #1E90FF;
+}
+.user-block .description {
+    color: #6c757d;
+    font-size:11px;
+    margin-top: -3px;
+}
+.post-content {
+    margin-top: 10px;
+    display: block;
+    color: black;
+}
+.post-title {
+    font-size: 23px;
+    color: black;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+.link-chart {
+    color: #6c757d;
+}
+.link-chart:hover, .link-chart:focus {
+    color: ##FF5733;
+}
+
+.patient-header {
+    font-size: 18px;
+    color: #1E90FF;
+    margin-left: 5px;
+}
+
+.mailbox-read-message {
+    min-height: 100px;
+}
+.mailbox-read-message > p {
+    margin-bottom: 2px;
+    font-size: 13px;
+}
+.mailbox-read-message > ol {
+    font-size: 13px;
+}
+.mbox-button {
+
+    margin-right: 8px;
+
+}
+.mbox-button > a {
+    color: #1a4970;
+}
+
+#compose-medication {
+    min-height: 200px;
+}
+.card-fullheight {
+    height: 80vh;
 }

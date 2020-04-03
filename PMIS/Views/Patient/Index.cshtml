@@ -30,12 +30,12 @@
     <script type="text/javascript">
         
         var patientProfile={
-            getPatientlist:"@Url.Action("GetAllPatients","Patient")",
+            getPatientlist:"@Url.Action("GetAllPatientsAsync", "Patient")",
             createPatientProfile: "@Url.Action("CreatePatientProfile","Patient")",
             removePatientProfile:"@Url.Action("RemovePatientProfile","Patient")"
 
         }
     </script>
 
-    @Scripts.Render("~/Scripts/js_Patient.js")
+    @Scripts.Render("~/Scripts/js_patient.js")
 }

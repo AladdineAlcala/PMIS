@@ -1,0 +1,30 @@
+﻿
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card" style="min-height: 160px;">
+                <div class="card-body">
+                    <div class="col-md-6 offset-3 mt-5">
+                        
+                        <input type="text" class="form-control" placeholder="Search Patient Firstname or Lastname" id="search-patient">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg" id="patient-physList">
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/js_medrecord.js")
+}

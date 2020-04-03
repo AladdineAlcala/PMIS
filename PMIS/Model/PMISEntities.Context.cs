@@ -29,7 +29,10 @@ namespace PMIS.Model
     
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<Physician> Physicians { get; set; }
+        public virtual DbSet<MedicalRecord> MedicalRecords { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<User_Physician> User_Physician { get; set; }
+        public virtual DbSet<Medication> Medications { get; set; }
     
         public virtual ObjectResult<Nullable<int>> Generate_PatCode(ObjectParameter series)
         {

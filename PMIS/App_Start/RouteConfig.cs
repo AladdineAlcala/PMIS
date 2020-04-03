@@ -16,14 +16,28 @@ namespace PMIS
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] {"PMIS.Controllers"}
             );
 
-            routes.MapRoute(
-                name:"PatientProfile",
-                url: "{controller}/{action}/{id}",
-                defaults: new {controller="Patient",action="Index",id=UrlParameter.Optional}
-                );
+            routes.MapRoute("PatientRecordById",
+               "{controller}/{action}/{patientid}/{phyid}",
+               new {controller= "PatientRecord", action= "MedicalHistory", patientid= "", phyid="" }
+            );
+
+            //routes.MapRoute("DoctorAppointRecord",
+            //    "Doctor/{controller}/{action}/{phyid}",
+            //    new { action = "Index",phyid = "" },
+            //    new { controller = "DocAppointment" },
+            //    new[] { "PMIS.Areas.Doctor.Controllers" });
+
+            routes.MapRoute("DoctorMedicalRecord",
+                "Doctor/{controller}/{action}/{id}/{phyid}",
+                new {action = "MedicalHistory", id ="", phyid =""}, 
+                new {controller = "PatientMedicalRecord"},
+                new[] {"PMIS.Areas.Doctor.Controllers"});
+
+
         }
     }
 }

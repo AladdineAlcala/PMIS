@@ -15,6 +15,27 @@
           <Property Name="Phys_id" Type="int" />
           <Property Name="PriorNo" Type="int" />
           <Property Name="Status" Type="bit" />
+          <Property Name="IsCancelled" Type="bit" />
+        </EntityType>
+        <EntityType Name="MedicalRecord">
+          <Key>
+            <PropertyRef Name="RecordNo" />
+          </Key>
+          <Property Name="RecordNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecordDate" Type="datetime" />
+          <Property Name="Pat_Id" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phys_id" Type="int" />
+          <Property Name="ActivityName" Type="nvarchar" MaxLength="250" />
+          <Property Name="RecordDetails" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Medication">
+          <Key>
+            <PropertyRef Name="MidNo" />
+          </Key>
+          <Property Name="MidNo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecordNo" Type="bigint" />
+          <Property Name="RecordedDate" Type="datetime" />
+          <Property Name="MedicationDesc" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -50,6 +71,14 @@
           <Property Name="Phys_Fullname" Type="nvarchar" MaxLength="50" />
           <Property Name="Phys_Abr" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="User_Physician">
+          <Key>
+            <PropertyRef Name="No" />
+          </Key>
+          <Property Name="No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="Phys_id" Type="int" />
+        </EntityType>
         <Association Name="FK_Appointment_Patient">
           <End Role="Patient" Type="Self.Patient" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -65,9 +94,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Appointment_Physician">
-          <End Role="Physician" Type="Self.Physician" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Physician" Type="Self.Physician" Multiplicity="0..1" />
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Physician">
@@ -78,13 +105,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MedicalRecord_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Pat_Id" />
+            </Principal>
+            <Dependent Role="MedicalRecord">
+              <PropertyRef Name="Pat_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalRecord_Physician">
+          <End Role="Physician" Type="Self.Physician" Multiplicity="0..1" />
+          <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Physician">
+              <PropertyRef Name="Phys_id" />
+            </Principal>
+            <Dependent Role="MedicalRecord">
+              <PropertyRef Name="Phys_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medication_MedicalRecord">
+          <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Medication" Type="Self.Medication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalRecord">
+              <PropertyRef Name="RecordNo" />
+            </Principal>
+            <Dependent Role="Medication">
+              <PropertyRef Name="RecordNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Physician_Physician">
+          <End Role="Physician" Type="Self.Physician" Multiplicity="0..1" />
+          <End Role="User_Physician" Type="Self.User_Physician" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Physician">
+              <PropertyRef Name="Phys_id" />
+            </Principal>
+            <Dependent Role="User_Physician">
+              <PropertyRef Name="Phys_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="Generate_PatCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="series" Type="int" Mode="InOut" />
         </Function>
         <EntityContainer Name="PMISModelStoreContainer">
           <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalRecord" EntityType="Self.MedicalRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Medication" EntityType="Self.Medication" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Physician" EntityType="Self.Physician" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Physician" EntityType="Self.User_Physician" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Appointment_Patient" Association="Self.FK_Appointment_Patient">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="Appointment" EntitySet="Appointment" />
@@ -92,6 +172,22 @@
           <AssociationSet Name="FK_Appointment_Physician" Association="Self.FK_Appointment_Physician">
             <End Role="Physician" EntitySet="Physician" />
             <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecord_Patient" Association="Self.FK_MedicalRecord_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecord_Physician" Association="Self.FK_MedicalRecord_Physician">
+            <End Role="Physician" EntitySet="Physician" />
+            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medication_MedicalRecord" Association="Self.FK_Medication_MedicalRecord">
+            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+            <End Role="Medication" EntitySet="Medication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Physician_Physician" Association="Self.FK_User_Physician_Physician">
+            <End Role="Physician" EntitySet="Physician" />
+            <End Role="User_Physician" EntitySet="User_Physician" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -123,6 +219,7 @@
           <Property Name="GuardianContact" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="GuardianRelation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="DateRegister" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MedicalRecords" Relationship="PMISModel.FK_MedicalRecord_Patient" FromRole="Patient" ToRole="MedicalRecord" />
           <NavigationProperty Name="Appointments" Relationship="PMISModel.FK_Appointment_Patient" FromRole="Patient" ToRole="Appointment" />
         </EntityType>
         <EntityContainer Name="PMISEntities" annotation:LazyLoadingEnabled="true">
@@ -131,6 +228,15 @@
           <Parameter Name="series" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Physicians" EntityType="PMISModel.Physician" />
+          <EntitySet Name="MedicalRecords" EntityType="PMISModel.MedicalRecord" />
+          <AssociationSet Name="FK_MedicalRecord_Patient" Association="PMISModel.FK_MedicalRecord_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="MedicalRecord" EntitySet="MedicalRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecord_Physician" Association="PMISModel.FK_MedicalRecord_Physician">
+            <End Role="Physician" EntitySet="Physicians" />
+            <End Role="MedicalRecord" EntitySet="MedicalRecords" />
+          </AssociationSet>
           <EntitySet Name="Appointments" EntityType="PMISModel.Appointment" />
           <AssociationSet Name="FK_Appointment_Patient" Association="PMISModel.FK_Appointment_Patient">
             <End Role="Patient" EntitySet="Patients" />
@@ -140,6 +246,16 @@
             <End Role="Physician" EntitySet="Physicians" />
             <End Role="Appointment" EntitySet="Appointments" />
           </AssociationSet>
+          <EntitySet Name="User_Physician" EntityType="PMISModel.User_Physician" />
+          <AssociationSet Name="FK_User_Physician_Physician" Association="PMISModel.FK_User_Physician_Physician">
+            <End Role="Physician" EntitySet="Physicians" />
+            <End Role="User_Physician" EntitySet="User_Physician" />
+          </AssociationSet>
+          <EntitySet Name="Medications" EntityType="PMISModel.Medication" />
+          <AssociationSet Name="FK_Medication_MedicalRecord" Association="PMISModel.FK_Medication_MedicalRecord">
+            <End Role="MedicalRecord" EntitySet="MedicalRecords" />
+            <End Role="Medication" EntitySet="Medications" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Physician">
           <Key>
@@ -148,8 +264,48 @@
           <Property Name="Phys_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Phys_Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phys_Abr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MedicalRecords" Relationship="PMISModel.FK_MedicalRecord_Physician" FromRole="Physician" ToRole="MedicalRecord" />
           <NavigationProperty Name="Appointments" Relationship="PMISModel.FK_Appointment_Physician" FromRole="Physician" ToRole="Appointment" />
+          <NavigationProperty Name="User_Physician" Relationship="PMISModel.FK_User_Physician_Physician" FromRole="Physician" ToRole="User_Physician" />
         </EntityType>
+        <EntityType Name="MedicalRecord">
+          <Key>
+            <PropertyRef Name="RecordNo" />
+          </Key>
+          <Property Name="RecordNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecordDate" Type="DateTime" Precision="3" />
+          <Property Name="Pat_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phys_id" Type="Int32" />
+          <Property Name="ActivityName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RecordDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Patient" Relationship="PMISModel.FK_MedicalRecord_Patient" FromRole="MedicalRecord" ToRole="Patient" />
+          <NavigationProperty Name="Physician" Relationship="PMISModel.FK_MedicalRecord_Physician" FromRole="MedicalRecord" ToRole="Physician" />
+          <NavigationProperty Name="Medications" Relationship="PMISModel.FK_Medication_MedicalRecord" FromRole="MedicalRecord" ToRole="Medication" />
+        </EntityType>
+        <Association Name="FK_MedicalRecord_Patient">
+          <End Type="PMISModel.Patient" Role="Patient" Multiplicity="0..1" />
+          <End Type="PMISModel.MedicalRecord" Role="MedicalRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Pat_Id" />
+            </Principal>
+            <Dependent Role="MedicalRecord">
+              <PropertyRef Name="Pat_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicalRecord_Physician">
+          <End Type="PMISModel.Physician" Role="Physician" Multiplicity="0..1" />
+          <End Type="PMISModel.MedicalRecord" Role="MedicalRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Physician">
+              <PropertyRef Name="Phys_id" />
+            </Principal>
+            <Dependent Role="MedicalRecord">
+              <PropertyRef Name="Phys_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="Appointment">
           <Key>
             <PropertyRef Name="No" />
@@ -160,6 +316,7 @@
           <Property Name="Phys_id" Type="Int32" />
           <Property Name="PriorNo" Type="Int32" />
           <Property Name="Status" Type="Boolean" />
+          <Property Name="IsCancelled" Type="Boolean" />
           <NavigationProperty Name="Patient" Relationship="PMISModel.FK_Appointment_Patient" FromRole="Appointment" ToRole="Patient" />
           <NavigationProperty Name="Physician" Relationship="PMISModel.FK_Appointment_Physician" FromRole="Appointment" ToRole="Physician" />
         </EntityType>
@@ -178,9 +335,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Appointment_Physician">
-          <End Type="PMISModel.Physician" Role="Physician" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Type="PMISModel.Physician" Role="Physician" Multiplicity="0..1" />
           <End Type="PMISModel.Appointment" Role="Appointment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Physician">
@@ -188,6 +343,51 @@
             </Principal>
             <Dependent Role="Appointment">
               <PropertyRef Name="Phys_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User_Physician">
+          <Key>
+            <PropertyRef Name="No" />
+          </Key>
+          <Property Name="No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Phys_id" Type="Int32" />
+          <NavigationProperty Name="Physician" Relationship="PMISModel.FK_User_Physician_Physician" FromRole="User_Physician" ToRole="Physician" />
+        </EntityType>
+        <Association Name="FK_User_Physician_Physician">
+          <End Type="PMISModel.Physician" Role="Physician" Multiplicity="0..1" />
+          <End Type="PMISModel.User_Physician" Role="User_Physician" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Physician">
+              <PropertyRef Name="Phys_id" />
+            </Principal>
+            <Dependent Role="User_Physician">
+              <PropertyRef Name="Phys_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Medication">
+          <Key>
+            <PropertyRef Name="MidNo" />
+          </Key>
+          <Property Name="MidNo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecordNo" Type="Int64" />
+          <Property Name="RecordedDate" Type="DateTime" Precision="3" />
+          <Property Name="MedicationDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MedicalRecord" Relationship="PMISModel.FK_Medication_MedicalRecord" FromRole="Medication" ToRole="MedicalRecord" />
+        </EntityType>
+        <Association Name="FK_Medication_MedicalRecord">
+          <End Type="PMISModel.MedicalRecord" Role="MedicalRecord" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PMISModel.Medication" Role="Medication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalRecord">
+              <PropertyRef Name="RecordNo" />
+            </Principal>
+            <Dependent Role="Medication">
+              <PropertyRef Name="RecordNo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -234,15 +434,47 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MedicalRecords">
+            <EntityTypeMapping TypeName="PMISModel.MedicalRecord">
+              <MappingFragment StoreEntitySet="MedicalRecord">
+                <ScalarProperty Name="RecordDetails" ColumnName="RecordDetails" />
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+                <ScalarProperty Name="Phys_id" ColumnName="Phys_id" />
+                <ScalarProperty Name="Pat_Id" ColumnName="Pat_Id" />
+                <ScalarProperty Name="RecordDate" ColumnName="RecordDate" />
+                <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Appointments">
             <EntityTypeMapping TypeName="PMISModel.Appointment">
               <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="IsCancelled" ColumnName="IsCancelled" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="PriorNo" ColumnName="PriorNo" />
                 <ScalarProperty Name="Phys_id" ColumnName="Phys_id" />
                 <ScalarProperty Name="Pat_Id" ColumnName="Pat_Id" />
                 <ScalarProperty Name="AppointDate" ColumnName="AppointDate" />
                 <ScalarProperty Name="No" ColumnName="No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Physician">
+            <EntityTypeMapping TypeName="PMISModel.User_Physician">
+              <MappingFragment StoreEntitySet="User_Physician">
+                <ScalarProperty Name="Phys_id" ColumnName="Phys_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="No" ColumnName="No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medications">
+            <EntityTypeMapping TypeName="PMISModel.Medication">
+              <MappingFragment StoreEntitySet="Medication">
+                <ScalarProperty Name="MedicationDesc" ColumnName="MedicationDesc" />
+                <ScalarProperty Name="RecordedDate" ColumnName="RecordedDate" />
+                <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
+                <ScalarProperty Name="MidNo" ColumnName="MidNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

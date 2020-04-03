@@ -1,0 +1,46 @@
+﻿@using PMIS.ViewModels
+@model IEnumerable<PatientPhysicianDistinctViewModel>
+    
+@{int counter = 0;}
+
+<div class="card">
+  
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Physician ID</th>
+                    <th>Physician Fullname</th>
+                    <th style="width: 40px"> </th>
+                </tr>
+                </thead>
+                <tbody>
+            @if (Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    counter += 1;
+
+                    <tr data-phyId="@item.Phyid">
+                        <td>@counter</td>
+                        <td>@item.Phyid</td>
+                        <td>@item.PhyscianName </td>
+                        <td><button type="button" class="btn btn-sm bg-blue patient-record" data-patientId="@item.PatientId">Select </button></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center bg-gradient-danger"> No Record Found</td>
+                </tr>
+            }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->

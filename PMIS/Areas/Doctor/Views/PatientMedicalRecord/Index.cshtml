@@ -1,0 +1,39 @@
+﻿
+<input id="hdnLogPhyId" type="hidden" value="@ViewBag.loginPhyId" />
+<div class="container">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card" style="min-height: 160px;">
+                <div class="card-body">
+                    <div class="col-md-6 offset-3 mt-5 ">
+                        <input type="text" class="form-control" placeholder="Search Patient Firstname or Lastname" id="search-patient">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg" id="patient-physList">
+
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts
+{
+  
+    <script type="text/javascript">
+
+    var patMedicalRecord= {
+        
+        getMedicalRecordByDoc:"@Url.Action("MedicalHistory","PatientMedicalRecord",new {area="Doctor", @id = "patid", @phyid = "phid"})"
+
+    }
+
+    </script>
+
+    @Scripts.Render("~/Areas/Scripts/js_doc_medicalrecords.js")
+}

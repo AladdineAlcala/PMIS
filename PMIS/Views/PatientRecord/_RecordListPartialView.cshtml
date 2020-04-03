@@ -1,0 +1,50 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@using PMIS.Model
+@model PagedList<MedicalRecord>
+
+
+
+@foreach (var item in Model)
+{
+    <div class="post" data-postId="@item.RecordNo">
+
+        <div class="user-block">
+
+            <span class="date-block">
+                @item.RecordDate.Value.ToString("D")
+
+            </span>
+
+        </div>
+
+        @*<h2 class="post-title">@item.ActivityName </h2>*@
+
+
+        @*<div class="post-content">*@
+        <div class="mailbox-read-message" style="overflow: hidden;">
+
+            @(new HtmlString(item.RecordDetails))
+
+        </div>
+
+
+        <div class="text-left">
+            <a href="#" class="link-chart text-sm mr-2" id="viewchart"><i class="fas fa-binoculars mr-1"></i> View</a>
+
+            <a href="#" class="link-chart text-sm mr-2" id="modifychart"><i class="fas fa-edit mr-1"></i> Edit</a>
+
+            @*<a href="#" class="link-chart text-sm" id="removechart"><i class="far fa-trash mr-1"></i> Remove</a>*@
+        </div>
+
+
+
+    </div>
+
+}
+
+
+<div class="mailbox-controls">
+    <span>Page</span> @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) <span>of</span> @Model.PageCount
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("MedicalHistoryListByPatient", new { page, id = ViewBag.patId, phyId = ViewBag.phyId }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "medicalrecord" }))
+</div>
