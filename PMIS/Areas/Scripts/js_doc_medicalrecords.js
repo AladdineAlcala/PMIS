@@ -12,8 +12,8 @@ function loadMedicalRecord(patId, phyId) {
 
     $.ajax({
         type: "Get",
-        url: '/Doctor/PatientMedicalRecord/MedicalHistoryListByPatient',
-        data: { id: patId, phyid: phyId, page: thisPage},
+        url: '/Doctor/PatientMedicalRecord/MedicalHistory',
+        data: { id: patId, phyid: phyId},
         contentType: 'application/html;charset=utf8',
         datatype: 'html',
         cache: false,

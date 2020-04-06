@@ -3,48 +3,40 @@
 @using PMIS.Model
 @model PagedList<MedicalRecord>
 
+@{
+    if (Model.Count > 0)
+    {
+        <h4>Recent Activity</h4>
 
+        foreach (var item in Model)
+         {
+             <div class="post clearfix" data-postId="@item.RecordNo">
 
-@foreach (var item in Model)
-{
-    <div class="post" data-postId="@item.RecordNo">
-        
-        <div class="user-block">
+                 <div class="user-block">
 
-            <span class="date-block">
-                @item.RecordDate.Value.ToString("D")
+                     <span class="username text-primary">
+                         @item.ActivityName
+                     </span>
+                     <span class="description">@item.RecordDate.Value.ToString("D")</span>
+                 </div>
+                 <!-- /.user-block -->
 
-            </span>
+                 <div class="medical-history">
+                     @(new HtmlString(item.RecordDetails))
+                 </div>
+                 <div class="mailbox-controls text-left">
+                     <a href="#" class="link-chart text-sm mr-2" id="viewchart"><i class="fas fa-binoculars mr-1"></i> View</a>
 
-        </div>
+                     <a href="#" class="link-chart text-sm mr-2" id="modifychart"><i class="fas fa-edit mr-1"></i> Edit</a>
 
-        @*<h2 class="post-title">@item.ActivityName </h2>*@
+                     @*<a href="#" class="link-chart text-sm" id="removechart"><i class="far fa-trash mr-1"></i> Remove</a>*@
+                 </div>
+             </div>
+             <!-- END POST -->
+         }
 
-
-        @*<div class="post-content">*@
-        <div class="mailbox-read-message">
-
-            @(new HtmlString(item.RecordDetails))
-
-        </div>
-
-
-        <div class="text-left">
-            <a href="#" class="link-chart text-sm mr-2" id="viewchart"><i class="fas fa-binoculars mr-1"></i> View</a>
-
-            <a href="#" class="link-chart text-sm mr-2" id="modifychart"><i class="fas fa-edit mr-1"></i> Edit</a>
-
-            @*<a href="#" class="link-chart text-sm" id="removechart"><i class="far fa-trash mr-1"></i> Remove</a>*@
-        </div>
-
-
-
-    </div>
+        <span>Page</span> @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) <span>of</span> @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("MedicalHistory", new {page, id = ViewBag.patId, phyId = ViewBag.phyId}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() {HttpMethod = "GET", UpdateTargetId = "medicalrecord"}))
+    }
 
 }
-
-
-<div class="mailbox-controls">
-    <span>Page</span> @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) <span>of</span> @Model.PageCount
-    @Html.PagedListPager((IPagedList) Model, page => Url.Action("MedicalHistoryListByPatient", new {page , id = ViewBag.patId, phyId = ViewBag.phyId}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() {HttpMethod = "GET", UpdateTargetId = "medicalrecord"}))
-</div>

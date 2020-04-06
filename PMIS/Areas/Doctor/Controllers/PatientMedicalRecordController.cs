@@ -37,37 +37,59 @@ namespace PMIS.Areas.Doctor.Controllers
         }
 
         [HttpGet]
-        public ActionResult MedicalHistory(string id,int phyid)
+        public ActionResult MedicalHistory(string id,int phyid,int? page)
         {
-         
+            int pageIndex = page ?? 1;
+            int dataCount = 3;
+           
+
+            ViewBag.patId = id;
+            ViewBag.phyId = phyid;
+           
+
 
             var patientRecordDetails = new PatientMedicalRecordDetailsViewModel
             {
                 PatientId = id,
                 PhyId = phyid,
                 Patient = _patientservices.GetPatientById(id)
-            };
+        };
+            var medicalRecord = _patientrecordservices.GetAllRecords(id, phyid);
+
+            patientRecordDetails.MedicalRecordList = medicalRecord.OrderByDescending(t => t.RecordNo).ToList()
+                .ToPagedList(pageIndex, dataCount);
+          
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_RecordListPartialView",(PagedList<MedicalRecord>) patientRecordDetails.MedicalRecordList);
+            }
          
             return View(patientRecordDetails);
         }
 
-        [HttpGet]
-        public ActionResult MedicalHistoryListByPatient(string id,int phyid,int? page)
-        {
-            int pageIndex = page ?? 1;
-            int dataCount = 3;
-            string patId = id.Trim();
+        //[HttpGet]
+        //public ActionResult getPatientProfile(string patId)
+        //{
+        //    return PartialView("_PatientProfile", _patientservices.GetPatientById(patId));
+        //}
 
-            ViewBag.patId = id;
-            ViewBag.phyId = phyid;
+        //[HttpGet]
+        //public ActionResult MedicalHistoryListByPatient(string id,int phyid,int? page)
+        //{
+        //    int pageIndex = page ?? 1;
+        //    int dataCount = 3;
+        //    string patId = id.Trim();
+
+        //    ViewBag.patId = id;
+        //    ViewBag.phyId = phyid;
 
 
-            var medicalRecord = _patientrecordservices.GetAllRecords(patId, phyid);
+            
 
-            var patientMedicalHistory = medicalRecord.OrderByDescending(t => t.RecordNo).ToList().ToPagedList(pageIndex, dataCount);
+        //    var patientMedicalHistory = medicalRecord.OrderByDescending(t => t.RecordNo).ToList().ToPagedList(pageIndex, dataCount);
 
-            return PartialView("_RecordListPartialView", (PagedList<MedicalRecord>) patientMedicalHistory);
-        }
+        //    return PartialView("_RecordListPartialView", (PagedList<MedicalRecord>) patientMedicalHistory);
+        //}
     
 
         [HttpGet]

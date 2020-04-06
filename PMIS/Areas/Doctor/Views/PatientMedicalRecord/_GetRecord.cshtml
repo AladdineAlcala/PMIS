@@ -32,7 +32,7 @@
                 </div>
 
 
-                <div class="mailbox-read-message with-border border-bottom">
+                <div class="subjective-message with-border border-bottom">
 
                     @(new HtmlString(Model.RecordDetails))
 
@@ -65,7 +65,7 @@
                 <!-- /.mailbox-controls -->
 
 
-                <div class="mailbox-read-message">
+                <div class="subjective-message with-border border-bottom">
 
 
                     @{
@@ -83,7 +83,44 @@
                     @(new HtmlString(first != null ? first.MedicationDesc : String.Empty))
 
                 </div>
+                
+                
+                <!--- prescreiption -->
+                
+                
+                
+                <div class="mailbox-read-info">
+                    <h5>Prescription: </h5>
 
+                </div>
+
+                <!-- /.mailbox-read-info -->
+                <div class="mailbox-controls with-border text-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm" id="medication" data-toggle="tooltip" data-container="body" title="Add Medication">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
+                            <i class="fas fa-reply"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
+                            <i class="fas fa-share"></i>
+                        </button>
+                    </div>
+                    <!-- /.btn-group -->
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                        <i class="fas fa-print"></i>
+                    </button>
+                </div>
+                <!-- /.mailbox-controls -->
+
+
+                <div class="subjective-message with-border border-bottom">
+
+
+                  
+
+                </div>
 
             </div>
 

@@ -106,11 +106,16 @@ namespace PMIS.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Load_MedicalRecordPartialView(string patientid, int phyid)
+        public async Task<ActionResult> Load_MedicalRecordPartialView(string patientid, int phyid,int? page)
         {
+            int pageIndex = page ?? 1;
+            int dataCount = 3;
+
             var medicalRecord = await _patientrecordservices.GetAllRecordsAsync();
-            
-            return PartialView("_RecordListPartialView", medicalRecord.Where(t => t.Pat_Id == patientid.Trim() && t.Phys_id == phyid).OrderByDescending(t=>t.RecordNo));
+            var patientmedicalhistory = medicalRecord.Where(t => t.Pat_Id == patientid.Trim() && t.Phys_id == phyid)
+                .OrderByDescending(t => t.RecordNo).ToPagedList(pageIndex, dataCount);
+
+            return PartialView("_RecordListPartialView",(PagedList<MedicalRecord>)patientmedicalhistory);
         }
 
 

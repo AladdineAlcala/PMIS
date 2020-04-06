@@ -9299,7 +9299,6 @@
     <Content Include="Content\plugins\toastr\toastr.min.js" />
     <Content Include="Content\signalR\jquery.signalR-2.4.1.js" />
     <Content Include="Content\signalR\jquery.signalR-2.4.1.min.js" />
-    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -9562,6 +9561,7 @@
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_GetRecord.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_CreateMedication.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_ModifyPatientRecord.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_PatientProfile.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\SideBar_Left.cshtml" />
     <Content Include="Views\Shared\NavBar.cshtml" />

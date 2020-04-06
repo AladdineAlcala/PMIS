@@ -163,7 +163,20 @@ table.dataTable tr.even:hover {
 }
 
 .mailbox-read-message {
-    min-height: 100px;
+    /*min-height: 100px;*/
+    max-height: 60px;
+    padding-bottom:5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.subjective-message {
+    padding: 10px;
+}
+.subjective-message >p {
+    margin-bottom: 2px;
+    font-size: 13px;
+   
 }
 .mailbox-read-message > p {
     margin-bottom: 2px;
@@ -186,4 +199,47 @@ table.dataTable tr.even:hover {
 }
 .card-fullheight {
     height: 80vh;
+}
+
+.user-block .username,
+.user-block .description
+ {
+
+    margin-top: 5px;
+    margin-left: 5px;
+}
+.medical-history {
+    margin: 3px;
+    height: 80px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+.medical-history > p,
+.medical-history > h1,
+.medical-history > h2,
+.medical-history > h3,
+.medical-history > h4,
+.medical-history > h5,
+.medical-history > h6
+{
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+/*.medical-history-page {
+    position: absolute;
+    bottom:5px;
+    width: 700px;
+    padding: 15px;
+}*/
+
+.mailbox-read-info {
+    margin: 3px 3px;
+    padding: 2px;
+}
+
+.mailbox-read-info > h5{
+    font-size:1.0em;
+    color: darkblue;
 }
