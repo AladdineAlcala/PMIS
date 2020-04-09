@@ -110,6 +110,24 @@ namespace PMIS.ServiceLayer
             return lastvisit;
         }
 
+        public IEnumerable<AppointmentScheduleViewModel> GetAllAppointment()
+        {
+            return _pmisEntities.Appointments.Select(t => new AppointmentScheduleViewModel()
+            {
+                No = t.No,
+                PatientNo = t.Pat_Id,
+                PatientName = t.Patient.Lastname + " ," + t.Patient.Firstname,
+                PhyId = (int)t.Phys_id,
+                PhyName = t.Physician.Phys_Fullname,
+                AppointDate = (DateTime)t.AppointDate,
+                Stat = (bool)t.Status ? "Served" : "Pending",
+                Iscancelled = (bool)t.IsCancelled,
+                BlStat = (bool) t.Status
+
+
+            }).ToList();
+        }
+
         private bool _disposed = false;
 
         public void Dispose()
@@ -132,21 +150,6 @@ namespace PMIS.ServiceLayer
             this._disposed = true;
         }
 
-        public IEnumerable<AppointmentScheduleViewModel> GetAllAppointment()
-        {
-            return _pmisEntities.Appointments.Select(t => new AppointmentScheduleViewModel()
-            {
-                No = t.No,
-                PatientNo = t.Pat_Id,
-                PatientName = t.Patient.Lastname + " ," + t.Patient.Firstname,
-                PhyId = (int)t.Phys_id,
-                PhyName = t.Physician.Phys_Fullname,
-                AppointDate = (DateTime)t.AppointDate,
-                Stat = (bool)t.Status ? "Served" : "Pending",
-                Iscancelled = (bool)t.IsCancelled
-
-
-            }).ToList();
-        }
+       
     }
 }

@@ -16,6 +16,7 @@ namespace PMIS.ViewModels
         public DateTime AppointDate { get; set; }
         public string Stat { get; set; }
         public bool Iscancelled { get; set; }
+        public bool BlStat { get; set; }
 
     }
 }

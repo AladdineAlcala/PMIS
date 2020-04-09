@@ -13,10 +13,13 @@ namespace PMIS.Areas.Doctor.Controllers
     {
         private readonly IAppointmentServices _appointmentServices;
         private readonly IUserPhysicianService _userPhysicianService;
-        public DocAppointmentController(IAppointmentServices appointmentServices, IUserPhysicianService userPhysicianService)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public DocAppointmentController(IAppointmentServices appointmentServices, IUserPhysicianService userPhysicianService, IUnitOfWork unitOfWork)
         {
             _appointmentServices = appointmentServices;
             _userPhysicianService = userPhysicianService;
+            _unitOfWork = unitOfWork;
 
             //ViewBag.controller = "docappointment";
         }
@@ -36,6 +39,29 @@ namespace PMIS.Areas.Doctor.Controllers
                 .Where(t => t.PhyId == id && t.AppointDate.Date == appointmentDate.Date).ToList();
 
             return PartialView("_appointListPartialView", appointSchedulebydoctor);
+        }
+
+        [HttpPost]
+        public ActionResult ServeAppointment(int apptId)
+        {
+            var appointment = _appointmentServices.GetAppointment(apptId);
+
+            if (appointment!=null)
+            {
+                appointment.Status = true;
+                _appointmentServices.ModifyAppointment(appointment);
+
+                _unitOfWork.Commit();
+
+
+                var _url = Url.Action("GetAppointmentByDoctor", "DocAppointment", new { area="Doctor", id = appointment.Phys_id, appointmentDate = appointment.AppointDate });
+
+                return Json(new { success = true, url=_url}, JsonRequestBehavior.AllowGet);
+
+
+            }
+
+            return Json(new { success =false}, JsonRequestBehavior.AllowGet);
         }
     }
 }

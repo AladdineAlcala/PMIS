@@ -89,7 +89,7 @@ namespace PMIS.App_Start
             kernel.Bind<IPatientRecordServices>().To<PatientRecordServices>();
             kernel.Bind<IPhycisianServices>().To<PhycisianServices>();
             kernel.Bind<IUserPhysicianService>().To<UserPhysicianService>();
-           
+            kernel.Bind<IPrescriptionServices>().To<PrescriptionServices>();
 
         }        
     }

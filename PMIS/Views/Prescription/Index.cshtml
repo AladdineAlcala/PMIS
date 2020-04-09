@@ -1,0 +1,53 @@
+﻿<div class="row">
+    <div class="col-lg">
+        <div class="card" style="min-height: 530px;">
+            <div class="card-header">
+                <h3 class="card-title">Prescription</h3>
+            </div>
+            <div class="card-body h-100">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm table-bordered compact nowrap" id="tblePrescription">
+                        <thead class="bg-cyan">
+                        <tr>
+                            <th></th>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">CATEGORY</th>
+                            <th class="text-center">DESCRIPTION</th>
+                            <th class="text-center">MAKE</th>
+
+
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal-createprescription">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Create/Update Prescription</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+@section scripts
+{
+   @Scripts.Render("~/Scripts/js_prescription.js")
+}

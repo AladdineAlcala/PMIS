@@ -1,6 +1,7 @@
 ﻿
 
 <input type="hidden" value=@ViewBag.phyId id="hdn_docuserId" />
+
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-sm-12">
@@ -45,7 +46,8 @@
 
         var docAppoint = {
 
-            getPatientMedicalHistory:"@Url.Action("MedicalHistory","PatientMedicalRecord",new {area="Doctor",@id="patid", @phyid="phid"})"
+            getPatientMedicalHistory: "@Url.Action("MedicalHistory","PatientMedicalRecord",new {area="Doctor",@id="patid", @phyid="phid"})"
+           
         }
 
     </script>

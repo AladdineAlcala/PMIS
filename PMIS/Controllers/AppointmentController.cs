@@ -199,9 +199,9 @@ namespace PMIS.Controllers
             _appointmentServices.InsertAppointment(appointment);
             _unitofwork.Commit();
             
-            var url = Url.Action("GetAppointment_By_Doctor", "Appointment", new { id = appointment.Phys_id, appdate = appointment.AppointDate });
+            var url = Url.Action("GetAppointment_By_Doctor", "Appointment", new { id= appointment.Phys_id, appdate = appointment.AppointDate });
 
-            return Json(new { success = true,}, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, url = url }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -223,7 +223,7 @@ namespace PMIS.Controllers
             {
                 var appointment = await _appointmentServices.GetAllAppointmentList();
 
-                count = appointment.Where(t => t.PhyId == id && t.AppointDate==appdate).ToList().Count;
+                count = appointment.Where(t => t.PhyId == id && t.AppointDate.Date==appdate.Date).ToList().Count;
             }
 
             return Json(count, JsonRequestBehavior.AllowGet);

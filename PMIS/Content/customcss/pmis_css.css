@@ -176,6 +176,7 @@ table.dataTable tr.even:hover {
 .subjective-message >p {
     margin-bottom: 2px;
     font-size: 13px;
+    color: #000000;
    
 }
 .mailbox-read-message > p {
@@ -210,7 +211,7 @@ table.dataTable tr.even:hover {
 }
 .medical-history {
     margin: 3px;
-    height: 80px;
+    height: 70px;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -226,6 +227,9 @@ table.dataTable tr.even:hover {
 {
     margin-top: 3px;
     margin-bottom: 3px;
+    font-size: 13px;
+    color: #000000;
+   
 }
 /*.medical-history-page {
     position: absolute;

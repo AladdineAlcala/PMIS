@@ -34,21 +34,82 @@ function appointcounter(id, appointdate) {
 
 
 
+
 (function ($) {
     
+    var appointdate = moment(new Date()).format('YYYY-MM-DD HH:mm');
+
+    appointcounter($('#hdn_docuserId').val(), appointdate);
 
 
 })(jQuery);
 
-//document.getElementById("view_medicalrecords").addEventListener('click',function() {
+document.getElementById("btnconsultationserve").addEventListener('click', function (e) {
 
-//    //e.preventDefault();
-//    //e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
 
-//       alert($(this).attr('data-patientId'));
+    var appointdate = moment(new Date()).format('YYYY-MM-DD HH:mm');
 
-//    //window.location.href = docAppoint.getPatientMedicalHistory.replace("patid", $(this).attr('data-patientId')).replace("phid",2);
-//});
+    $('#spinn-loader').show();
+    
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm serve appointment..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Proceed operation..!'
+
+    }).then((result) => {
+
+            if (result) {
+
+                $.ajax({
+                    type: 'Post',
+                    url: '/Doctor/DocAppointment/ServeAppointment',
+                    data: {apptId:($(this).closest('tr').attr('data-apptNo'))},
+                    datatype: 'json',
+                    cache: false,
+                    success: function (data) {
+
+                        if (data.success) {
+
+                           
+
+                            toast.fire({
+                                type: 'success',
+                                title: 'Record Succesfully Updated.'
+                            });
+                        }
+
+                      
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire('Error adding record!', 'Please try again', 'error');
+                    }
+
+                }).done(function (data) {
+
+                    $('#tableAppoint').load(data.url);
+
+                    setTimeout(function () {
+
+                        $('#spinn-loader').hide();
+
+                    }, 1000);
+
+                    appointcounter($('#hdn_docuserId').val(), appointdate);
+                });
+
+            }
+        }
+
+    );
+
+});
 
 $(document).on('click', '#view_medicalrecords', function (e) {
 

@@ -117,6 +117,8 @@ function loadChart(recordno) {
 
 //    });
 
+
+
 (function ($) {
 
 
@@ -229,7 +231,7 @@ $(document).on('click', '#modalClose', function () {
 
 
 
-$(document).on('click', '#save-docmedication', function(e) {
+$(document).on('click', '#save-docmedication',(e)=> {
     e.preventDefault();
     e.stopPropagation();
 
@@ -297,9 +299,57 @@ $(document).on('click', '#save-docmedication', function(e) {
 });
 
 
-$(document).on('click', '#return_to_list', function(e) {
+$(document).on('click', '#return_to_list',(e)=>{
     e.preventDefault();
     e.stopPropagation();
 
     loadMedicalRecord($('#patientid').val(), $('#phyid').val());
+});
+
+
+//document.getElementById('prescription').addEventListener('click', function (event) {
+//    event.preventDefault();
+//    event.stopPropagation();
+
+//    alert('sadsad');
+//});
+
+$(document).on('click','#prescription',event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    $.ajax({
+        type: 'Get',
+        url: '/Doctor/PatientMedicalRecord/MedicalPrescription',
+        data: { recNo: $('#recNo').val() },
+        contentType: 'application/html;charset=utf8',
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            var modal = $('#modal-prescription');
+            modal.find('.modal-body').html(result);
+
+            
+
+            modal.modal({
+                    backdrop: 'static',
+                    keyboard: false
+                },
+                'show');
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
+    });
+
+});
+
+
+$(document).on('click', '#btn-saveDoctorsPrescription', function(e) {
+    e.preventDefault();
+
+    alert('asdasd');
+
 });

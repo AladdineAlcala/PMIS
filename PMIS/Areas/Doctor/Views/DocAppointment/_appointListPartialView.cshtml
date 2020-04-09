@@ -10,7 +10,7 @@
         foreach (var item in Model)
         {
 
-            <tr data-patNo="@item.No">
+            <tr data-apptNo="@item.No">
 
                 <td>@(item.Iscancelled ? "" : i.ToString())</td>
 
@@ -18,17 +18,33 @@
                 <td>@item.PatientName</td>
                 <td>@(item.Iscancelled ? "Cancelled" : item.Stat)</td>
                 <td class="text-center">
-
-                    @*<button class="btn btn-success btn-sm" data-patientId="@item.PatientNo" id="btnconsultationoption">
-                        <i class="fal fa-lightbulb-on"></i>
-
-                    </button>*@
-
+                    
                     <button class="btn btn-info btn-sm" data-patientId="@item.PatientNo" id="view_medicalrecords">
                         <i class="fal fa-file-medical-alt"></i>
 
                     </button>
 
+                    @if (item.BlStat)
+                    {
+                        <button class="btn btn-success btn-sm" disabled="disabled" data-patientId="@item.PatientNo" id="btnconsultationserve">
+                            <i class="fal fa-lightbulb-on"></i>
+
+                        </button>
+                       
+                    }
+
+                    else
+                    {
+                        <button class="btn btn-success btn-sm" data-patientId="@item.PatientNo" id="btnconsultationserve">
+                            <i class="fal fa-lightbulb-on"></i>
+
+                        </button>
+
+                      
+                    }
+
+
+                   
 
 
                 </td>

@@ -17,6 +17,12 @@
         <AssociationConnector Association="PMISModel.FK_User_Physician_Physician" />
         <EntityTypeShape EntityType="PMISModel.Medication" Width="1.5" PointX="6.875" PointY="0.5" />
         <AssociationConnector Association="PMISModel.FK_Medication_MedicalRecord" />
+        <EntityTypeShape EntityType="PMISModel.DocPrescriptionRecord" Width="1.5" PointX="2.875" PointY="5.25" />
+        <EntityTypeShape EntityType="PMISModel.Prescription" Width="1.5" PointX="8.25" PointY="6.75" />
+        <AssociationConnector Association="PMISModel.FK_DocPrescriptionRecord_MedicalRecord" />
+        <AssociationConnector Association="PMISModel.FK_DocPrescriptionRecord_Prescription" />
+        <EntityTypeShape EntityType="PMISModel.PresCat" Width="1.5" PointX="6" PointY="8" />
+        <AssociationConnector Association="PMISModel.FK_Prescription_PresCat" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

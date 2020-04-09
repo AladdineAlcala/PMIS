@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using PMIS.Model;
@@ -19,16 +17,16 @@ namespace PMIS.Areas.Doctor.Controllers
         private readonly IPatientServices _patientservices;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserPhysicianService _userPhysicianService;
-        public PatientMedicalRecordController(IPatientRecordServices patientrecordservices, IPatientServices patientservices, IUserPhysicianService userPhysicianService, IUnitOfWork unitOfWork)
+        private readonly IPrescriptionServices _prescriptionServices;
+        public PatientMedicalRecordController(IPatientRecordServices patientrecordservices, IPatientServices patientservices, IUserPhysicianService userPhysicianService, IUnitOfWork unitOfWork, IPrescriptionServices prescriptionServices)
         {
             _patientrecordservices = patientrecordservices;
             _patientservices = patientservices;
             _unitOfWork = unitOfWork;
+            _prescriptionServices = prescriptionServices;
             _userPhysicianService = userPhysicianService;
 
         }
-
-
         // GET: Doctor/PatientMedicalRecord
         public ActionResult Index()
         {
@@ -67,30 +65,7 @@ namespace PMIS.Areas.Doctor.Controllers
             return View(patientRecordDetails);
         }
 
-        //[HttpGet]
-        //public ActionResult getPatientProfile(string patId)
-        //{
-        //    return PartialView("_PatientProfile", _patientservices.GetPatientById(patId));
-        //}
 
-        //[HttpGet]
-        //public ActionResult MedicalHistoryListByPatient(string id,int phyid,int? page)
-        //{
-        //    int pageIndex = page ?? 1;
-        //    int dataCount = 3;
-        //    string patId = id.Trim();
-
-        //    ViewBag.patId = id;
-        //    ViewBag.phyId = phyid;
-
-
-            
-
-        //    var patientMedicalHistory = medicalRecord.OrderByDescending(t => t.RecordNo).ToList().ToPagedList(pageIndex, dataCount);
-
-        //    return PartialView("_RecordListPartialView", (PagedList<MedicalRecord>) patientMedicalHistory);
-        //}
-    
 
         [HttpGet]
         public ActionResult New_MedicalRecord(string id)
@@ -186,6 +161,37 @@ namespace PMIS.Areas.Doctor.Controllers
 
             return PartialView("_ModifyPatientRecord");
         }
+
+
+        [HttpGet]
+        public ActionResult MedicalPrescription(int recNo)
+        {
+            var docPrescription=new DocPrescriptionViewModel
+            {   
+
+                RecNo = recNo,
+                PrescriptionCatListItem = _prescriptionServices.GetCategoryListItems(),
+                RecipeListItem = _prescriptionServices.GetPrescriptionListItems(null)
+            };
+
+
+            return PartialView("_MedicalPrescription", docPrescription);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("AddNewDoctorsPrescription")]
+        public ActionResult MedicalPrescription(DocPrescriptionViewModel docPrescription)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_MedicalPrescription", docPrescription);
+            }
+
+
+            return Json(new {success=true}, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

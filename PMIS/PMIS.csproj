@@ -220,6 +220,7 @@
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PatientRecordController.cs" />
     <Compile Include="Controllers\PhysicianController.cs" />
+    <Compile Include="Controllers\PrescriptionController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -227,6 +228,9 @@
     <Compile Include="HelperClass\Utilities.cs" />
     <Compile Include="Hubs\AppointHub.cs" />
     <Compile Include="Model\Appointment.cs">
+      <DependentUpon>PMISEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DocPrescriptionRecord.cs">
       <DependentUpon>PMISEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\IdentityModel.cs" />
@@ -257,6 +261,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PMISEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\PresCat.cs">
+      <DependentUpon>PMISEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Prescription.cs">
+      <DependentUpon>PMISEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\User_Physician.cs">
       <DependentUpon>PMISEntities.tt</DependentUpon>
     </Compile>
@@ -266,11 +276,13 @@
     <Compile Include="ServiceLayer\IPatientRecordServices.cs" />
     <Compile Include="ServiceLayer\IPatientServices.cs" />
     <Compile Include="ServiceLayer\IPhycisianServices.cs" />
+    <Compile Include="ServiceLayer\IPrescriptionServices.cs" />
     <Compile Include="ServiceLayer\IUnitOfWork.cs" />
     <Compile Include="ServiceLayer\IUserPhysicianService.cs" />
     <Compile Include="ServiceLayer\PatientRecordServices.cs" />
     <Compile Include="ServiceLayer\PatientServices.cs" />
     <Compile Include="ServiceLayer\PhycisianServices.cs" />
+    <Compile Include="ServiceLayer\PrescriptionServices.cs" />
     <Compile Include="ServiceLayer\UnitOfWork.cs" />
     <Compile Include="ServiceLayer\UserPhysicianService.cs" />
     <Compile Include="Startup.cs" />
@@ -278,6 +290,7 @@
     <Compile Include="ViewModels\AppointmentOptionsViewModel.cs" />
     <Compile Include="ViewModels\AppointmentScheduleViewModel.cs" />
     <Compile Include="ViewModels\AppointmentViewModel.cs" />
+    <Compile Include="ViewModels\DocPrescriptionViewModel.cs" />
     <Compile Include="ViewModels\MedicalRecordViewModel.cs" />
     <Compile Include="ViewModels\MedicationViewModel.cs" />
     <Compile Include="ViewModels\PatientAppointmentNewViewModel.cs" />
@@ -291,6 +304,7 @@
     <Compile Include="ViewModels\PatientProfileViewModel.cs" />
     <Compile Include="ViewModels\PatientViewModel.cs" />
     <Compile Include="ViewModels\PhysicianDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PrescriptionViewModel.cs" />
     <Compile Include="ViewModels\UsersConnectionViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
   </ItemGroup>
@@ -9318,6 +9332,7 @@
     <Content Include="Scripts\js_medrecord.js" />
     <Content Include="Scripts\js_patient.js" />
     <Content Include="Scripts\js_Physician.js" />
+    <Content Include="Scripts\js_prescription.js" />
     <Content Include="Scripts\js_sched.js" />
     <Content Include="Content\plugins\respond\respond.js" />
     <Content Include="Content\plugins\respond\respond.matchmedia.addListener.js" />
@@ -9562,6 +9577,7 @@
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_CreateMedication.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_ModifyPatientRecord.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_PatientProfile.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_MedicalPrescription.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\SideBar_Left.cshtml" />
     <Content Include="Views\Shared\NavBar.cshtml" />
@@ -9656,6 +9672,8 @@
     <Content Include="Views\Account\_AddRoleUser.cshtml" />
     <Content Include="Views\PatientRecord\_GetRecord.cshtml" />
     <Content Include="Views\PatientRecord\_CreateMedication.cshtml" />
+    <Content Include="Views\Prescription\Index.cshtml" />
+    <Content Include="Views\Prescription\_CreatePrescription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\plugins\filterizr\ActiveFilter.d.ts" />

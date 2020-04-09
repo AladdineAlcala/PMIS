@@ -1,0 +1,54 @@
+﻿@using PMIS.ViewModels
+@model PrescriptionViewModel
+
+<div class="container-fluid">
+
+    <div class="alert alert-info alert-dismissible">
+        <h6><i class="icon fas fa-info"></i>Note:</h6>
+        <p class="text" style="margin-bottom: 0; padding-bottom: 0;">All fields marked with an * are required</p>
+    </div>
+
+    @using (Html.BeginForm("CreatePrescription", "Prescription", FormMethod.Post, new { @role = "form", @id = "formprescription" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(m=>m.Id)
+        
+        <div class="row">
+            <div class="col-lg">
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label required">Category:</label>
+                    <div class="col-sm-6">
+                        @Html.DropDownListFor(m => m.PrescriptionCatid, Model.PresCategorySelectList, "-------Select Category------", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.PrescriptionCatid, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label required">Details:</label>
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(m=>m.PrescriptionDetails,new {@class="form-control",@rows=2, @placeholder = "Prescription Details"})
+                        @Html.ValidationMessageFor(m => m.PrescriptionDetails, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label required">Unit:</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(m=>m.PrescUnit,new {@class="form-control"})
+                        @Html.ValidationMessageFor(m => m.PrescUnit, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-4">
+                <button type="button" class="btn btn-primary" id="btn-savePrescription">Save </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    }
+
+</div>
