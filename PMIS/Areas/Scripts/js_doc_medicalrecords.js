@@ -1,4 +1,7 @@
-﻿function loadsummernote() {
+﻿var $selected;
+
+
+function loadsummernote() {
     $('#compose-record').summernote();
 }
 
@@ -22,7 +25,7 @@ function loadMedicalRecord(patId, phyId) {
             $('#medicalrecord').html(result);
 
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function (thrownError) {
 
             Swal.fire('Error retrieving record!', 'Please try again', 'error');
 
@@ -59,7 +62,7 @@ function loadChart(recordno) {
 
             $('#medicalrecord').html(result);
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function (thrownError) {
             Swal.fire('Error on retrieving record!', 'Please try again', 'error');
         }
 
@@ -77,50 +80,31 @@ function loadChart(recordno) {
 }
 
 
+const patientMedPrescrioption = (recNo) => {
 
-//var newmedicalrecord = document.getElementById('addPatientMedicalRecord');
-//    newmedicalrecord.addEventListener('click', function (event) {
-//        event.preventDefault();
-//        event.stopPropagation();
+    $.ajax({
+        type: 'Get',
+        url: '/Doctor/PatientMedicalRecord/GetMedPrescription',
+        contentType: 'application/html;charset=utf8',
+        data: { recordNo: recNo },
+        datatype: 'html',
+        cache: false,
+        success: function(result) {
 
-
-//        const patientId = document.getElementById('patientid').value;
-
-//        $.ajax({
-//            type: 'Get',
-//            url: '/Doctor/PatientMedicalRecord/New_MedicalRecord',
-//            data: { id: patientId},
-//            contentType: 'application/html;charset=utf8',
-//            datatype: 'html',
-//            cache: false,
-//            success: function (result) {
-
-//                var modal = $('#modal-createPhyRecord');
-//                modal.find('.modal-body').html(result);
-
-//                loadsummernote();
-
-//                modal.modal({
-//                        backdrop: 'static',
-//                        keyboard: false
-//                    },
-//                    'show');
-
-//            },
-//            error: function (xhr, ajaxOptions, thrownError) {
-//                //Swal.fire('Error adding record!', 'Please try again', 'error');
-//            }
-//        });
+            $('#med_prescription').html(result);
+        },
+        error: function(ajaxOptions, thrownError) {
+            Swal.fire('Error on retrieving record!', 'Please try again', 'error');
+        }
 
 
+    });
 
-
-//    });
-
-
+};
 
 (function ($) {
 
+ 
 
     function autocompleteName() {
 
@@ -178,11 +162,12 @@ $(document).on('click', '.post #viewchart', function (e) {
 
     var pageSelected = $('.pagination').find('li.active').next().text();
 
-    console.log(parseInt(pageSelected) - 1);
+   // console.log(parseInt(pageSelected) - 1);
 
 
     loadChart($(this).closest('.post').attr('data-postId'));
 
+   
 });
 
 
@@ -307,12 +292,62 @@ $(document).on('click', '#return_to_list',(e)=>{
 });
 
 
-//document.getElementById('prescription').addEventListener('click', function (event) {
-//    event.preventDefault();
-//    event.stopPropagation();
+$(document).on('click', '#removeMedication', function(e) {
+    e.preventDefault();
 
-//    alert('sadsad');
-//});
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm removing Medication..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Proceed operation..!'
+
+    }).then((result) => {
+
+            if (result.value) {
+
+                $.ajax({
+                    type: 'Post',
+                    url: '/Doctor/PatientMedicalRecord/RemoveMedication',
+                    data: { medNo: $('#medicationNo').val() },
+                    async: true,
+                    datatype: 'json',
+                    cache: false,
+                    success: function (data) {
+
+                        if (data.success) {
+
+                            toast.fire({
+                                type: 'success',
+                                title: 'Record Succesfully Removed.'
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire('Error removing record!', 'Please try again', 'error');
+                    }
+
+                }).done(function () {
+
+             
+
+                  //  patientMedPrescrioption($('#recNo').val());
+                });
+
+
+            }
+
+        }
+
+
+    );
+
+});
+
 
 $(document).on('click','#prescription',event => {
     event.preventDefault();
@@ -350,6 +385,168 @@ $(document).on('click','#prescription',event => {
 $(document).on('click', '#btn-saveDoctorsPrescription', function(e) {
     e.preventDefault();
 
-    alert('asdasd');
+    const recordNo = $('#addMedRecNo').val();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm saving Record..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Proceed operation..!'
+
+    }).then((result) => {
+
+            if (result.value) {
+
+                var formUrl = $('#form-addDorctorPrescription').attr('action');
+                var form = $('[id*=form-addDorctorPrescription]');
+
+                $.validator.unobtrusive.parse(form);
+                form.validate();
+
+
+                if (form.valid()) {
+
+                    $.ajax({
+                        type: 'Post',
+                        url: formUrl,
+                        data: form.serialize(),
+                        datatype: 'json',
+                        cache: false,
+                        success: function (data) {
+
+                            if (data.success) {
+
+                                $("#modal-prescription").modal('hide');
+
+                                toast.fire({
+                                    type: 'success',
+                                    title: 'Record Succesfully Added.'
+                                });
+                            }
+
+
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            Swal.fire('Error adding record!', 'Please try again', 'error');
+                        }
+
+                    }).done(function () {
+
+                        patientMedPrescrioption(recordNo);
+                    });
+
+                }
+
+            }
+        }
+
+    );
+
+
 
 });
+
+//remove doctors prescription
+
+$(document).on('click', '#btn-prescriptionremove', function (e) {
+
+    e.preventDefault();
+
+    $("#tble-docPrescription tbody tr").each(function () {
+       
+        var tr = $(this);
+
+        tr.find("td").each(function () {
+
+           // var chk = $(this).find(":checkbox").prop("checked");
+          
+            if ($(this).find(":checkbox").prop("checked")) {
+
+                var selectedid = $(this).closest('tr').find("input:checked").val();
+
+                Swal.fire({
+                    title: "Are You Sure ?",
+                    text: "Confirm removing Record..",
+                    type: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes,Proceed operation..!'
+
+                }).then((result) => {
+
+                        if (result.value) {
+
+                            $.ajax({
+                                type: 'Post',
+                                url: '/Doctor/PatientMedicalRecord/RemoveDoctorsPrescription',
+                                data: { id: selectedid },
+                                async:true,
+                                datatype: 'json',
+                                cache: false,
+                                success: function (data) {
+
+                                    if (data.success) {
+
+                                        toast.fire({
+                                            type: 'success',
+                                            title: 'Record Succesfully Removed.'
+                                        });
+                                    }
+
+
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    Swal.fire('Error removing record!', 'Please try again', 'error');
+                                }
+
+                            }).done(function () {
+
+                                $('button.btn-x').prop("disabled", true);
+                                $('#prescription').prop("disabled", false);
+
+                              //  $(this).closest('tr').remove();
+
+                                patientMedPrescrioption($('#recNo').val());
+                            });
+
+
+                        }
+
+                    }
+
+
+                );
+               
+            }
+
+        });
+
+    });
+
+});
+
+
+$(document).on('click', '#tble-docPrescription > tbody >tr', function(e) {
+
+    if ($(e.target).is(':checkbox')) {
+
+
+        $selected = $(e.target);
+        var $this = $(e.target);
+
+        $this.prop('checked')
+            ? $('button.btn-x').prop("disabled", false)
+            : $('button.btn-x').prop("disabled", true);
+
+        $this.prop('checked')
+            ? $('#prescription').prop("disabled", true)
+            : $('#prescription').prop("disabled", false);
+
+    }
+});
+
+

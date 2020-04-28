@@ -107,6 +107,7 @@ namespace PMIS.Areas.Doctor.Controllers
             {
                 medicationModel.operation = 0;
             }
+
             //medicationModel.operation = medication != null ? 1 : 0;
 
             return PartialView("_CreateMedication", medicationModel);
@@ -120,6 +121,15 @@ namespace PMIS.Areas.Doctor.Controllers
 
             return PartialView("_GetRecord", medicalRecord);
         }
+
+        [HttpGet]
+        public ActionResult GetMedicationView(int recNo)
+        {
+            var patientMedication = _patientrecordservices.GetMedication(recNo);
+            
+            return PartialView("_GetMedicationView", patientMedication);
+        }
+
 
 
         [HttpPost]
@@ -163,6 +173,15 @@ namespace PMIS.Areas.Doctor.Controllers
         }
 
 
+        public ActionResult RemoveMedication(int medNo)
+        {
+
+
+
+            return Json(new {success = true}, JsonRequestBehavior.AllowGet);
+
+        }
+
         [HttpGet]
         public ActionResult MedicalPrescription(int recNo)
         {
@@ -181,17 +200,50 @@ namespace PMIS.Areas.Doctor.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("AddNewDoctorsPrescription")]
-        public ActionResult MedicalPrescription(DocPrescriptionViewModel docPrescription)
+        public ActionResult MedicalPrescription(DocPrescriptionViewModel docPrescriptionViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("_MedicalPrescription", docPrescription);
+                return PartialView("_MedicalPrescription", docPrescriptionViewModel);
             }
 
+            var docprescription=new DocPrescriptionRecord()
+            {
+                Date =DateTime.Now,
+                RecordNo = docPrescriptionViewModel.RecNo,
+                PresId = docPrescriptionViewModel.PrescId,
+                Sig = docPrescriptionViewModel.Sig,
+                Disp = docPrescriptionViewModel.DispInst
+            };
+
+            _prescriptionServices.InsertDocPrescription(docprescription);
+            _unitOfWork.Commit();
 
             return Json(new {success=true}, JsonRequestBehavior.AllowGet);
         }
 
 
+        [HttpPost]
+        [ActionName("RemoveDoctorsPrescription")]
+        public async Task<ActionResult> RemoveMedicalPrescription(int id)
+        {
+            var docprescription =await  _prescriptionServices.FindDocPrescriptionByIdAsync(id);
+
+
+            if (docprescription == null) return Json(new {succces = false}, JsonRequestBehavior.AllowGet);
+
+            _prescriptionServices.RemoveDocPrescription(docprescription);
+            _unitOfWork.Commit();
+
+            return Json(new { succces = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetMedPrescription(int recordNo)
+        {
+            var docprescriptionList = _prescriptionServices.GetDocPrescriptionByRecNo(recordNo);
+
+            return PartialView("_GetMedPrescription",docprescriptionList);
+        }
     }
 }

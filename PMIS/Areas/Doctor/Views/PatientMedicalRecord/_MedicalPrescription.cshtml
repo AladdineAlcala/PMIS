@@ -6,7 +6,8 @@
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
-        @Html.HiddenFor(m => m.RecNo)
+
+        @Html.HiddenFor(m => m.RecNo,new {id="addMedRecNo"})
 
         <div class="row">
             <div class="col-lg">

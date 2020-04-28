@@ -7,6 +7,63 @@ var appoint_date;
 var phyId = null;
 
 
+function callCalender() {
+    var x = 5;
+    var doc = 'JLV';
+    let date = new Date();
+    var d = date.getDate(),
+        m = date.getMonth(),
+        y = date.getFullYear();
+
+    var Calendar = FullCalendar.Calendar;
+    var calendarEl = document.getElementById('app-calendar');
+
+    var calendar = new Calendar(calendarEl, {
+
+        plugins: ['bootstrap', 'dayGrid'],
+        timeZone: 'UTC',
+        defaultView: 'dayGridMonth',
+
+        events: [
+            {
+                title: `${doc} : (${x})`,
+                start: new Date(y, m, d),
+                backgroundColor: '#f56954', //red
+                borderColor: '#f56954' //red
+            }
+            ,
+            {
+                title: `${doc} : (${x})`,
+                start: new Date(y, m, d + 1),
+                backgroundColor: '#f56954', //red
+                borderColor: '#f56954' //red
+            }
+            ,
+            {
+                title: `${doc} : (${x})`,
+                start: new Date(y, m, d + 1),
+                backgroundColor: '#f56954', //red
+                borderColor: '#f56954' //red
+            }
+            ,
+            {
+                title: `${doc} : (${x})`,
+                start: new Date(y, m, d + 1),
+                backgroundColor: '#f56954', //red
+                borderColor: '#f56954' //red
+            }
+
+
+        ]
+        ,
+        contentHeight: 450,
+        aspectRatio: 1.5,
+        displayEventTime: false
+    });
+
+    calendar.render();
+}
+
 function appointcounter(id, appointdate) {
 
     //console.log(id);
@@ -107,37 +164,7 @@ function AutocompleteName() {
         return this.optional(element) || moment(value, "MMM-DD-YYYY", true).isValid();
     }
 
-
-    let date = new Date();
-    var d = date.getDate(),
-        m = date.getMonth(),
-        y = date.getFullYear();
-
-    var Calendar = FullCalendar.Calendar;
-    var calendarEl = document.getElementById('app-calendar');
-
-    var calendar = new Calendar(calendarEl, {
-
-        plugins: ['bootstrap', 'dayGrid'],
-        timeZone: 'UTC',
-        defaultView: 'dayGridMonth',
-
-        events: [
-            {
-                title: 'All Day Event',
-                start: new Date(y, m, 1),
-                backgroundColor: '#f56954', //red
-                borderColor: '#f56954' //red
-            }
-
-
-        ]
-        ,
-        contentHeight: 450,
-        aspectRatio: 1.5
-    });
-
-    calendar.render();
+    //callCalender();
 
 
     $('#add-appointment').prop("disabled", true);

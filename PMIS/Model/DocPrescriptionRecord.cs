@@ -18,7 +18,6 @@ namespace PMIS.Model
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<long> RecordNo { get; set; }
         public Nullable<long> PresId { get; set; }
-        public string Rx { get; set; }
         public string Sig { get; set; }
         public string Disp { get; set; }
     

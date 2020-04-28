@@ -53,7 +53,10 @@ namespace PMIS.ServiceLayer
             return _pmisEntities.Medications.FirstOrDefault(t => t.RecordNo == recordNo);
         }
 
-
+        public async Task<Medication> GetMedicationBymedNo(int medNo)
+        {
+            return await _pmisEntities.Medications.FirstOrDefaultAsync(t => t.MidNo == medNo);
+        }
 
         public IEnumerable<PatientPhysicianDistinctViewModel> Get_Distinct_PhysicianByPatient()
         {
@@ -71,6 +74,15 @@ namespace PMIS.ServiceLayer
         {
             return _pmisEntities.MedicalRecords.Where(t => t.Pat_Id == patId && t.Phys_id == phyid);
         }
+
+
+        public void RemoveMedication(Medication medication)
+        {
+            _pmisEntities.Medications.Remove(medication);
+        }
+
+
+
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -106,13 +118,7 @@ namespace PMIS.ServiceLayer
             GC.SuppressFinalize(this);
         }
 
-
-
-
-
-
-
-
+      
 
         #endregion
 

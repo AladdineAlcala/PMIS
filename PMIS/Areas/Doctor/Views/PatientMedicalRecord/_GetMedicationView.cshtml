@@ -1,0 +1,13 @@
+﻿@using PMIS.Model
+@model Medication
+
+
+
+@if (Model != null)
+{
+    <input type="hidden" value="@Model.MidNo" id="medicationNo" />
+    @(new HtmlString(Model.MedicationDesc))
+}
+<div class="container">
+    
+</div>

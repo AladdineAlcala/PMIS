@@ -49,13 +49,13 @@
                 <div class="mailbox-controls with-border text-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm" id="medication" data-toggle="tooltip" data-container="body" title="Add Medication">
-                            <i class="far fa-edit"></i>
+                            <i class="far fa-plus-square fa-fw"></i>
                         </button>
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                            <i class="fas fa-reply"></i>
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Modify Medication">
+                            <i class="fas fa-edit fa-fw"></i>
                         </button>
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                            <i class="fas fa-share"></i>
+                        <button type="button" class="btn btn-default btn-sm" id="removeMedication" data-toggle="tooltip" data-container="body" title="Remove Medication ">
+                            <i class="fas fa-trash fa-fw"></i>
                         </button>
                     </div>
                     <!-- /.btn-group -->
@@ -68,20 +68,11 @@
 
                 <div class="subjective-message with-border border-bottom">
 
-
+                <!-- medication here -->
                     @{
-                        Medication first = null;
-                        foreach (var t in Model.Medications)
-                        {
-                            if (t.RecordNo == Model.RecordNo)
-                            {
-                                first = t;
-                                break;
-                            }
-                        }
+                        Html.RenderAction("GetMedicationView", "PatientMedicalRecord", new { area = "Doctor", recNo = Model.RecordNo });
                     }
-
-                    @(new HtmlString(first != null ? first.MedicationDesc : String.Empty))
+                    
 
                 </div>
 
@@ -99,13 +90,15 @@
                 <div class="mailbox-controls with-border text-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm" id="prescription" data-toggle="tooltip" data-container="body" title="Add Prescription">
-                            <i class="far fa-edit"></i>
+                            <i class="far fa-plus-square fa-fw"></i>
                         </button>
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                            <i class="fas fa-reply"></i>
+                       
+                        <button type="button" class="btn btn-default btn-sm btn-x" disabled="disabled" data-toggle="tooltip" data-container="body" title="Edit Prescription">
+                            <i class="fas fa-edit fa-fw"></i>
                         </button>
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                            <i class="fas fa-share"></i>
+                        
+                        <button type="button" class="btn btn-default btn-sm btn-x" disabled="disabled" id="btn-prescriptionremove" data-toggle="tooltip" data-container="body" title="Remove Prescription">
+                            <i class="fas fa-trash fa-fw"></i>
                         </button>
                     </div>
                     <!-- /.btn-group -->
@@ -116,33 +109,11 @@
                 <!-- /.mailbox-controls -->
 
 
-                <div class="subjective-message with-border border-bottom  table-responsive p-0">
+                <div class="subjective-message with-border border-bottom table-responsive p-0" id="med_prescription">
 
-                    <table class="table table-striped table-hover table-sm">
-                        <thead>
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Task</th>
-                            <th>Progress</th>
-                            <th style="width: 40px">Label</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        
-                        <tr>
-                            <td>1.</td>
-                            <td>Update software</td>
-                            <td>
-                                <div class="progress progress-xs">
-                                    <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                </div>
-                            </td>
-                            <td><span class="badge bg-danger">55%</span></td>
-                        </tr>
-
-                        </tbody>
-
-                    </table>
+                    @{
+                        Html.RenderAction("GetMedPrescription","PatientMedicalRecord",new {area="Doctor",recordNo=Model.RecordNo});
+                    }
 
 
                 </div>
@@ -173,4 +144,5 @@
         </div>
     }
 }
+
 

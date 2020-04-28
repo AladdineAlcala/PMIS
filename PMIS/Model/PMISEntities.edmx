@@ -25,9 +25,8 @@
           <Property Name="Date" Type="datetime" />
           <Property Name="RecordNo" Type="bigint" />
           <Property Name="PresId" Type="bigint" />
-          <Property Name="Rx" Type="nchar" MaxLength="10" />
-          <Property Name="Sig" Type="nchar" MaxLength="10" />
-          <Property Name="Disp" Type="nchar" MaxLength="10" />
+          <Property Name="Sig" Type="nvarchar" MaxLength="150" />
+          <Property Name="Disp" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="MedicalRecord">
           <Key>
@@ -74,6 +73,7 @@
           <Property Name="GuardianContact" Type="nvarchar" MaxLength="20" />
           <Property Name="GuardianRelation" Type="nvarchar" MaxLength="20" />
           <Property Name="DateRegister" Type="datetime" />
+          <Property Name="Image" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Physician">
           <Key>
@@ -304,6 +304,7 @@
           <Property Name="DateRegister" Type="DateTime" Precision="3" />
           <NavigationProperty Name="MedicalRecords" Relationship="PMISModel.FK_MedicalRecord_Patient" FromRole="Patient" ToRole="MedicalRecord" />
           <NavigationProperty Name="Appointments" Relationship="PMISModel.FK_Appointment_Patient" FromRole="Patient" ToRole="Appointment" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="PMISEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Patients" EntityType="Self.Patient" />
@@ -340,6 +341,7 @@
             <End Role="Medication" EntitySet="Medications" />
           </AssociationSet>
           <EntitySet Name="DocPrescriptionRecords" EntityType="PMISModel.DocPrescriptionRecord" />
+          <EntitySet Name="PresCats" EntityType="PMISModel.PresCat" />
           <EntitySet Name="Prescriptions" EntityType="PMISModel.Prescription" />
           <AssociationSet Name="FK_DocPrescriptionRecord_MedicalRecord" Association="PMISModel.FK_DocPrescriptionRecord_MedicalRecord">
             <End Role="MedicalRecord" EntitySet="MedicalRecords" />
@@ -349,7 +351,6 @@
             <End Role="Prescription" EntitySet="Prescriptions" />
             <End Role="DocPrescriptionRecord" EntitySet="DocPrescriptionRecords" />
           </AssociationSet>
-          <EntitySet Name="PresCats" EntityType="PMISModel.PresCat" />
           <AssociationSet Name="FK_Prescription_PresCat" Association="PMISModel.FK_Prescription_PresCat">
             <End Role="PresCat" EntitySet="PresCats" />
             <End Role="Prescription" EntitySet="Prescriptions" />
@@ -498,11 +499,18 @@
           <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="RecordNo" Type="Int64" />
           <Property Name="PresId" Type="Int64" />
-          <Property Name="Rx" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Sig" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Disp" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Sig" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Disp" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MedicalRecord" Relationship="PMISModel.FK_DocPrescriptionRecord_MedicalRecord" FromRole="DocPrescriptionRecord" ToRole="MedicalRecord" />
           <NavigationProperty Name="Prescription" Relationship="PMISModel.FK_DocPrescriptionRecord_Prescription" FromRole="DocPrescriptionRecord" ToRole="Prescription" />
+        </EntityType>
+        <EntityType Name="PresCat">
+          <Key>
+            <PropertyRef Name="CatId" />
+          </Key>
+          <Property Name="CatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Prescriptions" Relationship="PMISModel.FK_Prescription_PresCat" FromRole="PresCat" ToRole="Prescription" />
         </EntityType>
         <EntityType Name="Prescription">
           <Key>
@@ -543,14 +551,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="PresCat">
-          <Key>
-            <PropertyRef Name="CatId" />
-          </Key>
-          <Property Name="CatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CatDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Prescriptions" Relationship="PMISModel.FK_Prescription_PresCat" FromRole="PresCat" ToRole="Prescription" />
-        </EntityType>
         <Association Name="FK_Prescription_PresCat">
           <End Type="PMISModel.PresCat" Role="PresCat" Multiplicity="0..1" />
           <End Type="PMISModel.Prescription" Role="Prescription" Multiplicity="*" />
@@ -572,6 +572,7 @@
           <EntitySetMapping Name="Patients">
             <EntityTypeMapping TypeName="PMISModel.Patient">
               <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Pat_Id" ColumnName="Pat_Id" />
                 <ScalarProperty Name="Lastname" ColumnName="Lastname" />
                 <ScalarProperty Name="Firstname" ColumnName="Firstname" />
@@ -655,11 +656,18 @@
               <MappingFragment StoreEntitySet="DocPrescriptionRecord">
                 <ScalarProperty Name="Disp" ColumnName="Disp" />
                 <ScalarProperty Name="Sig" ColumnName="Sig" />
-                <ScalarProperty Name="Rx" ColumnName="Rx" />
                 <ScalarProperty Name="PresId" ColumnName="PresId" />
                 <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="No" ColumnName="No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PresCats">
+            <EntityTypeMapping TypeName="PMISModel.PresCat">
+              <MappingFragment StoreEntitySet="PresCat">
+                <ScalarProperty Name="CatDesc" ColumnName="CatDesc" />
+                <ScalarProperty Name="CatId" ColumnName="CatId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -670,14 +678,6 @@
                 <ScalarProperty Name="PrescriptionDetails" ColumnName="PrescriptionDetails" />
                 <ScalarProperty Name="CatId" ColumnName="CatId" />
                 <ScalarProperty Name="PresId" ColumnName="PresId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PresCats">
-            <EntityTypeMapping TypeName="PMISModel.PresCat">
-              <MappingFragment StoreEntitySet="PresCat">
-                <ScalarProperty Name="CatDesc" ColumnName="CatDesc" />
-                <ScalarProperty Name="CatId" ColumnName="CatId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

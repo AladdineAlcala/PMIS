@@ -305,6 +305,7 @@
     <Compile Include="ViewModels\PatientViewModel.cs" />
     <Compile Include="ViewModels\PhysicianDetailsViewModel.cs" />
     <Compile Include="ViewModels\PrescriptionViewModel.cs" />
+    <Compile Include="ViewModels\ProfileImageViewModel.cs" />
     <Compile Include="ViewModels\UsersConnectionViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
   </ItemGroup>
@@ -367,6 +368,7 @@
     <Content Include="Content\dist\js\pages\dashboard.js" />
     <Content Include="Content\dist\js\pages\dashboard2.js" />
     <Content Include="Content\dist\js\pages\dashboard3.js" />
+    <Content Include="Content\Images\3e1d.png" />
     <Content Include="Content\Images\Spinner-1.gif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
@@ -9311,6 +9313,8 @@
     <Content Include="Content\plugins\toastr\toastr.css" />
     <Content Include="Content\plugins\toastr\toastr.min.css" />
     <Content Include="Content\plugins\toastr\toastr.min.js" />
+    <Content Include="Content\plugins\webcam\webcam.min.js" />
+    <Content Include="Content\plugins\webcam\webcam.swf" />
     <Content Include="Content\signalR\jquery.signalR-2.4.1.js" />
     <Content Include="Content\signalR\jquery.signalR-2.4.1.min.js" />
     <Content Include="favicon.ico" />
@@ -9578,6 +9582,8 @@
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_ModifyPatientRecord.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_PatientProfile.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_MedicalPrescription.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_GetMedPrescription.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_GetMedicationView.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\SideBar_Left.cshtml" />
     <Content Include="Views\Shared\NavBar.cshtml" />
@@ -9674,6 +9680,7 @@
     <Content Include="Views\PatientRecord\_CreateMedication.cshtml" />
     <Content Include="Views\Prescription\Index.cshtml" />
     <Content Include="Views\Prescription\_CreatePrescription.cshtml" />
+    <Content Include="Views\Patient\ProfileImageModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\plugins\filterizr\ActiveFilter.d.ts" />

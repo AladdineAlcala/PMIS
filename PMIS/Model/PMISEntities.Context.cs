@@ -34,8 +34,8 @@ namespace PMIS.Model
         public virtual DbSet<User_Physician> User_Physician { get; set; }
         public virtual DbSet<Medication> Medications { get; set; }
         public virtual DbSet<DocPrescriptionRecord> DocPrescriptionRecords { get; set; }
-        public virtual DbSet<Prescription> Prescriptions { get; set; }
         public virtual DbSet<PresCat> PresCats { get; set; }
+        public virtual DbSet<Prescription> Prescriptions { get; set; }
     
         public virtual ObjectResult<Nullable<int>> Generate_PatCode(ObjectParameter series)
         {

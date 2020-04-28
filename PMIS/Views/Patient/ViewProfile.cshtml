@@ -3,15 +3,23 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-
+            @Html.HiddenFor(m=>m.PatientId,new {id="patient-Id"});
             <div class="card card-primary card-outline">
-                <div class="card-body">
-                    <h3 class="profile-username text-center">@($"{Model.PatientDetails.Lastname},{Model.PatientDetails.Firstname}")</h3>
+                <div class="card-body box-profile">
+                    <div class="text-center" id="img-portrait">
+                        <img class="img-thumbnail img-fluid"
+                             src="@Url.Content("~/Content/dist/img/avatar04.png")"
+                             alt="User profile picture">
+                    </div>
+                    <div class="uploadpics">
+                        <button id="profilepicbtn" class="btn btn-default btn-xs"><i class="fas fa-camera"></i> </button>
+                    </div>
+                    <h5 class="profile-username text-center">@($"{Model.PatientDetails.Lastname},{Model.PatientDetails.Firstname}")</h5>
                     <p class="text-muted text-center">@Model.PatientId</p>
 
-                    <h5 class="text-center text-blue mt-2"> Doctor's In-charge</h5>
+                    <h6 class="text-center text-blue mt-2"> Doctor's In-charge</h6>
                     <ul class="list-group list-group-unbordered mb-3">
-                        
+
 
                         @{
                             if (Model.Listofdoctors.Any())
@@ -40,7 +48,7 @@
             <div class="card">
                 <div class="card-body">
                     <span class="text-info"> Last Visited:</span>
-                 @(Model.Lastvisited!=null?Model.Lastvisited.AppointDate.Value.ToString("MMM-dd-yyyy") :"No Visit Found")
+                    @(Model.Lastvisited!=null?Model.Lastvisited.AppointDate.Value.ToString("MMM-dd-yyyy") :"No Visit Found")
                      
                 </div>
             </div>
@@ -143,7 +151,7 @@
                                 <strong><i class="fas fa-dna mr-1"></i> Blood Type:</strong>
 
                                 <p class="text-muted">
-                                   @Model.PatientDetails.BloodType
+                                    @Model.PatientDetails.BloodType
                                 </p>
 
                                 <hr>
@@ -180,3 +188,30 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="modal-picsnapshot">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<h4 class="modal-title">Create Doctor Profile</h4>*@
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+@section scripts
+{
+   
+    @Scripts.Render("~/Scripts/js_patient.js")
+}

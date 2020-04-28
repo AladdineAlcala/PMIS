@@ -73,6 +73,39 @@ namespace PMIS.ServiceLayer
             });
         }
 
+        public async Task<DocPrescriptionRecord> FindDocPrescriptionByIdAsync(int id)
+        {
+            return await _pmisEntities.DocPrescriptionRecords.FirstOrDefaultAsync(t=>t.No==id);
+        }
+        public void InsertDocPrescription(DocPrescriptionRecord docPrescription)
+        {
+            _pmisEntities.DocPrescriptionRecords.Add(docPrescription);
+        }
+
+        public void RemoveDocPrescription(DocPrescriptionRecord docPrescription)
+        {
+            _pmisEntities.DocPrescriptionRecords.Remove(docPrescription);
+        }
+
+        public void UpdateDocPrescription(DocPrescriptionRecord docPrescription)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<DocPrescriptionViewModel> GetDocPrescriptionByRecNo(int recNo)
+        {
+            return _pmisEntities.DocPrescriptionRecords.Select(t => new DocPrescriptionViewModel()
+            {
+                PrescNo = (int) t.No,
+                RecNo = (int) t.RecordNo,
+                PrescId = (int) t.PresId,
+                PrescriptionDetails = t.Prescription.PrescriptionDetails,
+                Sig = t.Sig,
+                DispInst = t.Disp
+
+            }).Where(t=>t.RecNo==recNo).ToList();
+        }
+
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -108,6 +141,12 @@ namespace PMIS.ServiceLayer
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
+
+     
+
+
+
+
         #endregion
 
 

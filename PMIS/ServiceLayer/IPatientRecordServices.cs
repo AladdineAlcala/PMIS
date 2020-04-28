@@ -10,11 +10,13 @@ namespace PMIS.ServiceLayer
        void AddMedicalRecord(MedicalRecord record);
        void AddMedication(Medication medrecord);
        void UpdateMedication(Medication medication);
+       void RemoveMedication(Medication medication);
        Task<IEnumerable<MedicalRecord>> GetAllRecordsAsync();
        IEnumerable<PatientPhysicianDistinctViewModel> Get_Distinct_PhysicianByPatient();
        Medication GetMedication(int recordNo);
+       Task<Medication> GetMedicationBymedNo(int medNo);
        Task <MedicalRecord> GetMedicalRecord(long recordNo);
-      IEnumerable<MedicalRecord> GetAllRecords(string patId,int phyid);
+       IEnumerable<MedicalRecord> GetAllRecords(string patId,int phyid);
        
     }
 }

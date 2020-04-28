@@ -25,6 +25,7 @@ namespace PMIS
                 "~/Content/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js",
                 "~/Content/plugins/toastr/toastr.min.js",
                 "~/Content/plugins/summernote/summernote-bs4.min.js",
+                "~/Content/plugins/webcam/webcam.min.js",
                 "~/Content/dist/js/adminlte.min.js"
 
                 ));

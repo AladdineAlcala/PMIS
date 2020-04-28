@@ -42,6 +42,7 @@ namespace PMIS.Model
         public string GuardianContact { get; set; }
         public string GuardianRelation { get; set; }
         public Nullable<System.DateTime> DateRegister { get; set; }
+        public string Image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }

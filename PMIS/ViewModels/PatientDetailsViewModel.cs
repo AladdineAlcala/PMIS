@@ -38,11 +38,11 @@ namespace PMIS.ViewModels
         public string GuardianRelation { get; set; }
         public DateTime DateRegister { get; set; }
 
-        [Required(ErrorMessage = "Please enter Month.")]
+        [Required(ErrorMessage = "Month Required")]
         public int monthint { get; set; }
-        [Required(ErrorMessage = "Please enter date.")]
+        [Required(ErrorMessage = "Date Required")]
         public int dateint { get; set; }
-        [Required(ErrorMessage = "Please enter year.")]
+        [Required(ErrorMessage = "Year Required")]
         public int yearint { get; set; }
         public Dictionary<string, string> GenderDictionary { get; set; }
         public Dictionary<string,string> CivilStatDictionary { get; set; }

@@ -163,6 +163,15 @@
 
 @section scripts
 {
+    @*<script type="text/javascript">
+        
+        var doc_medicalhistory = {
+            doc_prescriptionMed: '@Url.Action("GetMedPrescription","PatientMedicalRecord",new {area="Doctor",recNo="rcNo"})'
+        }
+
+        //$('#med_prescription').load(doc_medicalhistory.doc_prescriptionMed.replace("rcNo", $('#recNo').val()));
+
+    </script>*@
 
     @Scripts.Render("~/Areas/Scripts/js_doc_medicalrecords.js")
 

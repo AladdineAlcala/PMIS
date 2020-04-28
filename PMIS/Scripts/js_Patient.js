@@ -1,4 +1,48 @@
 ﻿
+function take_snapshot() {
+    // take snapshot and get image data
+    Webcam.snap(function (data_uri) {
+     
+
+        const file = {
+            id: $('#patient-Id').val(),
+            base64Image: data_uri
+        }
+        saveSnapShot(file);
+
+    });
+
+
+    Webcam.reset();
+
+    $("#modal-picsnapshot").modal('hide');
+}
+
+
+const saveSnapShot = (file) => {
+
+    let formData = new FormData();
+    formData.append("patId",file.id);
+    formData.append("base64Image", file.base64Image);
+
+    $.ajax({
+        url: '/Patient/SaveProfileImage',
+        type: 'Post',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success:function(data) {
+            if (data.success) {
+                console.log(data);
+                //// display results in page
+                  document.getElementById('img-portrait').innerHTML =
+                '<img id="profilePrev" class="img-thumbnail img-fluid" src="/Content/Images/' + data.randomFileName + '"/>';
+            }
+        }
+    });
+
+}
+
 
 
 $(document).ready(function () {
@@ -221,9 +265,12 @@ $(document).ready(function () {
     });
 
 
+    //$('#modal-picsnapshot').on('hidden.bs.modal',
+    //    function() {
+         
+    //        Webcam.reset();
 
-
-   
+    //    });
 
 
 });
@@ -365,4 +412,53 @@ $(document).on('click', '#view-profile', function(e) {
 
     window.location.href = '/Patient/ViewProfile/' + $(this).closest('tr').attr('data-patientId');
 
+});
+
+
+document.getElementById('profilepicbtn').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        type: 'Get',
+        url: '/Patient/ProfileImageModal',
+        contentType: 'application/html;charset=utf8',
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            var modal = $('#modal-picsnapshot');
+            modal.find('.modal-body').html(result);
+
+            Webcam.set({
+                width: 420,
+                height: 320,
+                dest_width: 640,
+                dest_height: 480,
+                image_format: 'jpeg',
+                jpeg_quality: 90,
+                force_flash: false,
+                flip_horiz: true,
+                fps: 45
+            });
+            Webcam.attach('#picsnap');
+
+            modal.modal({
+                    backdrop: 'static',
+                    keyboard: false
+                },
+                'show');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
+    });
+
+
+
+
+});
+
+$(document).on('click', '#capture-profileImage', function (e) {
+    e.preventDefault();
+    take_snapshot();
 });

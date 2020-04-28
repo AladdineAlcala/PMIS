@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -240,6 +242,43 @@ namespace PMIS.Controllers
 
         
             return View(patientprofile);
+        }
+
+
+        [HttpGet]
+        public ActionResult ProfileImageModal()
+        {
+           
+            return PartialView("ProfileImageModal");
+        }
+
+        [HttpPost]
+        public ActionResult SaveProfileImage(ProfileImageViewModel viewModel)
+        {
+            string randomFileName = null;
+
+            if (viewModel != null)
+            {
+                var t = viewModel.base64Image.Substring(23);
+                byte[] bytes = Convert.FromBase64String(t);
+
+                using (MemoryStream ms = new MemoryStream(bytes))
+                {
+                    var image = Image.FromStream(ms);
+
+                     randomFileName = Guid.NewGuid().ToString().Substring(0, 4) + ".jpg";
+                     var fullPath = Path.Combine(Server.MapPath("~/Content/Images/"), randomFileName);
+                     image.Save(fullPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
+
+                //save image filename to database
+                
+
+            }
+
+           // System.IO.File.WriteAllText(Server.MapPath("~/Content/Images/" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".txt"), base64Image);
+
+            return Json(new {success = true,randomFileName}, JsonRequestBehavior.AllowGet);
         }
     }
 }
