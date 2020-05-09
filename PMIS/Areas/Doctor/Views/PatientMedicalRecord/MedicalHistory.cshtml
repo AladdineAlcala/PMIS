@@ -61,10 +61,10 @@
                           
 
 
-                            <div class="text-center mt-5 mb-3">
+                            @*<div class="text-center mt-5 mb-3">
                                 <a href="#" class="btn btn-sm btn-primary">Add files</a>
                                 <a href="#" class="btn btn-sm btn-warning">Report contact</a>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -163,16 +163,9 @@
 
 @section scripts
 {
-    @*<script type="text/javascript">
-        
-        var doc_medicalhistory = {
-            doc_prescriptionMed: '@Url.Action("GetMedPrescription","PatientMedicalRecord",new {area="Doctor",recNo="rcNo"})'
-        }
 
-        //$('#med_prescription').load(doc_medicalhistory.doc_prescriptionMed.replace("rcNo", $('#recNo').val()));
-
-    </script>*@
 
     @Scripts.Render("~/Areas/Scripts/js_doc_medicalrecords.js")
+
 
 }

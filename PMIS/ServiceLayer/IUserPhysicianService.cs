@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PMIS.Model;
+using PMIS.ViewModels;
+using System.Web.Mvc;
 
 namespace PMIS.ServiceLayer
 {
     public interface IUserPhysicianService
     {
-        string GetPhysicianUserId(int userid);
-        int GetPhysicianId(string loginId);
-        void InsertPhysicianUser(User_Physician userPhysician);
+        User GetUserPhysician_By_Id(int id);
+        IEnumerable<PhysicianDetailsViewModel> GetAllPhysician();
+        IEnumerable<SelectListItem> GetPhysicianListItems();
+
     }
 }

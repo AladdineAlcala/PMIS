@@ -24,7 +24,12 @@ namespace PMIS.ServiceLayer
             _pmisEntities.MedicalRecords.Add(record);
         }
 
-    
+        public void RemoveMedicalRecord(MedicalRecord record)
+        {
+            _pmisEntities.MedicalRecords.Remove(record);
+        }
+
+
         public void AddMedication(Medication medrecord)
         {
             _pmisEntities.Medications.Add(medrecord);
@@ -47,6 +52,8 @@ namespace PMIS.ServiceLayer
             return await  _pmisEntities.MedicalRecords.FindAsync(recordNo);
         }
 
+     
+
 
         public Medication GetMedication(int recordNo)
         {
@@ -62,15 +69,15 @@ namespace PMIS.ServiceLayer
         {
             return (_pmisEntities.MedicalRecords.Select(m => new PatientPhysicianDistinctViewModel()
             {
-                PatientId = m.Pat_Id,
-                Phyid = (int) m.Phys_id,
-                PhyscianName = m.Physician.Phys_Fullname
+                PatientId = m.Pat_Id
+                //Phyid = m.Phys_id,
+                //PhyscianName = m.Physician.Phys_Fullname
             })).Distinct().ToList();
 
         }
 
 
-        public IEnumerable<MedicalRecord> GetAllRecords(string patId, int phyid)
+        public IEnumerable<MedicalRecord> GetAllRecords(string patId, string phyid)
         {
             return _pmisEntities.MedicalRecords.Where(t => t.Pat_Id == patId && t.Phys_id == phyid);
         }
@@ -119,6 +126,7 @@ namespace PMIS.ServiceLayer
         }
 
       
+
 
         #endregion
 

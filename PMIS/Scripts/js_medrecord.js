@@ -81,7 +81,6 @@ var getAge = function (dob) {
     var today = new Date();
     var d = moment(b_day).format('MM/DD/YYYY');
     var bday = new Date(d);
-    console.log(bday);
     var age = today.getFullYear() - bday.getFullYear();
     var mo = today.getMonth() - bday.getMonth();
 
@@ -303,7 +302,7 @@ $(document).on('click', '.post #viewchart', function (e) {
         type: 'Get',
         url: '/PatientRecord/GetRecordChart',
         contentType: 'application/html;charset=utf8',
-        data: { recordNo: $(this).parents('.post').attr('data-postId')},
+        data: { recordNo: $(this).parents('.post').attr('data-recorId') },
         datatype: 'html',
         cache: false,
         success: function (result) {
@@ -445,4 +444,58 @@ $(document).on('click', '#save-medication', function (e) {
 $(document).on('click', '#modalClose', function () {
 
     $("#modal-createMedication").modal("hide");
+});
+
+
+
+$(document).on('click', '#removechart', function (e) {
+    e.preventDefault();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Removing Record..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Proceed operation..!'
+
+    }).then((result) => {
+
+            if (result.value) {
+
+                $.ajax({
+                    type: 'Post',
+                    url: '/PatientRecord/RemovePatientRecord',
+                    data: { recordId: $(this).parents('.post').attr('data-recorId') },
+                    datatype: 'json',
+                    cache: false,
+                    success: function (data) {
+
+                        if (data.success) {
+
+                            $("#modal-createMedication").modal('hide');
+
+                            toast.fire({
+                                type: 'success',
+                                title: 'Record Succesfully Deleted.'
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire('Error adding record!', 'Please try again', 'error');
+                    }
+
+                }).done(function () {
+
+                    loadMedicalRecord($('#patientid').val(), $('#phyid').val());
+                });
+
+
+            }
+        }
+
+    );
 });

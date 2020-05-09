@@ -62,7 +62,8 @@ namespace PMIS.ServiceLayer
                 Municipality = t.Muncity,
                 Province = t.Province,
                 DateofBirth = (DateTime) t.DoB,
-                ContactCell = t.ContactCell
+                ContactCell = t.ContactCell,
+                ProfileImage = t.Image
             }).ToListAsync();
         }
 
@@ -116,15 +117,16 @@ namespace PMIS.ServiceLayer
                 DateofBirth = (DateTime) t.DoB,
                 ContactCell = t.ContactCell,
                 ContactTell = t.ContactPhone,
-                Height = true ? (decimal)t.Height : 0,
-                Weight = true ? (decimal)t.Weight : 0,
+                Height =t.Height==null?t.Height : 0,
+                Weight =t.Weight == null?t.Weight : 0,
                 BloodType = t.BType,
                 Occupation = t.Occupation,
                 Company = t.Company,
                 GuardianName = t.GuardianName,
                 GuardianContact = t.GuardianContact,
-                GuardianRelation = t.GuardianRelation
-
+                GuardianRelation = t.GuardianRelation,
+                ProfileImage = t.Image
+                
 
             }).FirstOrDefault(t => t.PatientId == patientid);
         }
@@ -133,18 +135,18 @@ namespace PMIS.ServiceLayer
         public List<PhysicianDetailsViewModel> GetDoctorsByPatient(string id)
         {
 
-            return (from mr in _pmisEntities.MedicalRecords
-                join p in _pmisEntities.Physicians on mr.Phys_id equals p.Phys_id
-                where mr.Pat_Id == id
-                group new { mr, p } by new { mr.Pat_Id, mr.Phys_id, p.Phys_Fullname }
-                into mrp
-                select new PhysicianDetailsViewModel()
-                {
-                    PhysId = mrp.Key.Phys_id,
-                    PhysName = mrp.Key.Phys_Fullname
+            //return (from mr in _pmisEntities.MedicalRecords
+            //    join p in _pmisEntities.Physicians on mr.Phys_id equals p.Phys_id
+            //    where mr.Pat_Id == id
+            //    group new { mr, p } by new { mr.Pat_Id, mr.Phys_id, p.Phys_Fullname }
+            //    into mrp
+            //    select new PhysicianDetailsViewModel()
+            //    {
+            //        PhysId = mrp.Key.Phys_id,
+            //        PhysName = mrp.Key.Phys_Fullname
 
-                }).ToList();
-
+            //    }).ToList();
+            throw new NotImplementedException();
 
         }
 

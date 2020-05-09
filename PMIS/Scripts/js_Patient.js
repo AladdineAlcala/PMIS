@@ -3,11 +3,11 @@ function take_snapshot() {
     // take snapshot and get image data
     Webcam.snap(function (data_uri) {
      
-
         const file = {
             id: $('#patient-Id').val(),
             base64Image: data_uri
         }
+
         saveSnapShot(file);
 
     });

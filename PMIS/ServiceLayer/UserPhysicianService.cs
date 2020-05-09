@@ -6,33 +6,21 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using PMIS.Model;
+using PMIS.ViewModels;
 
 namespace PMIS.ServiceLayer
 {
     public class UserPhysicianService : IUserPhysicianService,IDisposable
     {
         private readonly PMISEntities _pmisEntities = null;
-
+       
         public UserPhysicianService(PMISEntities pmisEntities)
         {
             this._pmisEntities = pmisEntities;
         }
 
-      
-        public string GetPhysicianUserId(int userid)
-        {
-            return _pmisEntities.User_Physician.FirstOrDefault(t => t.Phys_id == userid).Id;
-        }
 
-        public void InsertPhysicianUser(User_Physician userPhysician)
-        {
-            _pmisEntities.User_Physician.Add(userPhysician);
-        }
 
-        public int GetPhysicianId(string loginId)
-        {
-           return (int) _pmisEntities.User_Physician.FirstOrDefault(t => t.Id == loginId).Phys_id;
-        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -68,7 +56,40 @@ namespace PMIS.ServiceLayer
             // GC.SuppressFinalize(this);
         }
 
-       
+        public User GetUserPhysician_By_Id(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<PhysicianDetailsViewModel> GetAllPhysician()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<SelectListItem> GetPhysicianListItems()
+        {
+            UsersViewModel users = new UsersViewModel();
+
+            var physicianlist = (from v in users.listofUsers().Where(t => t.roles.Contains("doctor"))
+                select new UsersViewModel()
+                {
+                    userId = v.userId,
+                    abr = v.abr,
+                    roles = v.roles,
+                    has_superadminRights = v.has_superadminRights
+                }).ToList();
+
+            return new SelectList(physicianlist.AsEnumerable().Select(t=>new SelectListItem()
+                {
+                    Value = t.userId,
+                    Text = t.abr
+                }).ToList(), "Value", "Text"
+               );
+
+        }
+
+
+
 
 
 

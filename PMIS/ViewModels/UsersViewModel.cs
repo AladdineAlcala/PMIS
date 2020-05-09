@@ -13,6 +13,7 @@ namespace PMIS.ViewModels
         public string userId { get; set; }
         public string username { get; set; }
         public string email { get; set; }
+        public string abr { get; set; }
         public string roles { get; set; }
         public bool has_superadminRights { get; set; }
 
@@ -29,6 +30,7 @@ namespace PMIS.ViewModels
                     userId = user.Id,
                     username = user.UserName,
                     email = user.Email,
+                    abrv=user.Abr,
                     Rolenames = (from userRole in user.Roles
                         join role in context.Roles on userRole.RoleId
                         equals role.Id
@@ -38,6 +40,7 @@ namespace PMIS.ViewModels
                 userId = p.userId,
                 username = p.username,
                 email = p.email,
+                abr = p.abrv,
                 roles = string.Join(",", p.Rolenames),
                 has_superadminRights = p.Rolenames.Contains("superadmin")
             }).ToList();
@@ -59,10 +62,10 @@ namespace PMIS.ViewModels
         public string email { get; set; }
         public List<IdentityRole> userRole { get; set; }
         public IEnumerable<System.Web.Mvc.SelectListItem> selectListRoles { get; set; }
-        public IEnumerable<System.Web.Mvc.SelectListItem> selectListPhysicians { get; set; }
+        //public IEnumerable<System.Web.Mvc.SelectListItem> selectListPhysicians { get; set; }
         [Required(ErrorMessage = "Select a role")]
         public string selecteduserRole { get; set; }
-        public int selectedPhyId { get; set; }
+        //public int selectedPhyId { get; set; }
 
         public IEnumerable<UserinRoleViewModel> GetUsersinRole()
         {

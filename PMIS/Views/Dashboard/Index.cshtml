@@ -1,7 +1,74 @@
 ﻿
-@{
-    ViewBag.Title = "Index";
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>150</h3>
+
+                    <p>Patients Appointment</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-wheelchair"></i>
+                </div>
+                @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>1</h3>
+
+                    <p>Physician</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>44</h3>
+
+                    <p>User Registrations</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>65</h3>
+
+                    <p>Medicines</p>
+                </div>
+                <div class="icon">
+                    <i class="far fa-prescription-bottle-alt"></i>
+                </div>
+                @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+   
+</div>
+
+
+
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/js_medrecord.js")
 }
-
-<h2>Index</h2>
-

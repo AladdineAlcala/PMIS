@@ -12,8 +12,6 @@ namespace PMIS.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class PMISEntities : DbContext
     {
@@ -27,19 +25,16 @@ namespace PMIS.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Patient> Patients { get; set; }
-        public virtual DbSet<Physician> Physicians { get; set; }
-        public virtual DbSet<MedicalRecord> MedicalRecords { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
-        public virtual DbSet<User_Physician> User_Physician { get; set; }
-        public virtual DbSet<Medication> Medications { get; set; }
         public virtual DbSet<DocPrescriptionRecord> DocPrescriptionRecords { get; set; }
+        public virtual DbSet<MedicalRecord> MedicalRecords { get; set; }
+        public virtual DbSet<Medication> Medications { get; set; }
+        public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<PresCat> PresCats { get; set; }
         public virtual DbSet<Prescription> Prescriptions { get; set; }
-    
-        public virtual ObjectResult<Nullable<int>> Generate_PatCode(ObjectParameter series)
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Generate_PatCode", series);
-        }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<UserClaim> UserClaims { get; set; }
+        public virtual DbSet<UserLogin> UserLogins { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

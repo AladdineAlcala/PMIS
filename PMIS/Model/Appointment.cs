@@ -17,12 +17,12 @@ namespace PMIS.Model
         public int No { get; set; }
         public Nullable<System.DateTime> AppointDate { get; set; }
         public string Pat_Id { get; set; }
-        public Nullable<int> Phys_id { get; set; }
+        public string Phys_id { get; set; }
         public Nullable<int> PriorNo { get; set; }
         public Nullable<bool> Status { get; set; }
         public Nullable<bool> IsCancelled { get; set; }
     
         public virtual Patient Patient { get; set; }
-        public virtual Physician Physician { get; set; }
+        public virtual User User { get; set; }
     }
 }

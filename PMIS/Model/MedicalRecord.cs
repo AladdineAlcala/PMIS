@@ -17,22 +17,21 @@ namespace PMIS.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MedicalRecord()
         {
-            this.Medications = new HashSet<Medication>();
             this.DocPrescriptionRecords = new HashSet<DocPrescriptionRecord>();
+            this.Medications = new HashSet<Medication>();
         }
     
         public long RecordNo { get; set; }
         public Nullable<System.DateTime> RecordDate { get; set; }
         public string Pat_Id { get; set; }
-        public Nullable<int> Phys_id { get; set; }
+        public string Phys_id { get; set; }
         public string ActivityName { get; set; }
         public string RecordDetails { get; set; }
     
-        public virtual Patient Patient { get; set; }
-        public virtual Physician Physician { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Medication> Medications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocPrescriptionRecord> DocPrescriptionRecords { get; set; }
+        public virtual Patient Patient { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Medication> Medications { get; set; }
     }
 }

@@ -3,6 +3,7 @@
         this.patientid = id;
         this.patientname = name;
     }
+
 }
 
 (function ($) {
@@ -23,13 +24,13 @@
         var outputModel = JSON.parse(model);
         let appoint = '';
         let i = 0;
-        debugger;
+       // debugger;
 
         var objcount= Object.keys(outputModel).length;
 
         if (objcount > 0) {
 
-            outputModel.forEach(function(el) {
+            outputModel.forEach(el => {
                 i += 1;
 
                 appoint += '<tr data-patNo="' +
@@ -45,11 +46,19 @@
                     el.Stat +
                     '</td>' +
                     '<td class="text-center">' +
+
                     '<button class="btn btn-info btn-sm" data-patientId="' +
                     el.PatientNo +
                     '" id="view_medicalrecords">' +
                     '<i class="fal fa-file-medical-alt"></i>' +
                     '</button>' +
+
+                    '<button class="btn btn-success btn-sm mr-1" data-patientId="' +
+                    el.PatientNo +
+                    '"id="btnconsultationserve">'+
+                    '<i class="fal fa-lightbulb-on"></i>'+
+                    '</button>' +
+
                     '</td>' +
                     '</tr>';
             });

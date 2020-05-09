@@ -1,6 +1,5 @@
 ﻿var $selected;
 
-
 function loadsummernote() {
     $('#compose-record').summernote();
 }
@@ -140,6 +139,8 @@ const patientMedPrescrioption = (recNo) => {
 
     autocompleteName();
 
+
+   
 
 })(jQuery);
 
@@ -549,4 +550,7 @@ $(document).on('click', '#tble-docPrescription > tbody >tr', function(e) {
     }
 });
 
+//$(document).on('change','#get-age',function() {
 
+   
+//});

@@ -42,16 +42,16 @@
                                                 <li class="small my-1"><span class="fa fa-li"><i class="fas fa-mdb fa-street-view"></i></span> @($"{Model.Patient.AddStreetBrgy},{Model.Patient.Muncity},{Model.Patient.Province}")</li>
                                                 <li class="small my-1">
                                                     <span class="fa fa-li"><i class="fas fa-mdb fa-phone"></i></span>
-                                                   @{
-                                                       if ( !String.IsNullOrEmpty(Model.Patient.ContactCell) && !String.IsNullOrEmpty(Model.Patient.ContactPhone))
-                                                       {
-                                                           @($"{Model.Patient.ContactCell} , {Model.Patient.ContactPhone}")
-                                                       }
-                                                       else
-                                                       {
-                                                           @Model.Patient.ContactCell;
-                                                       }
-                                                   }
+                                                    @{
+                                                        if ( !String.IsNullOrEmpty(Model.Patient.ContactCell) && !String.IsNullOrEmpty(Model.Patient.ContactPhone))
+                                                        {
+                                                            @($"{Model.Patient.ContactCell} , {Model.Patient.ContactPhone}")
+                                                        }
+                                                        else
+                                                        {
+                                                            @Model.Patient.ContactCell;
+                                                        }
+                                                    }
 
                                                    
                                                     
@@ -82,9 +82,9 @@
                         <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1" id="medicalrecord">
 
                              
-                                @{
-                                    Html.RenderAction("MedicalHistoryListByPatient",new {@id=Model.PatientId, @phyid=Model.PhyId});
-                                }      
+                            @{
+                                Html.RenderAction("MedicalHistoryListByPatient",new {@id=Model.PatientId, @phyid=Model.PhyId});
+                            }      
                         </div>
 
 

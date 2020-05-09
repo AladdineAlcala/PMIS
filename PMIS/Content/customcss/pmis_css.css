@@ -272,3 +272,12 @@ table.dataTable tr.even:hover {
     width: 50px;
 }
 
+.img-thumbnail {
+    width: 70%;
+    padding:6px;
+}
+.profile_info {
+    text-align: center;
+    margin-bottom:15px;
+}
+

@@ -1,0 +1,50 @@
+﻿@using PMIS.ViewModels
+@model UserProfileInfoViewModel
+
+<h1>Profile Info</h1>
+
+@using (Html.BeginForm("UpdateUserProfileInfo","Account",FormMethod.Post,new {role="form",id="formUpdateProfileInfo"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.userId, new { @id = "userId" })
+    <div class="row">
+        <div class="col-lg">
+                                      
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label required">Username:</label>
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(m => m.userName, new {@class = "form-control required", @placeholder = " Physician Name"})
+                    @*@Html.ValidationMessageFor(m => m.PhysName, null, new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label required">Lastname:</label>
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(m => m.lastName, new {@class = "form-control required", @placeholder = "Lastname"})
+                    @*@Html.ValidationMessageFor(m => m.PhysAbr, null, new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label required">Firstname:</label>
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(m => m.firstName, new {@class = "form-control required", @placeholder = "Lastname"})
+                    @*@Html.ValidationMessageFor(m => m.PhysAbr, null, new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label required">Abrevation (Abr):</label>
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(m => m.userAbr, new {@class = "form-control required", @placeholder = "Lastname"})
+                    @*@Html.ValidationMessageFor(m => m.PhysAbr, null, new { @class = "text-danger" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-2">
+              
+            <button type="button" class="btn btn-info" id="btn-saveUserProfile">Save </button>
+        </div>
+    </div>
+}

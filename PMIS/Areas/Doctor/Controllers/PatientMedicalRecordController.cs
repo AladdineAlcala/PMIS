@@ -16,26 +16,24 @@ namespace PMIS.Areas.Doctor.Controllers
         private readonly IPatientRecordServices _patientrecordservices;
         private readonly IPatientServices _patientservices;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserPhysicianService _userPhysicianService;
         private readonly IPrescriptionServices _prescriptionServices;
-        public PatientMedicalRecordController(IPatientRecordServices patientrecordservices, IPatientServices patientservices, IUserPhysicianService userPhysicianService, IUnitOfWork unitOfWork, IPrescriptionServices prescriptionServices)
+        public PatientMedicalRecordController(IPatientRecordServices patientrecordservices, IPatientServices patientservices, IUnitOfWork unitOfWork, IPrescriptionServices prescriptionServices)
         {
             _patientrecordservices = patientrecordservices;
             _patientservices = patientservices;
             _unitOfWork = unitOfWork;
             _prescriptionServices = prescriptionServices;
-            _userPhysicianService = userPhysicianService;
 
         }
         // GET: Doctor/PatientMedicalRecord
         public ActionResult Index()
         {
-            ViewBag.loginPhyId = _userPhysicianService.GetPhysicianId(HttpContext.User.Identity.GetUserId());
+            ViewBag.loginPhyId =HttpContext.User.Identity.GetUserId();
             return View();
         }
 
         [HttpGet]
-        public ActionResult MedicalHistory(string id,int phyid,int? page)
+        public ActionResult MedicalHistory(string id,string phyid,int? page)
         {
             int pageIndex = page ?? 1;
             int dataCount = 3;

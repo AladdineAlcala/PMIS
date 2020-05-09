@@ -8,6 +8,7 @@ namespace PMIS.ServiceLayer
     public interface IPatientRecordServices
     {
        void AddMedicalRecord(MedicalRecord record);
+        void RemoveMedicalRecord(MedicalRecord record);
        void AddMedication(Medication medrecord);
        void UpdateMedication(Medication medication);
        void RemoveMedication(Medication medication);
@@ -16,7 +17,7 @@ namespace PMIS.ServiceLayer
        Medication GetMedication(int recordNo);
        Task<Medication> GetMedicationBymedNo(int medNo);
        Task <MedicalRecord> GetMedicalRecord(long recordNo);
-       IEnumerable<MedicalRecord> GetAllRecords(string patId,int phyid);
+       IEnumerable<MedicalRecord> GetAllRecords(string patId,string phyid);
        
     }
 }

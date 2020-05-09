@@ -4,25 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="96ef4181fdf5442e862fa2a5813a9d27" Name="Diagram1">
-        <EntityTypeShape EntityType="PMISModel.Patient" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PMISModel.Physician" Width="1.5" PointX="10" PointY="0.75" />
-        <EntityTypeShape EntityType="PMISModel.MedicalRecord" Width="1.5" PointX="3.75" PointY="0.625" />
-        <AssociationConnector Association="PMISModel.FK_MedicalRecord_Patient" />
-        <AssociationConnector Association="PMISModel.FK_MedicalRecord_Physician" />
-        <EntityTypeShape EntityType="PMISModel.Appointment" Width="1.5" PointX="3.125" PointY="4" />
-        <AssociationConnector Association="PMISModel.FK_Appointment_Patient" />
-        <AssociationConnector Association="PMISModel.FK_Appointment_Physician" />
-        <EntityTypeShape EntityType="PMISModel.User_Physician" Width="1.5" PointX="13" PointY="0.875" />
-        <AssociationConnector Association="PMISModel.FK_User_Physician_Physician" />
-        <EntityTypeShape EntityType="PMISModel.Medication" Width="1.5" PointX="6.875" PointY="0.5" />
-        <AssociationConnector Association="PMISModel.FK_Medication_MedicalRecord" />
-        <EntityTypeShape EntityType="PMISModel.DocPrescriptionRecord" Width="1.5" PointX="6.75" PointY="4" />
-        <EntityTypeShape EntityType="PMISModel.PresCat" Width="1.5" PointX="0.75" PointY="8.375" />
-        <EntityTypeShape EntityType="PMISModel.Prescription" Width="1.5" PointX="3" PointY="8.125" />
-        <AssociationConnector Association="PMISModel.FK_DocPrescriptionRecord_MedicalRecord" />
-        <AssociationConnector Association="PMISModel.FK_DocPrescriptionRecord_Prescription" />
-        <AssociationConnector Association="PMISModel.FK_Prescription_PresCat" />
+      <Diagram DiagramId="0e8d5258525e4ee5bf35d093a052896b" Name="Diagram1">
+        <EntityTypeShape EntityType="PMISModel.Appointment" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.DocPrescriptionRecord" Width="1.5" PointX="5.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.MedicalRecord" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.Medication" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.Patient" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.PresCat" Width="1.5" PointX="0.75" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.Prescription" Width="1.5" PointX="3" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.Role" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.UserClaim" Width="1.5" PointX="6" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.UserLogin" Width="1.5" PointX="4.875" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.User" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <AssociationConnector Association="PMISModel.FK_Appointment_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="PMISModel.FK_Appointment_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="PMISModel.FK_DocPrescriptionRecord_MedicalRecord" ManuallyRouted="false" />
+        <AssociationConnector Association="PMISModel.FK_DocPrescriptionRecord_Prescription" ManuallyRouted="false" />
+        <AssociationConnector Association="PMISModel.FK_MedicalRecord_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="PMISModel.FK_Medication_MedicalRecord" ManuallyRouted="false" />
+        <AssociationConnector Association="PMISModel.FK_Prescription_PresCat" ManuallyRouted="false" />
+        <AssociationConnector Association="PMISModel.FK_dbo_UserClaims_dbo_Users_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="PMISModel.FK_dbo_UserLogins_dbo_Users_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="PMISModel.UserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

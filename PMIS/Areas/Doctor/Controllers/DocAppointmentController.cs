@@ -12,13 +12,12 @@ namespace PMIS.Areas.Doctor.Controllers
     public class DocAppointmentController : Controller
     {
         private readonly IAppointmentServices _appointmentServices;
-        private readonly IUserPhysicianService _userPhysicianService;
+     
         private readonly IUnitOfWork _unitOfWork;
 
-        public DocAppointmentController(IAppointmentServices appointmentServices, IUserPhysicianService userPhysicianService, IUnitOfWork unitOfWork)
+        public DocAppointmentController(IAppointmentServices appointmentServices, IUnitOfWork unitOfWork)
         {
             _appointmentServices = appointmentServices;
-            _userPhysicianService = userPhysicianService;
             _unitOfWork = unitOfWork;
 
             //ViewBag.controller = "docappointment";
@@ -27,13 +26,14 @@ namespace PMIS.Areas.Doctor.Controllers
         // GET: Doctor/DocAppointment
         public ActionResult Index()
         {
-            ViewBag.phyId = _userPhysicianService.GetPhysicianId(User.Identity.GetUserId());
+            //ViewBag.phyId = _userPhysicianService.GetPhysicianId(User.Identity.GetUserId());
 
+            ViewBag.phyId = User.Identity.GetUserId();
             return View();
         }
 
         [HttpGet]
-        public ActionResult GetAppointmentByDoctor(int id, DateTime appointmentDate)
+        public ActionResult GetAppointmentByDoctor(string id, DateTime appointmentDate)
         {
             var appointSchedulebydoctor = _appointmentServices.GetAllAppointment()
                 .Where(t => t.PhyId == id && t.AppointDate.Date == appointmentDate.Date).ToList();

@@ -17,8 +17,8 @@ namespace PMIS.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Patient()
         {
-            this.MedicalRecords = new HashSet<MedicalRecord>();
             this.Appointments = new HashSet<Appointment>();
+            this.MedicalRecords = new HashSet<MedicalRecord>();
         }
     
         public string Pat_Id { get; set; }
@@ -26,13 +26,13 @@ namespace PMIS.Model
         public string Firstname { get; set; }
         public string Middle { get; set; }
         public string Gender { get; set; }
-        public string CivilStat { get; set; }
         public Nullable<System.DateTime> DoB { get; set; }
-        public string Occupation { get; set; }
-        public string Company { get; set; }
         public string AddStreetBrgy { get; set; }
         public string Muncity { get; set; }
         public string Province { get; set; }
+        public string CivilStat { get; set; }
+        public string Occupation { get; set; }
+        public string Company { get; set; }
         public string ContactCell { get; set; }
         public string ContactPhone { get; set; }
         public Nullable<decimal> Height { get; set; }
@@ -45,8 +45,8 @@ namespace PMIS.Model
         public string Image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
     }
 }

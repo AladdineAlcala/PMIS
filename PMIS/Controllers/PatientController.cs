@@ -256,7 +256,7 @@ namespace PMIS.Controllers
         public ActionResult SaveProfileImage(ProfileImageViewModel viewModel)
         {
             string randomFileName = null;
-
+            bool _success = false;
             if (viewModel != null)
             {
                 var t = viewModel.base64Image.Substring(23);
@@ -266,19 +266,27 @@ namespace PMIS.Controllers
                 {
                     var image = Image.FromStream(ms);
 
-                     randomFileName = Guid.NewGuid().ToString().Substring(0, 4) + ".jpg";
+                     randomFileName = Guid.NewGuid().ToString().Substring(0, 7) + ".jpg";
                      var fullPath = Path.Combine(Server.MapPath("~/Content/Images/"), randomFileName);
                      image.Save(fullPath, System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
 
                 //save image filename to database
-                
 
+                var patientinfo = _patientServices.GetPatientById(viewModel.patId);
+
+                patientinfo.Image = randomFileName;
+
+                _patientServices.UpdatePatient(patientinfo);
+                _unitofwork.Commit();
+
+
+                _success = true;
             }
 
            // System.IO.File.WriteAllText(Server.MapPath("~/Content/Images/" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".txt"), base64Image);
 
-            return Json(new {success = true,randomFileName}, JsonRequestBehavior.AllowGet);
+            return Json(new {success = _success, randomFileName}, JsonRequestBehavior.AllowGet);
         }
     }
 }

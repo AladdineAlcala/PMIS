@@ -3,13 +3,35 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            @Html.HiddenFor(m=>m.PatientId,new {id="patient-Id"});
+            @Html.HiddenFor(m => m.PatientId, new { id = "patient-Id" })
             <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
                     <div class="text-center" id="img-portrait">
-                        <img class="img-thumbnail img-fluid"
-                             src="@Url.Content("~/Content/dist/img/avatar04.png")"
-                             alt="User profile picture">
+                      @{
+
+                          if (Model.PatientDetails.ProfileImage == null)
+                          {
+                              if (Model.PatientDetails.Gender == "Female")
+                              {
+                                  <img class="img-thumbnail img-fluid"
+                                       src="@Url.Content("~/Content/dist/img/avatar3.png")"
+                                       alt="User profile picture">
+                              }
+                              else
+                              {
+                                  <img class="img-thumbnail img-fluid"
+                                       src="@Url.Content("~/Content/dist/img/avatar04.png")"
+                                       alt="User profile picture">
+                              }
+                          }
+                          else
+                          {
+                              <img class="img-thumbnail img-fluid"
+                                   src="@Url.Content("~/Content/Images/" + Model.PatientDetails.ProfileImage)"
+                                   alt="User profile picture">
+                          }
+                      }
+                       
                     </div>
                     <div class="uploadpics">
                         <button id="profilepicbtn" class="btn btn-default btn-xs"><i class="fas fa-camera"></i> </button>
@@ -48,8 +70,8 @@
             <div class="card">
                 <div class="card-body">
                     <span class="text-info"> Last Visited:</span>
-                    @(Model.Lastvisited!=null?Model.Lastvisited.AppointDate.Value.ToString("MMM-dd-yyyy") :"No Visit Found")
-                     
+                    @(Model.Lastvisited != null ? Model.Lastvisited.AppointDate.Value.ToString("MMM-dd-yyyy") : "No Visit Found")
+
                 </div>
             </div>
         </div>
@@ -143,7 +165,7 @@
                                 <strong><i class="fas fa-weight mr-1"></i> Weight (kls.):</strong>
 
                                 <p class="text-muted">
-                                    @(Model.PatientDetails.Weight != null? string.Concat(Model.PatientDetails.Weight, " cm") : String.Empty)
+                                    @(Model.PatientDetails.Weight != null ? string.Concat(Model.PatientDetails.Weight, " cm") : String.Empty)
                                 </p>
 
                                 <hr>
@@ -212,6 +234,6 @@
 
 @section scripts
 {
-   
+
     @Scripts.Render("~/Scripts/js_patient.js")
 }

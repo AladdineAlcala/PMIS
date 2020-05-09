@@ -2,20 +2,48 @@
 @model Patient
 
 <div class="text-center mb-4">
-    <img class="profile-user-img img-fluid img-circle "
-         src="~/Content/dist/img/user3-128x128.jpg"
-         alt="User profile picture">
+    @{
+
+       
+        if (Model.Image == null)
+        {
+            if (Model.Gender == "Female")
+            {
+                <img class="img-thumbnail img-fluid"
+                     src="@Url.Content("~/Content/dist/img/avatar3.png")"
+                     alt="User profile picture">
+            }
+            else
+            {
+                <img class="img-thumbnail img-fluid"
+                     src="@Url.Content("~/Content/dist/img/avatar04.png")"
+                     alt="User profile picture">
+            }
+        }
+        else
+        {
+            <img class="img-thumbnail img-fluid"
+                 src="@Url.Content("~/Content/Images/" + Model.Image)"
+                 alt="User profile picture">
+        }
+    }
 
 </div>
 <h3 class="profile-username text-center">@($"{Model.Lastname},{Model.Firstname}")</h3>
 
 <p class="text-muted text-center">Pat. Id: <span class="text-danger">@Model.Pat_Id</span></p>
 <br/>
+@*<div class="profile_info">
+    <button class="btn btn-primary btn-sm"> <i class="fas fa-user"> </i> View Profile</button>
+ 
+</div>*@
 <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
 
 <p class="text-muted">@($"{Model.AddStreetBrgy},{Model.Muncity},{Model.Province}")</p>
                              
 <hr>
+@Html.HiddenFor(m=>m.DoB,new {id="dateofbirth"})
+
 <ul class="list-unstyled">
     <li>
         <span class="mr-1"><i class="fas fa-star"></i></span>@($"{Model.DoB.Value:yyyy MMMM dd}")  ( <span class="d-inline-block text-bold" id="get-age"></span> yrs. )
@@ -44,3 +72,32 @@
         <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
     </li>*@
 </ul>
+
+
+<script type="text/javascript">
+
+
+    var getAge = function (dob) {
+
+        //debugger;
+
+        var today = new Date();
+        //var d = moment.utc(dob).format('MM/DD/YYYY');
+        var bday = new Date(dob);
+
+        var age = today.getFullYear() - bday.getFullYear();
+        var mo = today.getMonth() - bday.getMonth();
+
+        if (mo < 0 || mo === 0 && (today.getDate() < bday.getDate())) {
+
+            age--;
+        }
+
+        return age;
+    }
+
+    var _dob = document.getElementById('dateofbirth').value;
+
+    document.getElementById('get-age').innerHTML = getAge(_dob);
+    
+</script>

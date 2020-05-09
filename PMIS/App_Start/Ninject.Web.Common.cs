@@ -1,3 +1,4 @@
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.SignalR;
 using PMIS.Hubs;
 using PMIS.Model;
@@ -16,6 +17,8 @@ namespace PMIS.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.AspNet.Identity.EntityFramework;
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -87,10 +90,22 @@ namespace PMIS.App_Start
             kernel.Bind<IAppointmentServices>().To<AppointmentServices>();
             kernel.Bind<IPatientServices>().To<PatientServices>();
             kernel.Bind<IPatientRecordServices>().To<PatientRecordServices>();
-            kernel.Bind<IPhycisianServices>().To<PhycisianServices>();
             kernel.Bind<IUserPhysicianService>().To<UserPhysicianService>();
             kernel.Bind<IPrescriptionServices>().To<PrescriptionServices>();
 
+            kernel.Bind<ApplicationDbContext>().ToSelf();
+            kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().WithConstructorArgument("context",kernel.Get<ApplicationDbContext>());
+            kernel.Bind<UserManager<ApplicationUser>>().ToSelf();
+            kernel.Bind<HttpContextBase>().ToMethod(ctx => new HttpContextWrapper(HttpContext.Current))
+                .InTransientScope();
+
+            kernel.Bind<ApplicationSignInManager>().ToMethod((context) =>
+            {
+                var cbase=new HttpContextWrapper(HttpContext.Current);
+                return cbase.GetOwinContext().Get<ApplicationSignInManager>();
+            });
+
+            kernel.Bind<ApplicationUserManager>().ToSelf();
         }        
     }
 }

@@ -18,6 +18,6 @@ namespace PMIS.ServiceLayer
         void ModifyAppointment(Appointment appointment);
         void RemoveAppointment(Appointment appointment);
         IEnumerable<AppointmentScheduleViewModel> GetAllAppointment();
-        bool CheckAppointment(string patId, int phyId, DateTime dateAppoint);
+        bool CheckAppointment(string patId, string phyId, DateTime dateAppoint);
     }
 }

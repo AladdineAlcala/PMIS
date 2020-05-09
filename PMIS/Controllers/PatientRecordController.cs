@@ -34,7 +34,7 @@ namespace PMIS.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddRecord(string patientId,int physicianId)
+        public ActionResult AddRecord(string patientId,string physicianId)
         {
             var newrecord = new MedicalRecordViewModel()
             {
@@ -71,8 +71,26 @@ namespace PMIS.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<ActionResult> RemovePatientRecord(int recordId)
+        {
+
+           var patientMedicalRecord= await _patientrecordservices.GetMedicalRecord(recordId);
+
+            if (patientMedicalRecord != null)
+            {
+                _patientrecordservices.RemoveMedicalRecord(patientMedicalRecord);
+                _unitofwork.Commit();
+                return Json(new { success=true}, JsonRequestBehavior.AllowGet);
+            }
+
+
+            return Json(new {success=false}, JsonRequestBehavior.AllowGet);
+        }
+
+
         [HttpGet]
-        public ActionResult MedicalHistory(string patientid, int phyid)
+        public ActionResult MedicalHistory(string patientid, string phyid)
         {
 
             var patient_record_details = new PatientMedicalRecordDetailsViewModel
@@ -87,7 +105,7 @@ namespace PMIS.Controllers
 
 
         [HttpGet]
-        public ActionResult MedicalHistoryListByPatient(string id, int phyid, int? page)
+        public ActionResult MedicalHistoryListByPatient(string id, string phyid, int? page)
         {
             int pageIndex = page ?? 1;
             int dataCount = 3;
@@ -106,7 +124,7 @@ namespace PMIS.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Load_MedicalRecordPartialView(string patientid, int phyid,int? page)
+        public async Task<ActionResult> Load_MedicalRecordPartialView(string patientid, string phyid,int? page)
         {
             int pageIndex = page ?? 1;
             int dataCount = 3;

@@ -33,7 +33,7 @@ namespace PMIS.ViewModels
         public string ContactCell { get; set; }
         public Dictionary<string, string> GenderDictionary { get; set; }
         [Required(ErrorMessage = "Doctor In-charge required..")]
-        public int PhysId { get; set; }
+        public string PhysId { get; set; }
         public string PhyName { get; set; }
         [Required(ErrorMessage = "Appointment date required..")]
         [DataType(DataType.Date)]

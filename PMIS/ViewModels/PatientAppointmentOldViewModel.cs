@@ -12,7 +12,7 @@ namespace PMIS.ViewModels
         public string PatientId { get; set; }
         public string PatientName { get; set; }
         [Required(ErrorMessage = "Doctor In-charge required..")]
-        public int PhysId { get; set; }
+        public string PhysId { get; set; }
         public string PhyName { get; set; }
         [Required(ErrorMessage ="Appointment date required..")]
         [DataType(DataType.Date)]

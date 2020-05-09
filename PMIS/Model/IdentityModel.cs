@@ -18,7 +18,7 @@ namespace PMIS.Model
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Middle { get; set; }
-
+        public string Abr { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -62,6 +62,7 @@ namespace PMIS.Model
         public string UserId { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public string Abr { get; set; }
         public DateTime DateofBirth { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser Users { get; set; }

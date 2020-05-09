@@ -219,7 +219,6 @@
     <Compile Include="Controllers\PatientComplaintsController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PatientRecordController.cs" />
-    <Compile Include="Controllers\PhysicianController.cs" />
     <Compile Include="Controllers\PrescriptionController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -243,9 +242,6 @@
     <Compile Include="Model\Patient.cs">
       <DependentUpon>PMISEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Physician.cs">
-      <DependentUpon>PMISEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\PMISEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -267,7 +263,16 @@
     <Compile Include="Model\Prescription.cs">
       <DependentUpon>PMISEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\User_Physician.cs">
+    <Compile Include="Model\Role.cs">
+      <DependentUpon>PMISEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\User.cs">
+      <DependentUpon>PMISEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserClaim.cs">
+      <DependentUpon>PMISEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserLogin.cs">
       <DependentUpon>PMISEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -275,13 +280,11 @@
     <Compile Include="ServiceLayer\IAppointmentServices.cs" />
     <Compile Include="ServiceLayer\IPatientRecordServices.cs" />
     <Compile Include="ServiceLayer\IPatientServices.cs" />
-    <Compile Include="ServiceLayer\IPhycisianServices.cs" />
     <Compile Include="ServiceLayer\IPrescriptionServices.cs" />
     <Compile Include="ServiceLayer\IUnitOfWork.cs" />
     <Compile Include="ServiceLayer\IUserPhysicianService.cs" />
     <Compile Include="ServiceLayer\PatientRecordServices.cs" />
     <Compile Include="ServiceLayer\PatientServices.cs" />
-    <Compile Include="ServiceLayer\PhycisianServices.cs" />
     <Compile Include="ServiceLayer\PrescriptionServices.cs" />
     <Compile Include="ServiceLayer\UnitOfWork.cs" />
     <Compile Include="ServiceLayer\UserPhysicianService.cs" />
@@ -306,12 +309,16 @@
     <Compile Include="ViewModels\PhysicianDetailsViewModel.cs" />
     <Compile Include="ViewModels\PrescriptionViewModel.cs" />
     <Compile Include="ViewModels\ProfileImageViewModel.cs" />
+    <Compile Include="ViewModels\UserProfileInfoViewModel.cs" />
+    <Compile Include="ViewModels\UserProfileViewModel.cs" />
     <Compile Include="ViewModels\UsersConnectionViewModel.cs" />
+    <Compile Include="ViewModels\UserSecurityViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Scripts\js_doc_appoint.js" />
     <Content Include="Areas\Scripts\js_doc_medicalrecords.js" />
+    <Content Include="Areas\Scripts\js_doc_userprofile.js" />
     <Content Include="Content\ajaxextensions\jquery-validate.js" />
     <Content Include="Content\ajaxextensions\jquery.unobtrusive-ajax.js" />
     <Content Include="Content\ajaxextensions\jquery.validate.unobtrusive.js" />
@@ -368,7 +375,6 @@
     <Content Include="Content\dist\js\pages\dashboard.js" />
     <Content Include="Content\dist\js\pages\dashboard2.js" />
     <Content Include="Content\dist\js\pages\dashboard3.js" />
-    <Content Include="Content\Images\3e1d.png" />
     <Content Include="Content\Images\Spinner-1.gif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
@@ -9406,7 +9412,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Doctor\Models\" />
-    <Folder Include="Areas\Doctor\Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -9556,13 +9561,6 @@
     <Content Include="Content\plugins\fontawesome-pro-5.11.2-web\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\plugins\fontawesome-pro-5.11.2-web\webfonts\fa-solid-900.woff" />
     <Content Include="Content\plugins\fontawesome-pro-5.11.2-web\webfonts\fa-solid-900.woff2" />
-    <EntityDeploy Include="Model\PMISEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PMISEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Model\PMISEntities.edmx.diagram">
-      <DependentUpon>PMISEntities.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Doctor\Views\web.config" />
     <Content Include="Areas\Doctor\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Doctor\Views\Home\Index.cshtml" />
@@ -9576,7 +9574,6 @@
     <Content Include="Areas\Doctor\Views\DocAppointment\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\New_MedicalRecord.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_AddPatientRecordPartialView.cshtml" />
-    <Content Include="Areas\Doctor\Views\DocPatientMedicalRecord\Index.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_GetRecord.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_CreateMedication.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_ModifyPatientRecord.cshtml" />
@@ -9584,6 +9581,16 @@
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_MedicalPrescription.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_GetMedPrescription.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_GetMedicationView.cshtml" />
+    <EntityDeploy Include="Model\PMISEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PMISEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model\PMISEntities.edmx.diagram">
+      <DependentUpon>PMISEntities.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Doctor\Views\Account\UserProfile.cshtml" />
+    <Content Include="Areas\Doctor\Views\Account\_GetUserProfileInfo.cshtml" />
+    <Content Include="Areas\Doctor\Views\Account\_ChangeUserPassword.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\SideBar_Left.cshtml" />
     <Content Include="Views\Shared\NavBar.cshtml" />
@@ -9681,6 +9688,9 @@
     <Content Include="Views\Prescription\Index.cshtml" />
     <Content Include="Views\Prescription\_CreatePrescription.cshtml" />
     <Content Include="Views\Patient\ProfileImageModal.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
+    <Content Include="Views\Account\_ChangeUserPassword.cshtml" />
+    <Content Include="Views\Account\_GetUserProfileInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\plugins\filterizr\ActiveFilter.d.ts" />

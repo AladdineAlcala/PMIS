@@ -65,11 +65,20 @@ namespace PMIS.Controllers
             bool success = false;
 
             var physician = _phycisianservices.GetPhysician_By_Id(id);
+
             if (physician != null)
             {
-                _phycisianservices.RemovePhysician(physician);
-                _unitOfWork.Commit();
-                success = true;
+                try
+                {
+                    _phycisianservices.RemovePhysician(physician);
+                    _unitOfWork.Commit();
+                    success = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             };
 
             return Json(new {success=success}, JsonRequestBehavior.AllowGet);

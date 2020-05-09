@@ -1,0 +1,52 @@
+﻿@using PMIS.ViewModels
+@model UserProfileViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item"><a class="nav-link active" href="#basic-info" data-toggle="tab">BASIC INFO</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#security-info" data-toggle="tab">SECURITY</a></li>
+
+                    </ul>
+
+
+                </div>
+                
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="basic-info">
+                            <div class="basic-info">
+                                           
+                                @{
+                                    Html.RenderAction("GetUserProfileInfo", "Account", new {userId = Model.UserId });
+                                }
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="security-info">
+                            <div class="security-info">
+
+                                @{
+                                    Html.RenderAction("ChangeUserPassword", "Account", new {_userId = Model.UserId });
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+
+    @Scripts.Render("~/Scripts/js_users.js")
+}

@@ -14,8 +14,8 @@ namespace PMIS.ServiceLayer
     public class AppointmentServices:IAppointmentServices, IDisposable
     {
         private PMISEntities _pmisEntities = null;
-        private readonly IPhycisianServices _phycisianService;
-        private readonly IPatientServices _patientservice;
+        private readonly IUserPhysicianService _userPhysicianService;
+        private readonly IPatientServices _patientServices;
 
         //public AppointmentServices()
         //{
@@ -24,11 +24,11 @@ namespace PMIS.ServiceLayer
         //    _patientservice = new PatientServices();
         //}
 
-        public AppointmentServices(PMISEntities pmisEntities,IPhycisianServices phycisianServices,IPatientServices patientServices)
+        public AppointmentServices(PMISEntities pmisEntities,IPatientServices patientServices, IUserPhysicianService userPhysicianService, IPatientServices patientServices1)
         {
             this._pmisEntities = pmisEntities;
-            this._phycisianService = phycisianServices;
-            this._patientservice = patientServices;
+            _userPhysicianService = userPhysicianService;
+            _patientServices = patientServices1;
         }
 
 
@@ -40,8 +40,8 @@ namespace PMIS.ServiceLayer
                 No = t.No,
                 PatientNo = t.Pat_Id,
                 PatientName = t.Patient.Lastname + " ," + t.Patient.Firstname,
-                PhyId = (int)t.Phys_id,
-                PhyName = t.Physician.Phys_Fullname,
+                PhyId =t.User.Id,
+                PhyName =t.User.Abr,
                 AppointDate = (DateTime)t.AppointDate,
                 Stat =(bool) t.Status?"Served":"Pending",
                 Iscancelled = (bool) t.IsCancelled
@@ -52,12 +52,12 @@ namespace PMIS.ServiceLayer
 
         public IEnumerable<SelectListItem> GetAllDoctors()
         {
-            return _phycisianService.GetPhysicianListItems();
+            return _userPhysicianService.GetPhysicianListItems();
         }
 
         public Dictionary<string,string> GetAllGender()
         {
-            return _patientservice.GetGenderDictionary();
+            return _patientServices.GetGenderDictionary();
         }
 
         public void InsertAppointment(Appointment appointment)
@@ -66,7 +66,7 @@ namespace PMIS.ServiceLayer
          
         }
 
-        public bool CheckAppointment(string patId, int phyId, DateTime dateAppoint)
+        public bool CheckAppointment(string patId, string phyId, DateTime dateAppoint)
         {
            
             return _pmisEntities.Appointments.Any(t => t.Pat_Id == patId && t.Phys_id == phyId &&
@@ -117,8 +117,8 @@ namespace PMIS.ServiceLayer
                 No = t.No,
                 PatientNo = t.Pat_Id,
                 PatientName = t.Patient.Lastname + " ," + t.Patient.Firstname,
-                PhyId = (int)t.Phys_id,
-                PhyName = t.Physician.Phys_Fullname,
+                PhyId = t.User.Id,
+                PhyName = t.User.Abr,
                 AppointDate = (DateTime)t.AppointDate,
                 Stat = (bool)t.Status ? "Served" : "Pending",
                 Iscancelled = (bool)t.IsCancelled,
@@ -153,6 +153,6 @@ namespace PMIS.ServiceLayer
             this._disposed = true;
         }
 
-       
+ 
     }
 }

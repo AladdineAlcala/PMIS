@@ -20,16 +20,10 @@ namespace PMIS.Controllers
        
         private readonly IAppointmentServices _appointmentServices;
         private readonly IPatientServices _patientServices;
-        private readonly IUserPhysicianService _userPhysicianService;
         private readonly IUnitOfWork _unitofwork;
         private AppointHub appointHub;
+        private readonly IUserPhysicianService _userPhysicianService;
 
-        //public AppointmentController()
-        //{
-        //    _appointmentServices = new AppointmentServices();
-        //    _patientServices = new PatientServices();
-        //    _unitofwork = new UnitOfWork();
-        //}
 
         public AppointmentController(IAppointmentServices appointmentServices,IPatientServices patientServices,IUnitOfWork unitofwork, IUserPhysicianService userPhysicianService)
         {
@@ -37,7 +31,6 @@ namespace PMIS.Controllers
             _patientServices = patientServices;
             _unitofwork = unitofwork;
             _userPhysicianService = userPhysicianService;
-           
         }
 
 
@@ -132,15 +125,15 @@ namespace PMIS.Controllers
 
                 appointHub = new AppointHub();
 
-                var id = _userPhysicianService.GetPhysicianUserId(Convert.ToInt32(appointment.Phys_id));
+           
            
                 _unitofwork.Commit();
 
                 var appointSchedulebydoctor = await _appointmentServices.GetAllAppointmentList();
 
-                if(id!=null)
+                if(appointment.Phys_id != null)
 
-                appointHub.SendAppointment(id, appointSchedulebydoctor.Where(t => t.PhyId == appointment.Phys_id && t.AppointDate == appointment.AppointDate).ToList());
+                appointHub.SendAppointment(appointment.Phys_id, appointSchedulebydoctor.Where(t => t.PhyId == appointment.Phys_id && t.AppointDate == appointment.AppointDate).ToList());
 
 
             }
@@ -206,7 +199,7 @@ namespace PMIS.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> GetAppointment_By_Doctor(int id, DateTime appdate)
+        public async Task<ActionResult> GetAppointment_By_Doctor(string id, DateTime appdate)
         {
             var appointSchedulebydoctor = await _appointmentServices.GetAllAppointmentList();
 
@@ -214,7 +207,7 @@ namespace PMIS.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetAppointCount(int? id, DateTime appdate)
+        public async Task<JsonResult> GetAppointCount(string id, DateTime appdate)
         {
 
             int count = 0;
@@ -255,7 +248,7 @@ namespace PMIS.Controllers
 
             var appointment = _appointmentServices.GetAppointment(appointmentoption.AppNo);
 
-            int phyId = (int)appointment.Phys_id;
+            string phyId = appointment.Phys_id;
             DateTime appdate = (DateTime)appointment.AppointDate;
 
 
@@ -297,13 +290,13 @@ namespace PMIS.Controllers
             {
                 appointHub = new AppointHub();
 
-                var id = _userPhysicianService.GetPhysicianUserId(phyId);
+                //var id = _userPhysicianService.GetPhysicianUserId(phyId);
 
                 _unitofwork.Commit();
 
                 var appointSchedulebydoctor = await _appointmentServices.GetAllAppointmentList();
 
-                appointHub.SendAppointment(id, appointSchedulebydoctor.Where(t => t.PhyId == phyId && t.AppointDate == appdate).ToList());
+                appointHub.SendAppointment(phyId, appointSchedulebydoctor.Where(t => t.PhyId == phyId && t.AppointDate == appdate).ToList());
 
 
             }
