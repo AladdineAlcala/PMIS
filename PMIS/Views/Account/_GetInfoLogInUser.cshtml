@@ -1,0 +1,7 @@
+﻿@using PMIS.ViewModels
+@model ApplicationUserViewModel
+
+ <div class="info">
+     <a href="@Url.Action("UserProfile","Account",new {userId=Model.UserId})" class="d-block">@Model.Firstname  @Model.Lastname
+     </a>
+</div>

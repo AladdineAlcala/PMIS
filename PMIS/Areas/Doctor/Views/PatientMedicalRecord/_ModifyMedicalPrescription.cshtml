@@ -1,0 +1,66 @@
+﻿
+@using PMIS.ViewModels
+@model DocPrescriptionViewModel
+
+<div class="container-fluid">
+    @using (Html.BeginForm("UpdateMedicalPrescription", "PatientMedicalRecord", FormMethod.Post, new { role = "form", id = "form-updateDorctorPrescription" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(m => m.RecNo, new { id = "addMedRecNo" })
+
+        <div class="row">
+            <div class="col-lg">
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Search Category:</label>
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(m => m.CatId, Model.PrescriptionCatListItem, new { @class = "form-control custom-select", @id = "selectlist-category" })
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Recipe (Rx):</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.PrescId, Model.RecipeListItem, new { @class = "form-control custom-select", @id = "docrecipelistitem" })
+
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Signatura (Sig):</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Sig, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Dispensing Instructions (Disp):</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.DispInst, new { @class = "form-control" })
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 offset-md-4"> 
+                <button type="button" class="btn btn-primary" id="btn-UpdateDoctorsPrescription">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+
+    }
+
+
+
+
+</div>

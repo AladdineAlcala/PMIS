@@ -8,8 +8,8 @@ function loadMedicalRecord(patId, phyId) {
 
     $('#spinn-loader').show();
 
-    var thisPage = $('#currPage').val();
-    console.log(thisPage);
+    //var thisPage = $('#currPage').val();
+    //console.log(thisPage);
 
 
     $.ajax({
@@ -350,7 +350,7 @@ $(document).on('click', '#removeMedication', function(e) {
 });
 
 
-$(document).on('click','#prescription',event => {
+$(document).on('click', '#btn-newprescription', event => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -446,8 +446,6 @@ $(document).on('click', '#btn-saveDoctorsPrescription', function(e) {
 
     );
 
-
-
 });
 
 //remove doctors prescription
@@ -466,7 +464,7 @@ $(document).on('click', '#btn-prescriptionremove', function (e) {
           
             if ($(this).find(":checkbox").prop("checked")) {
 
-                var selectedid = $(this).closest('tr').find("input:checked").val();
+               // var selectedid = $(this).closest('tr').find("input:checked").val();
 
                 Swal.fire({
                     title: "Are You Sure ?",
@@ -484,7 +482,7 @@ $(document).on('click', '#btn-prescriptionremove', function (e) {
                             $.ajax({
                                 type: 'Post',
                                 url: '/Doctor/PatientMedicalRecord/RemoveDoctorsPrescription',
-                                data: { id: selectedid },
+                                data: {prescNo: $(this).closest('tr').find("input:checked").val() },
                                 async:true,
                                 datatype: 'json',
                                 cache: false,
@@ -507,7 +505,7 @@ $(document).on('click', '#btn-prescriptionremove', function (e) {
                             }).done(function () {
 
                                 $('button.btn-x').prop("disabled", true);
-                                $('#prescription').prop("disabled", false);
+                                $('#btn-newprescription').prop("disabled", false);
 
                               //  $(this).closest('tr').remove();
 
@@ -544,13 +542,125 @@ $(document).on('click', '#tble-docPrescription > tbody >tr', function(e) {
             : $('button.btn-x').prop("disabled", true);
 
         $this.prop('checked')
-            ? $('#prescription').prop("disabled", true)
-            : $('#prescription').prop("disabled", false);
+            ? $('#btn-newprescription').prop("disabled", true)
+            : $('#btn-newprescription').prop("disabled", false);
 
     }
 });
 
-//$(document).on('change','#get-age',function() {
+//modify prescription
 
-   
-//});
+$(document).on('click', '#btn-modifyPrescription', event => {
+    event.preventDefault();
+    event.stopPropagation();
+    $("#tble-docPrescription tbody tr").each(function() {
+
+        var tr = $(this);
+
+
+        tr.find("td").each(function() {
+
+                if ($(this).find(":checkbox").prop("checked")) {
+
+                    var selectedid = $(this).closest('tr').find("input:checked").val();
+
+                
+                    $.ajax({
+                        type: 'Get',
+                        url: '/Doctor/PatientMedicalRecord/ModifyMedicalPrescription',
+                        data: {prescNo: selectedid },
+                        contentType: 'application/html;charset=utf8',
+                        datatype: 'html',
+                        cache: false,
+                        success: function (result) {
+
+                            var modal = $('#modal-prescription');
+                            modal.find('.modal-body').html(result);
+
+
+                            modal.modal({
+                                    backdrop: 'static',
+                                    keyboard: false
+                                },
+                                'show');
+
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            Swal.fire('Error adding record!', 'Please try again', 'error');
+                        }
+                    });
+
+                }
+            }
+        );
+
+    });
+});
+
+// Update medical Prescription
+
+$(document).on('click', '#btn-UpdateDoctorsPrescription', event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const recordNo = $('#addMedRecNo').val();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm update record..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Proceed operation..!'
+
+        }).then((result) => {
+
+            if (result.value) {
+
+                var formUrl = $('#form-updateDorctorPrescription').attr('action');
+                var form = $('[id*=form-updateDorctorPrescription]');
+
+                $.validator.unobtrusive.parse(form);
+                form.validate();
+
+
+                if (form.valid()) {
+
+                    $.ajax({
+                        type: 'Post',
+                        url: formUrl,
+                        data: form.serialize(),
+                        datatype: 'json',
+                        cache: false,
+                        success: function (data) {
+
+                            if (data.success) {
+
+                                $("#modal-prescription").modal('hide');
+
+                                toast.fire({
+                                    type: 'success',
+                                    title: 'Record Succesfully Updated.'
+                                });
+                            }
+
+
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            Swal.fire('Error adding record!', 'Please try again', 'error');
+                        }
+
+                    }).done(function () {
+
+                        patientMedPrescrioption(recordNo);
+                    });
+
+                }
+
+            }
+        }
+
+    );
+
+});

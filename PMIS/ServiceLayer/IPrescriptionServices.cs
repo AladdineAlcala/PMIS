@@ -13,11 +13,6 @@ namespace PMIS.ServiceLayer
         void InsertPrescription(Prescription prescription);
         void UpdatePrescription(Prescription prescription);
         void RemovePrescription(Prescription prescription);
-
-        void InsertDocPrescription(DocPrescriptionRecord docPrescription);
-        Task<DocPrescriptionRecord> FindDocPrescriptionByIdAsync(int id);
-        void RemoveDocPrescription(DocPrescriptionRecord docPrescription);
-        void UpdateDocPrescription(DocPrescriptionRecord docPrescription);
         IEnumerable<SelectListItem> GetCategoryListItems();
         IEnumerable<SelectListItem> GetPrescriptionListItems(int? catId);
         IEnumerable<DocPrescriptionViewModel> GetDocPrescriptionByRecNo(int recNo);

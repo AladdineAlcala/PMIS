@@ -92,6 +92,7 @@ namespace PMIS.App_Start
             kernel.Bind<IPatientRecordServices>().To<PatientRecordServices>();
             kernel.Bind<IUserPhysicianService>().To<UserPhysicianService>();
             kernel.Bind<IPrescriptionServices>().To<PrescriptionServices>();
+            kernel.Bind<IPhyPrescriptionServices>().To<PhyPrescriptionServices>();
 
             kernel.Bind<ApplicationDbContext>().ToSelf();
             kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().WithConstructorArgument("context",kernel.Get<ApplicationDbContext>());

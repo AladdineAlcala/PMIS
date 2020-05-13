@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Services.Configuration;
 using Microsoft.AspNet.Identity;
 using PMIS.Model;
 using PMIS.ServiceLayer;
@@ -17,13 +18,14 @@ namespace PMIS.Areas.Doctor.Controllers
         private readonly IPatientServices _patientservices;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPrescriptionServices _prescriptionServices;
-        public PatientMedicalRecordController(IPatientRecordServices patientrecordservices, IPatientServices patientservices, IUnitOfWork unitOfWork, IPrescriptionServices prescriptionServices)
+        private readonly IPhyPrescriptionServices _phyPrescriptionServices;
+        public PatientMedicalRecordController(IPatientRecordServices patientrecordservices, IPatientServices patientservices, IUnitOfWork unitOfWork, IPrescriptionServices prescriptionServices, IPhyPrescriptionServices phyPrescriptionServices)
         {
             _patientrecordservices = patientrecordservices;
             _patientservices = patientservices;
             _unitOfWork = unitOfWork;
             _prescriptionServices = prescriptionServices;
-
+            _phyPrescriptionServices = phyPrescriptionServices;
         }
         // GET: Doctor/PatientMedicalRecord
         public ActionResult Index()
@@ -166,15 +168,12 @@ namespace PMIS.Areas.Doctor.Controllers
         public ActionResult ModifyRecord(int recNo)
         {
 
-
             return PartialView("_ModifyPatientRecord");
         }
 
 
         public ActionResult RemoveMedication(int medNo)
         {
-
-
 
             return Json(new {success = true}, JsonRequestBehavior.AllowGet);
 
@@ -214,7 +213,54 @@ namespace PMIS.Areas.Doctor.Controllers
                 Disp = docPrescriptionViewModel.DispInst
             };
 
-            _prescriptionServices.InsertDocPrescription(docprescription);
+            _phyPrescriptionServices.InsertDocPrescription(docprescription);
+            _unitOfWork.Commit();
+
+            return Json(new {success=true}, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult ModifyMedicalPrescription(int prescNo)
+        {
+            var docprescription =_phyPrescriptionServices.FindDocPrescriptionById(prescNo);
+
+            DocPrescriptionViewModel docPrescriptionViewModel=null;
+            if (docprescription != null)
+            {
+                docPrescriptionViewModel = new DocPrescriptionViewModel()
+                {
+                    
+                    RecNo = (int) docprescription.RecordNo,
+                    CatId = (int) docprescription.Prescription.CatId,
+                    PrescId = (int) docprescription.PresId,
+                    Sig = docprescription.Sig,
+                    DispInst = docprescription.Disp,
+                    PrescriptionCatListItem= _prescriptionServices.GetCategoryListItems(),
+                    RecipeListItem = _prescriptionServices.GetPrescriptionListItems(null)
+                };
+
+             
+            }
+
+            return PartialView("_ModifyMedicalPrescription", docPrescriptionViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateMedicalPrescription(DocPrescriptionViewModel docPrescriptionViewModel)
+        {
+            if (!ModelState.IsValid) return PartialView("_ModifyMedicalPrescription", docPrescriptionViewModel);
+
+            var docprescription = new DocPrescriptionRecord()
+            {
+                Date = DateTime.Now,
+                RecordNo = docPrescriptionViewModel.RecNo,
+                PresId = docPrescriptionViewModel.PrescId,
+                Sig = docPrescriptionViewModel.Sig,
+                Disp = docPrescriptionViewModel.DispInst
+            };
+
+            _phyPrescriptionServices.UpdateDocPrescription(docprescription);
             _unitOfWork.Commit();
 
             return Json(new {success=true}, JsonRequestBehavior.AllowGet);
@@ -223,14 +269,14 @@ namespace PMIS.Areas.Doctor.Controllers
 
         [HttpPost]
         [ActionName("RemoveDoctorsPrescription")]
-        public async Task<ActionResult> RemoveMedicalPrescription(int id)
+        public async Task<ActionResult> RemoveMedicalPrescription(int prescNo)
         {
-            var docprescription =await  _prescriptionServices.FindDocPrescriptionByIdAsync(id);
+            var docprescription =await _phyPrescriptionServices.FindDocPrescriptionByIdAsync(prescNo);
 
 
             if (docprescription == null) return Json(new {succces = false}, JsonRequestBehavior.AllowGet);
 
-            _prescriptionServices.RemoveDocPrescription(docprescription);
+            _phyPrescriptionServices.RemoveDocPrescription(docprescription);
             _unitOfWork.Commit();
 
             return Json(new { succces = true }, JsonRequestBehavior.AllowGet);

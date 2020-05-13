@@ -339,7 +339,7 @@ namespace PMIS.Controllers
         }
 
 
-
+        [HttpGet]
         public ActionResult UserProfile(string userId)
         {
             var userProfile = new UserProfileViewModel { UserId = userId };
@@ -450,6 +450,26 @@ namespace PMIS.Controllers
             }
 
 
+        }
+
+        public ActionResult GetInfoLogInUser(string userId)
+        {
+            ApplicationUser user = UserManager.FindById(userId);
+            ApplicationUserViewModel appuser = null;
+            if (user != null)
+            {
+                appuser = new ApplicationUserViewModel()
+                {
+                    UserId = userId,
+                    Lastname = user.Lastname,
+                    Firstname = user.Firstname,
+                    Abr = user.Abr
+                };
+
+
+            }
+
+            return PartialView("_GetInfoLogInUser",appuser);
         }
 
         #endregion

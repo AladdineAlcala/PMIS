@@ -44,15 +44,13 @@ function appointcounter(id, appointdate) {
 
 })(jQuery);
 
-document.getElementById("btnconsultationserve").addEventListener('click', function (e) {
+$(document).on('click', '#btnconsultationserve', function (e) {
 
     e.preventDefault();
-    e.stopPropagation();
-
     var appointdate = moment(new Date()).format('YYYY-MM-DD HH:mm');
 
     $('#spinn-loader').show();
-    
+
     Swal.fire({
         title: "Are You Sure ?",
         text: "Confirm serve appointment..",
@@ -69,14 +67,14 @@ document.getElementById("btnconsultationserve").addEventListener('click', functi
                 $.ajax({
                     type: 'Post',
                     url: '/Doctor/DocAppointment/ServeAppointment',
-                    data: {apptId:($(this).closest('tr').attr('data-apptNo'))},
+                    data: { apptId: ($(this).closest('tr').attr('data-apptNo')) },
                     datatype: 'json',
                     cache: false,
                     success: function (data) {
 
                         if (data.success) {
 
-                           
+
 
                             toast.fire({
                                 type: 'success',
@@ -84,7 +82,7 @@ document.getElementById("btnconsultationserve").addEventListener('click', functi
                             });
                         }
 
-                      
+
 
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -108,7 +106,6 @@ document.getElementById("btnconsultationserve").addEventListener('click', functi
         }
 
     );
-
 });
 
 $(document).on('click', '#view_medicalrecords', function (e) {

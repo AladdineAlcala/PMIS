@@ -280,16 +280,19 @@
     <Compile Include="ServiceLayer\IAppointmentServices.cs" />
     <Compile Include="ServiceLayer\IPatientRecordServices.cs" />
     <Compile Include="ServiceLayer\IPatientServices.cs" />
+    <Compile Include="ServiceLayer\IPhyPrescriptionServices.cs" />
     <Compile Include="ServiceLayer\IPrescriptionServices.cs" />
     <Compile Include="ServiceLayer\IUnitOfWork.cs" />
     <Compile Include="ServiceLayer\IUserPhysicianService.cs" />
     <Compile Include="ServiceLayer\PatientRecordServices.cs" />
     <Compile Include="ServiceLayer\PatientServices.cs" />
+    <Compile Include="ServiceLayer\PhyPrescriptionServices.cs" />
     <Compile Include="ServiceLayer\PrescriptionServices.cs" />
     <Compile Include="ServiceLayer\UnitOfWork.cs" />
     <Compile Include="ServiceLayer\UserPhysicianService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\ApplicationUserViewModel.cs" />
     <Compile Include="ViewModels\AppointmentOptionsViewModel.cs" />
     <Compile Include="ViewModels\AppointmentScheduleViewModel.cs" />
     <Compile Include="ViewModels\AppointmentViewModel.cs" />
@@ -356,6 +359,8 @@
     <Content Include="Content\dist\img\photo2.png" />
     <Content Include="Content\dist\img\photo3.jpg" />
     <Content Include="Content\dist\img\photo4.jpg" />
+    <Content Include="Content\dist\img\PMIS.png" />
+    <Content Include="Content\dist\img\PMS.png" />
     <Content Include="Content\dist\img\prod-1.jpg" />
     <Content Include="Content\dist\img\prod-2.jpg" />
     <Content Include="Content\dist\img\prod-3.jpg" />
@@ -375,6 +380,7 @@
     <Content Include="Content\dist\js\pages\dashboard.js" />
     <Content Include="Content\dist\js\pages\dashboard2.js" />
     <Content Include="Content\dist\js\pages\dashboard3.js" />
+    <Content Include="Content\Images\61802.jpg" />
     <Content Include="Content\Images\Spinner-1.gif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
@@ -9591,6 +9597,7 @@
     <Content Include="Areas\Doctor\Views\Account\UserProfile.cshtml" />
     <Content Include="Areas\Doctor\Views\Account\_GetUserProfileInfo.cshtml" />
     <Content Include="Areas\Doctor\Views\Account\_ChangeUserPassword.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_ModifyMedicalPrescription.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\SideBar_Left.cshtml" />
     <Content Include="Views\Shared\NavBar.cshtml" />
@@ -9691,6 +9698,7 @@
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Account\_ChangeUserPassword.cshtml" />
     <Content Include="Views\Account\_GetUserProfileInfo.cshtml" />
+    <Content Include="Views\Account\_GetInfoLogInUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\plugins\filterizr\ActiveFilter.d.ts" />
