@@ -33,11 +33,29 @@ function appointcounter(id, appointdate) {
 }
 
 
+function getAppointment(id,appointmentdate) {
+    $.ajax({
+        type: 'Get',
+        url: '/Doctor/DocAppointment/GetAppointmentByDoctor',
+        ajaxasync: true,
+        data: { id: id, appointmentDate: appointmentdate },
+        contentType: 'application/html;charset=utf8',
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            $('#tableAppoint').html(result);
+        }
+    });
+}
+
 
 
 (function ($) {
     
     var appointdate = moment(new Date()).format('YYYY-MM-DD HH:mm');
+
+    getAppointment($('#hdn_docuserId').val(), appointdate);
 
     appointcounter($('#hdn_docuserId').val(), appointdate);
 

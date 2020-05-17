@@ -27,9 +27,7 @@
                         </tr>
                         </thead>
                         <tbody id="tableAppoint">
-                        @{
-                            Html.RenderAction("GetAppointmentByDoctor", "DocAppointment",new {area="Doctor",@id= @ViewBag.phyId, @appointmentDate=DateTime.Now});
-                        }
+                            @*@Html.RenderAction("GetAppointmentByDoctor", "DocAppointment",new {area="Doctor",@id= @ViewBag.phyId, @appointmentDate=DateTime.Now});*@
                         </tbody>
                     </table>
                     

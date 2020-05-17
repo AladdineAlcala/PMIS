@@ -9598,6 +9598,7 @@
     <Content Include="Areas\Doctor\Views\Account\_GetUserProfileInfo.cshtml" />
     <Content Include="Areas\Doctor\Views\Account\_ChangeUserPassword.cshtml" />
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_ModifyMedicalPrescription.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_ModifyMedication.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\SideBar_Left.cshtml" />
     <Content Include="Views\Shared\NavBar.cshtml" />
@@ -9699,6 +9700,7 @@
     <Content Include="Views\Account\_ChangeUserPassword.cshtml" />
     <Content Include="Views\Account\_GetUserProfileInfo.cshtml" />
     <Content Include="Views\Account\_GetInfoLogInUser.cshtml" />
+    <Content Include="Views\PatientRecord\_PatientProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Content\plugins\filterizr\ActiveFilter.d.ts" />

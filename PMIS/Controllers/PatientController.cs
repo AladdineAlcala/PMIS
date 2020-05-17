@@ -230,12 +230,12 @@ namespace PMIS.Controllers
         }
 
         [HttpGet]
-        public ActionResult ViewProfile(string id)
+        public async Task<ActionResult> ViewProfile(string id)
         {
             var patientprofile = new PatientProfileViewModel()
             {
                 PatientId = id,
-                PatientDetails = _patientServices.GetPatientDetailsById(id),
+                PatientDetails =await _patientServices.GetPatientDetailsById(id),
                 Listofdoctors = _patientServices.GetDoctorsByPatient(id),
                 Lastvisited = _appointmentServices.LastVisited(id)
             };

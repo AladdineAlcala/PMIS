@@ -12,7 +12,7 @@ namespace PMIS.ServiceLayer
         Dictionary<string, string> GetGenderDictionary();
         Dictionary<string, string> Generate_CivilStatus_Dictionary();
         Task<IEnumerable<PatientDetailsViewModel>>  GetAllPatients();
-        PatientDetailsViewModel GetPatientDetailsById(string patientid);
+        Task<PatientDetailsViewModel> GetPatientDetailsById(string patientid);
         IQueryable<PatientViewModel> GetPatientAutoComplete();
         List<PhysicianDetailsViewModel> GetDoctorsByPatient(string id);
         void InsertPatient(Patient patient);

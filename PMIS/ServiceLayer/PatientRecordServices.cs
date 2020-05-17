@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.AspNet.Identity;
 using PMIS.Model;
 using PMIS.ViewModels;
 
@@ -69,9 +70,11 @@ namespace PMIS.ServiceLayer
         {
             return (_pmisEntities.MedicalRecords.Select(m => new PatientPhysicianDistinctViewModel()
             {
-                PatientId = m.Pat_Id
-                //Phyid = m.Phys_id,
-                //PhyscianName = m.Physician.Phys_Fullname
+                PatientId = m.Pat_Id,
+                Phyid = m.Phys_id,
+                Arb = m.User.Abr,
+                phyLastname = m.User.Lastname,
+                phyFirstname = m.User.Firstname
             })).Distinct().ToList();
 
         }

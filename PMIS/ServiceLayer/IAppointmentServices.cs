@@ -10,6 +10,7 @@ namespace PMIS.ServiceLayer
     public interface IAppointmentServices
     {
         Task<IEnumerable<AppointmentScheduleViewModel>>  GetAllAppointmentList();
+        Task<IEnumerable<AppointmentScheduleViewModel>> GetAllAppointmentList(string id, DateTime appointmentDate);
         IEnumerable<SelectListItem> GetAllDoctors();
         Dictionary<string,string> GetAllGender();
         Appointment GetAppointment(int appId);

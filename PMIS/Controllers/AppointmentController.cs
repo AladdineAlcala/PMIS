@@ -270,6 +270,8 @@ namespace PMIS.Controllers
                 case AppointOptions.Replace:
                     if (appointment.Pat_Id != appointmentoption.RepIdNo)
                     {
+
+
                         appointment.Pat_Id = appointmentoption.RepIdNo;
                         _appointmentServices.ModifyAppointment(appointment);
 

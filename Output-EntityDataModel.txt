@@ -1,3 +1,6 @@
-﻿1>------ Build started: Project: PMIS, Configuration: Debug Any CPU ------
-1>  PMIS -> E:\PMIS\PMIS\PMIS\bin\PMIS.dll
-========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
+﻿Generated model file: PMISEntities.edmx.
+Loading metadata from the database took 00:00:01.1890596.
+Generating the model took 00:00:04.7367071.
+Generated model file: PMISEntities.edmx.
+Loading metadata from the database took 00:00:00.4457297.
+Generating the model took 00:00:04.2884033.

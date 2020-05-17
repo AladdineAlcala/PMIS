@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using PMIS.Model;
 
 namespace PMIS.ViewModels
 {
@@ -21,5 +22,6 @@ namespace PMIS.ViewModels
         [Required(ErrorMessage = "Please enter appointment option.")]
         public AppointOptions AppOptions  { get; set; }
         public string RepIdNo { get; set; }
+        public MedicalRecord PatientMedicalRecord { get; set; }
     }
 }

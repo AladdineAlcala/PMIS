@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="PMISModel.Role" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PMISModel.UserClaim" Width="1.5" PointX="6" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PMISModel.UserLogin" Width="1.5" PointX="4.875" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="PMISModel.User" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PMISModel.User" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="PMISModel.FK_Appointment_Patient" ManuallyRouted="false" />
         <AssociationConnector Association="PMISModel.FK_Appointment_Users" ManuallyRouted="false" />
         <AssociationConnector Association="PMISModel.FK_DocPrescriptionRecord_MedicalRecord" ManuallyRouted="false" />
@@ -26,6 +26,7 @@
         <AssociationConnector Association="PMISModel.FK_dbo_UserClaims_dbo_Users_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="PMISModel.FK_dbo_UserLogins_dbo_Users_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="PMISModel.UserRoles" />
+        <AssociationConnector Association="PMISModel.FK_MedicalRecord_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

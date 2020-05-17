@@ -61,7 +61,8 @@ namespace PMIS.Controllers
                 Phys_id = medicalrecord.PhyId,
                 RecordDate = DateTime.Now,
                 ActivityName = medicalrecord.Subject,
-                RecordDetails = medicalrecord.Desciption
+                RecordDetails = medicalrecord.Desciption,
+                AppointmentNo = medicalrecord.ApppointmentNo
             };
 
              _patientrecordservices.AddMedicalRecord(newmedicalrecord);

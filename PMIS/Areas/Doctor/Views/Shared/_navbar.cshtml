@@ -5,11 +5,11 @@
             <a href="@Url.Action("Index","Home",new {area="Doctor"})" class="nav-link">Home</a>
         </li>
         <li class="nav-item">
-            <a href="@Url.Action("Index","DocAppointment",new {area="Doctor",@phyid=@ViewBag.phyId})" class="nav-link">Appointment</a>
+            <a href="@Url.Action("Index","DocAppointment",new {area="Doctor",phyid=ViewBag.phyId})" class="nav-link">Appointment</a>
         </li>
         
         <li class="nav-item">
-            <a href="@Url.Action("Index","PatientMedicalRecord",new { area = "Doctor" })" class="nav-link">Medical Records</a>
+            <a href="@Url.Action("Index","PatientMedicalRecord",new {area = "Doctor" })" class="nav-link">Medical Records</a>
         </li>
         
 

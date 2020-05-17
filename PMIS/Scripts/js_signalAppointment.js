@@ -45,21 +45,21 @@
                     '<td>' +
                     el.Stat +
                     '</td>' +
-                    '<td class="text-center">' +
+                        '<td class="text-center">' +
 
-                    '<button class="btn btn-info btn-sm" data-patientId="' +
-                    el.PatientNo +
-                    '" id="view_medicalrecords">' +
-                    '<i class="fal fa-file-medical-alt"></i>' +
-                    '</button>' +
+                        '<button class="btn btn-info btn-sm mr-1" data-patientId="' +
+                        el.PatientNo +
+                        '" id="view_medicalrecords">' +
+                        '<i class="fal fa-file-medical-alt"></i>' +
+                        '</button>' +
+                        '<button class="btn btn-success btn-sm" data-patientId="' +
+                        el.PatientNo +
+                        '"id="btnconsultationserve">'+
+                        '<i class="fal fa-lightbulb-on"></i>'+
+                        '</button>' +
 
-                    '<button class="btn btn-success btn-sm mr-1" data-patientId="' +
-                    el.PatientNo +
-                    '"id="btnconsultationserve">'+
-                    '<i class="fal fa-lightbulb-on"></i>'+
-                    '</button>' +
+                        '</td>' +
 
-                    '</td>' +
                     '</tr>';
             });
         } else {

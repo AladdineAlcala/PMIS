@@ -293,6 +293,115 @@ $(document).on('click', '#return_to_list',(e)=>{
 });
 
 
+// modify medication
+$(document).on('click', '#btn-modifymedication', event => {
+    event.preventDefault();
+ 
+    $.ajax({
+        type: 'Get',
+        url: '/Doctor/PatientMedicalRecord/ModifyMedication',
+        data: { recNo: $('#recNo').val() },
+        contentType: 'application/html;charset=utf8',
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            var modal = $('#modal-ModifyMedication');
+            modal.find('.modal-body').html(result);
+
+            $('#compose-medication').summernote({
+                height: 350   //set editable area's height
+                //codemirror: { // codemirror options
+                //    theme: 'monokai'
+                //}
+            });
+
+            modal.modal({
+                    backdrop: 'static',
+                    keyboard: false
+                },
+                'show');
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
+    });
+
+
+});
+
+//update medication
+
+$(document).on('click', '#update-docmedication', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const recordNo = $('#recNo').val();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Update Medication Record..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Proceed operation..!'
+
+    }).then((result) => {
+
+            if (result.value) {
+
+                var formUrl = $('#form_docUpdateMedication').attr('action');
+                var form = $('[id*=form_docUpdateMedication]');
+
+                $.validator.unobtrusive.parse(form);
+                form.validate();
+
+
+                if (form.valid()) {
+
+                    $.ajax({
+                        type: 'Post',
+                        url: formUrl,
+                        data: form.serialize(),
+                        datatype: 'json',
+                        cache: false,
+                        success: function (data) {
+
+                            if (data.success) {
+
+                                $("#modal-createMedication").modal('hide');
+
+                                toast.fire({
+                                    type: 'success',
+                                    title: 'Record Succesfully Updated.'
+                                });
+                            }
+
+
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            Swal.fire('Error adding record!', 'Please try again', 'error');
+                        }
+
+                    }).done(function () {
+
+                        loadChart(recordNo);
+                    });
+
+                }
+
+            }
+        }
+
+    );
+
+
+});
+
+
+
 $(document).on('click', '#removeMedication', function(e) {
     e.preventDefault();
 

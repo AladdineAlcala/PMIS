@@ -38,6 +38,7 @@
           <Property Name="Phys_id" Type="nvarchar" MaxLength="128" />
           <Property Name="ActivityName" Type="nvarchar" MaxLength="250" />
           <Property Name="RecordDetails" Type="nvarchar(max)" />
+          <Property Name="AppointmentNo" Type="bigint" />
         </EntityType>
         <EntityType Name="Medication">
           <Key>
@@ -268,6 +269,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MedicalRecord_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MedicalRecord">
+              <PropertyRef Name="Phys_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Medication_MedicalRecord">
           <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -343,6 +356,10 @@
             <End Role="Patient" EntitySet="Patient" />
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
           </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecord_Users" Association="Self.FK_MedicalRecord_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+          </AssociationSet>
           <AssociationSet Name="FK_Medication_MedicalRecord" Association="Self.FK_Medication_MedicalRecord">
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
             <End Role="Medication" EntitySet="Medication" />
@@ -396,6 +413,8 @@
           <NavigationProperty Name="DocPrescriptionRecords" Relationship="Self.FK_DocPrescriptionRecord_MedicalRecord" FromRole="MedicalRecord" ToRole="DocPrescriptionRecord" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_MedicalRecord_Patient" FromRole="MedicalRecord" ToRole="Patient" />
           <NavigationProperty Name="Medications" Relationship="Self.FK_Medication_MedicalRecord" FromRole="MedicalRecord" ToRole="Medication" />
+          <Property Name="AppointmentNo" Type="Int64" />
+          <NavigationProperty Name="User" Relationship="PMISModel.FK_MedicalRecord_Users" FromRole="MedicalRecord" ToRole="User" />
         </EntityType>
         <EntityType Name="Medication">
           <Key>
@@ -508,6 +527,7 @@
           <NavigationProperty Name="UserClaims" Relationship="Self.FK_dbo_UserClaims_dbo_Users_UserId" FromRole="Users" ToRole="UserClaims" />
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_dbo_UserLogins_dbo_Users_UserId" FromRole="Users" ToRole="UserLogins" />
           <NavigationProperty Name="Roles" Relationship="PMISModel.UserRoles" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="MedicalRecords" Relationship="PMISModel.FK_MedicalRecord_Users" FromRole="User" ToRole="MedicalRecord" />
         </EntityType>
         <Association Name="FK_Appointment_Patient">
           <End Role="Patient" Type="Self.Patient" Multiplicity="0..1">
@@ -681,10 +701,26 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_MedicalRecord_Users" Association="PMISModel.FK_MedicalRecord_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="MedicalRecord" EntitySet="MedicalRecords" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="UserRoles">
           <End Type="PMISModel.Role" Role="Role" Multiplicity="*" />
           <End Type="PMISModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_MedicalRecord_Users">
+          <End Type="PMISModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="PMISModel.MedicalRecord" Role="MedicalRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MedicalRecord">
+              <PropertyRef Name="Phys_id" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -720,6 +756,7 @@
           <EntitySetMapping Name="MedicalRecords">
             <EntityTypeMapping TypeName="PMISModel.MedicalRecord">
               <MappingFragment StoreEntitySet="MedicalRecord">
+                <ScalarProperty Name="AppointmentNo" ColumnName="AppointmentNo" />
                 <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
                 <ScalarProperty Name="RecordDate" ColumnName="RecordDate" />
                 <ScalarProperty Name="Pat_Id" ColumnName="Pat_Id" />

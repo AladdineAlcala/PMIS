@@ -175,6 +175,10 @@ namespace PMIS.Areas.Doctor.Controllers
         public ActionResult RemoveMedication(int medNo)
         {
 
+
+
+
+
             return Json(new {success = true}, JsonRequestBehavior.AllowGet);
 
         }
@@ -229,7 +233,7 @@ namespace PMIS.Areas.Doctor.Controllers
             {
                 docPrescriptionViewModel = new DocPrescriptionViewModel()
                 {
-                    
+                    PrescNo = prescNo,
                     RecNo = (int) docprescription.RecordNo,
                     CatId = (int) docprescription.Prescription.CatId,
                     PrescId = (int) docprescription.PresId,
@@ -254,6 +258,7 @@ namespace PMIS.Areas.Doctor.Controllers
             var docprescription = new DocPrescriptionRecord()
             {
                 Date = DateTime.Now,
+                No = docPrescriptionViewModel.PrescNo,
                 RecordNo = docPrescriptionViewModel.RecNo,
                 PresId = docPrescriptionViewModel.PrescId,
                 Sig = docPrescriptionViewModel.Sig,
@@ -288,6 +293,58 @@ namespace PMIS.Areas.Doctor.Controllers
             var docprescriptionList = _prescriptionServices.GetDocPrescriptionByRecNo(recordNo);
 
             return PartialView("_GetMedPrescription",docprescriptionList);
+        }
+
+        [HttpGet]
+        public ActionResult ModifyMedication(int recNo)
+        {
+            var medication = _patientrecordservices.GetMedication(recNo);
+
+            var medicationModel = new MedicationViewModel()
+            {
+
+                RecordNo = recNo,
+                RecordedDate = DateTime.Now,
+                Medication = medication != null ? medication.MedicationDesc : String.Empty
+            };
+
+
+            if (medication != null)
+            {
+                medicationModel.operation = 1;
+                medicationModel.Id = (int)medication.MidNo;
+            }
+            else
+            {
+                medicationModel.operation = 0;
+            }
+
+            return PartialView("_ModifyMedication", medicationModel);
+        }
+
+
+        public ActionResult UpdateMedication(MedicationViewModel viewModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_CreateMedication", viewModel);
+            }
+
+
+            Medication medication = new Medication
+            {
+                MidNo = viewModel.Id,
+                RecordNo = viewModel.RecordNo,
+                RecordedDate = DateTime.Now,
+                MedicationDesc = viewModel.Medication
+            };
+
+            _patientrecordservices.UpdateMedication(medication);
+
+            _unitOfWork.Commit();
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }

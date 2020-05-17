@@ -8,7 +8,7 @@ namespace PMIS.ViewModels
 {
     public class PhysicianDetailsViewModel
     {
-        public int? PhysId { get; set; }
+        public string PhysId { get; set; }
         [Required(ErrorMessage = "Please enter physican.")]
         public string PhysName { get; set; }
         [Required(ErrorMessage = "Please enter physician abbrv..")]

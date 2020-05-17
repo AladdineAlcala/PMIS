@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -12,7 +13,6 @@ namespace PMIS.Areas.Doctor.Controllers
     public class DocAppointmentController : Controller
     {
         private readonly IAppointmentServices _appointmentServices;
-     
         private readonly IUnitOfWork _unitOfWork;
 
         public DocAppointmentController(IAppointmentServices appointmentServices, IUnitOfWork unitOfWork)
@@ -20,23 +20,22 @@ namespace PMIS.Areas.Doctor.Controllers
             _appointmentServices = appointmentServices;
             _unitOfWork = unitOfWork;
 
-            //ViewBag.controller = "docappointment";
         }
 
         // GET: Doctor/DocAppointment
         public ActionResult Index()
         {
-            //ViewBag.phyId = _userPhysicianService.GetPhysicianId(User.Identity.GetUserId());
-
+     
             ViewBag.phyId = User.Identity.GetUserId();
             return View();
         }
 
         [HttpGet]
-        public ActionResult GetAppointmentByDoctor(string id, DateTime appointmentDate)
+        public async Task<ActionResult> GetAppointmentByDoctor(string id, DateTime appointmentDate)
         {
-            var appointSchedulebydoctor = _appointmentServices.GetAllAppointment()
-                .Where(t => t.PhyId == id && t.AppointDate.Date == appointmentDate.Date).ToList();
+            var appointSchedulebydoctor = await _appointmentServices.GetAllAppointmentList(id,appointmentDate);
+
+                //.Where(t => t.PhyId == id && t.AppointDate.Date == appointmentDate.Date).ToList();
 
             return PartialView("_appointListPartialView", appointSchedulebydoctor);
         }

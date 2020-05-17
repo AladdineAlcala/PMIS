@@ -47,11 +47,14 @@
 
                 <!-- /.mailbox-read-info -->
                 <div class="mailbox-controls with-border text-center">
+                    @{
+                        string hasrecord = Model.Medications.Count > 0 ? "disabled" : "";
+                    }
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm" id="medication" data-toggle="tooltip" data-container="body" title="Add Medication">
+                        <button type="button" class="btn btn-default btn-sm" id="medication" data-toggle="tooltip" data-container="body" title="Add Medication" @hasrecord>
                             <i class="far fa-plus-square fa-fw"></i>
                         </button>
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Modify Medication">
+                        <button type="button" class="btn btn-default btn-sm" id="btn-modifymedication" data-toggle="tooltip" data-container="body" title="Modify Medication">
                             <i class="fas fa-edit fa-fw"></i>
                         </button>
                         <button type="button" class="btn btn-default btn-sm" id="removeMedication" data-toggle="tooltip" data-container="body" title="Remove Medication ">

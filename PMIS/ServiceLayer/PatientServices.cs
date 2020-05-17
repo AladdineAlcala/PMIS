@@ -13,7 +13,7 @@ namespace PMIS.ServiceLayer
 {
     public class PatientServices: IPatientServices,IDisposable
     {
-        private PMISEntities _pmisEntities;
+        private readonly PMISEntities _pmisEntities;
 
         //public PatientServices()
         //{
@@ -102,9 +102,9 @@ namespace PMIS.ServiceLayer
            _pmisEntities.Entry(patient).State=EntityState.Modified;
         }
 
-        public PatientDetailsViewModel GetPatientDetailsById(string patientid)
+        public async Task<PatientDetailsViewModel> GetPatientDetailsById(string patientid)
         {
-            return _pmisEntities.Patients.Select(t => new PatientDetailsViewModel()
+            return await _pmisEntities.Patients.Select(t => new PatientDetailsViewModel()
             {
                 PatientId = t.Pat_Id,
                 Firstname = t.Firstname,
@@ -128,25 +128,24 @@ namespace PMIS.ServiceLayer
                 ProfileImage = t.Image
                 
 
-            }).FirstOrDefault(t => t.PatientId == patientid);
+            }).FirstOrDefaultAsync(t => t.PatientId == patientid);
         }
 
 
         public List<PhysicianDetailsViewModel> GetDoctorsByPatient(string id)
         {
 
-            //return (from mr in _pmisEntities.MedicalRecords
-            //    join p in _pmisEntities.Physicians on mr.Phys_id equals p.Phys_id
-            //    where mr.Pat_Id == id
-            //    group new { mr, p } by new { mr.Pat_Id, mr.Phys_id, p.Phys_Fullname }
-            //    into mrp
-            //    select new PhysicianDetailsViewModel()
-            //    {
-            //        PhysId = mrp.Key.Phys_id,
-            //        PhysName = mrp.Key.Phys_Fullname
+            return (from mr in _pmisEntities.MedicalRecords
+                    join p in _pmisEntities.Users on mr.Phys_id equals p.Id
+                    where mr.Pat_Id == id
+                    group new { mr, p } by new { mr.Pat_Id, mr.Phys_id, p.Abr }
+                into mrp
+                    select new PhysicianDetailsViewModel()
+                    {
+                        PhysId = mrp.Key.Phys_id,
+                        PhysName = mrp.Key.Abr
 
-            //    }).ToList();
-            throw new NotImplementedException();
+                    }).ToList();
 
         }
 

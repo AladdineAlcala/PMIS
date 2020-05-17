@@ -1,102 +1,80 @@
-﻿@using PMIS.ViewModels
+﻿@using PagedList
+@using PagedList.Mvc
+@using PMIS.Model
+@using PMIS.ViewModels
 @model PatientMedicalRecordDetailsViewModel
 
 @Html.HiddenFor(m => m.PatientId, new { @id = "patientid" })
 @Html.HiddenFor(m => m.PhyId, new { @id = "phyid" })
 
-@Html.HiddenFor(m=>m.Patient.DoB,new {@id= "patient-info" })
+@Html.HiddenFor(m => m.Patient.DoB, new { @id = "patient-info" })
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col-lg">
-            <div class="card card-fullheight">
+            <!-- Default box -->
+            <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Medical History: <span class="patient-header">@($"{Model.Patient.Lastname},{Model.Patient.Firstname}")</span> </h3>
-                   
-                    <div class="card-tools">
-                        <button class="btn btn-info btn-sm" type="button" id="addActivity"><i class="fas fa-plus"></i>Add Activity </button>
-                    </div>
-                </div>
+                    <h3 class="card-title">Medical History</h3>
 
+
+                </div>
                 <div class="card-body">
                     <div class="row">
+                        
+                        <!-- insert medical history paging -->
+                        
+                        <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1" style="margin-bottom: 10px;">
 
-                        <div class="col-12 col-md-12 col-lg-4 order-2 order-md-1">
+                            <div class="row">
+                                
+                                <div class="col-12" id="medicalrecord">
 
 
-                            <div class="card bg-light mr-2">
-                                <div class="card-header text-muted pb-0 border-bottom-0">
-                                    <h6 style="display: inline-block">Record#: <span class="text-danger" style="font-size:22px;">@Model.PatientId</span> </h6>
+
+                                    @{
+                                        Html.RenderPartial("_RecordListPartialView", (PagedList<MedicalRecord>) Model.MedicalRecordList);
+                                    }
+
                                 </div>
-                                <div class="card-body pt-0">
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <h2 class="lead">@($"{Model.Patient.Lastname},{Model.Patient.Firstname}")</h2>
-                                           
-                                            <ul class="ml-4 mb-0 mt-2 fa fa-ul mb-4 text-muted">
-                                                <li class="small my-1" id="patientinfo-age">
-                                                    <span class="fa fa-li"><i class="fas fa-mdb fa-star"></i></span>@(Model.Patient.DoB?.ToString("yyyy MMMM dd") ?? String.Empty) ( <span class="d-inline-block text-bold" id="get-age"></span> yrs. )
-                                                </li>
-                                                <li class="small my-1"><span class="fa fa-li"><i class="fas fa-mdb fa-stamp"></i></span>@($"{Model.Patient.CivilStat}")</li>
 
-                                                <li class="small my-1"><span class="fa fa-li"><i class="fas fa-mdb fa-street-view"></i></span> @($"{Model.Patient.AddStreetBrgy},{Model.Patient.Muncity},{Model.Patient.Province}")</li>
-                                                <li class="small my-1">
-                                                    <span class="fa fa-li"><i class="fas fa-mdb fa-phone"></i></span>
-                                                    @{
-                                                        if ( !String.IsNullOrEmpty(Model.Patient.ContactCell) && !String.IsNullOrEmpty(Model.Patient.ContactPhone))
-                                                        {
-                                                            @($"{Model.Patient.ContactCell} , {Model.Patient.ContactPhone}")
-                                                        }
-                                                        else
-                                                        {
-                                                            @Model.Patient.ContactCell;
-                                                        }
-                                                    }
-
-                                                   
-                                                    
-                                                </li>
-                                            </ul>
-                                            
-                                            <div class="mt-3">
-                                                
-                                                <p class="text-muted text-sm my-1"><b>Blood Type: </b>@Model.Patient.BType
-                                                </p>
-                                                <p class="text-muted text-sm my-1"><b>Height(cm): </b>@Model.Patient.Height
-                                                </p>
-                                                <p class="text-muted text-sm my-1"><b>Weight(kls): </b>@Model.Patient.Weight
-                                                </p>
-
-                                            </div>
-                                         
-                                            
-                                           
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
-
+                          
                         </div>
+                        
+                        <!-- insert pagelist here -->
+                        @*<div class="medical-history-page">
+                            <span>Page</span> @(Model.MedicalRecordList.PageCount < Model.MedicalRecordList.PageNumber ? 0 : Model.MedicalRecordList.PageNumber) <span>of</span> @Model.MedicalRecordList.PageCount
+                            @Html.PagedListPager(Model.MedicalRecordList, page => Url.Action("MedicalHistory", new {page, id = ViewBag.patId, phyId = ViewBag.phyId}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() {HttpMethod = "GET", UpdateTargetId = "medicalrecord"}))
+                        </div>*@
+                       
+                        
+                        <!-- end-->
 
-                        <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1" id="medicalrecord">
+                        <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                            
+                            @*<h3 class="text-primary"><i class="fas fa-paint-brush"></i> AdminLTE v3</h3>*@
 
-                             
                             @{
-                                Html.RenderAction("MedicalHistoryListByPatient",new {@id=Model.PatientId, @phyid=Model.PhyId});
-                            }      
+                                Html.RenderPartial("_PatientProfile", Model.Patient);
+                            }
+
+
+
+                            @*<div class="text-center mt-5 mb-3">
+                                <a href="#" class="btn btn-sm btn-primary">Add files</a>
+                                <a href="#" class="btn btn-sm btn-warning">Report contact</a>
+                            </div>*@
                         </div>
-
-
                     </div>
-
-
                 </div>
+                <!-- /.card-body -->
             </div>
+            <!-- /.card -->
         </div>
     </div>
 </div>
-
 
 
 

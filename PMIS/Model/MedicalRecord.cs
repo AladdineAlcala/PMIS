@@ -27,11 +27,13 @@ namespace PMIS.Model
         public string Phys_id { get; set; }
         public string ActivityName { get; set; }
         public string RecordDetails { get; set; }
+        public Nullable<long> AppointmentNo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocPrescriptionRecord> DocPrescriptionRecords { get; set; }
         public virtual Patient Patient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Medication> Medications { get; set; }
+        public virtual User User { get; set; }
     }
 }

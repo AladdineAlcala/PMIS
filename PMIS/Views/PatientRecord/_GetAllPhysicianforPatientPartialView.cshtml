@@ -11,8 +11,9 @@
                 <thead>
                 <tr>
                     <th style="width: 10px">#</th>
-                    <th>Physician ID</th>
                     <th>Physician Fullname</th>
+                    <th>Physician Abrivation</th>
+                    
                     <th style="width: 40px"> </th>
                 </tr>
                 </thead>
@@ -21,12 +22,14 @@
             {
                 foreach (var item in Model)
                 {
+                    var fullname = item.phyFirstname + ' ' + item.phyLastname;
                     counter += 1;
 
                     <tr data-phyId="@item.Phyid">
                         <td>@counter</td>
-                        <td>@item.Phyid</td>
-                        <td>@item.PhyscianName </td>
+                        <td>@fullname </td>
+                        <td>@item.Arb</td>
+                      
                         <td><button type="button" class="btn btn-sm bg-blue patient-record" data-patientId="@item.PatientId">Select </button></td>
                     </tr>
                 }

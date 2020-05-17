@@ -50,6 +50,24 @@ namespace PMIS.ServiceLayer
             }).ToListAsync();
         }
 
+        public async Task<IEnumerable<AppointmentScheduleViewModel>> GetAllAppointmentList(string id, DateTime appointmentDate)
+        {
+            return await _pmisEntities.Appointments.Where(t=>t.Phys_id==id && t.AppointDate.Value==appointmentDate.Date) .Select(t => new AppointmentScheduleViewModel()
+            {
+                No = t.No,
+                PatientNo = t.Pat_Id,
+                PatientName = t.Patient.Lastname + " ," + t.Patient.Firstname,
+                PhyId = t.User.Id,
+                PhyName = t.User.Abr,
+                AppointDate = (DateTime)t.AppointDate,
+                Stat = (bool)t.Status ? "Served" : "Pending",
+                Iscancelled = (bool)t.IsCancelled
+
+
+            }).ToListAsync();
+        }
+
+
         public IEnumerable<SelectListItem> GetAllDoctors()
         {
             return _userPhysicianService.GetPhysicianListItems();

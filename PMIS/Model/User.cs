@@ -21,6 +21,7 @@ namespace PMIS.Model
             this.UserClaims = new HashSet<UserClaim>();
             this.UserLogins = new HashSet<UserLogin>();
             this.Roles = new HashSet<Role>();
+            this.MedicalRecords = new HashSet<MedicalRecord>();
         }
     
         public string Id { get; set; }
@@ -48,5 +49,7 @@ namespace PMIS.Model
         public virtual ICollection<UserLogin> UserLogins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Role> Roles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
     }
 }

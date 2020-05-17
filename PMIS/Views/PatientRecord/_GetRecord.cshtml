@@ -1,85 +1,149 @@
 ﻿@using PMIS.Model
 @model MedicalRecord
-
-@Html.HiddenFor(m=>m.RecordNo,new {@id="recNo"})
-
-<div class="card card-primary card-outline">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="nav-icon fal fa-file-medical-alt"> </i>
-            Patient Record
-        </h3>
-        <div class="card-tools">
-            
-            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" id="return_to_list" data-container="body" title="Return to List">
-                <i class="fas fa-reply"></i>
-            </button>
-        </div>
-    </div> 
     
-    <!--card header-->
-    
-    <div class="card-body p-0">
-        <div class="mailbox-read-info">
-            <h5>Subjective: </h5>
-            
-            <h6><span class="mailbox-read-time float-right">@Model.RecordDate.Value.ToString("yy-MMM-dd ddd tt")</span></h6>
-        </div>
-       
-        
-        <div class="mailbox-read-message with-border border-bottom">
-           
-            @(new HtmlString(Model.RecordDetails))
+@{
+    if (Model != null)
+    {
+        @Html.HiddenFor(m => m.RecordNo, new {@id = "recNo"})
 
-        </div>
-        
-      
-        <div class="mailbox-read-info">
-            <h5>Current Medication : </h5>
-           
-        </div>
 
-        <!-- /.mailbox-read-info -->
-        <div class="mailbox-controls with-border text-center">
-            <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm" id="medication" data-toggle="tooltip" data-container="body" title="Add Medication">
-                    <i class="far fa-edit"></i>
-                </button>
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                    <i class="fas fa-reply"></i>
-                </button>
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                    <i class="fas fa-share"></i>
-                </button>
+        <div class="card card-primary card-outline">
+            <div class="card-header p-2">
+                <h3 class="card-title">
+                    <i class="nav-icon fal fa-file-medical-alt"> </i>
+                    Patient Record
+                </h3>
+                <div class="card-tools mr-2">
+
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" id="return_to_list" data-container="body" title="Return to List">
+                        <i class="fas fa-reply"></i>
+                    </button>
+                </div>
             </div>
-            <!-- /.btn-group -->
-            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                <i class="fas fa-print"></i>
-            </button>
-        </div>
-        <!-- /.mailbox-controls -->
+
+            <!--card header-->
+
+            <div class="card-body p-0">
+
+                <div class="mailbox-read-info pl-2 bg-info">
+                    <h5 class="text-white" style="width: 300px;">Subjective: </h5>
+
+                    @*<h6><span class="mailbox-read-info">@Model.RecordDate.Value.ToString("yy-MMM-dd ddd tt")</span></h6>*@
+                </div>
 
 
-        <div class="mailbox-read-message">
+                <div class="subjective-message with-border border-bottom">
+
+                    @(new HtmlString(Model.RecordDetails))
+
+                </div>
 
 
-            @{
-                Medication first = null;
-                foreach (var t in Model.Medications)
-                {
-                    if (t.RecordNo == Model.RecordNo)
-                    {
-                        first = t;
-                        break;
+                <div class="mailbox-read-info pl-2 bg-info">
+                    <h5 class="text-white">Current Medication</h5>
+
+                </div>
+
+                <!-- /.mailbox-read-info -->
+                <div class="mailbox-controls with-border text-center">
+                    @{
+                        string hasrecord = Model.Medications.Count > 0 ? "disabled" : "";
                     }
-                }
-            }
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm" id="medication" data-toggle="tooltip" data-container="body" title="Add Medication" @hasrecord>
+                            <i class="far fa-plus-square fa-fw"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" id="btn-modifymedication" data-toggle="tooltip" data-container="body" title="Modify Medication">
+                            <i class="fas fa-edit fa-fw"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" id="removeMedication" data-toggle="tooltip" data-container="body" title="Remove Medication ">
+                            <i class="fas fa-trash fa-fw"></i>
+                        </button>
+                    </div>
+                    <!-- /.btn-group -->
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                        <i class="fas fa-print"></i>
+                    </button>
+                </div>
+                <!-- /.mailbox-controls -->
 
-            @(new HtmlString(first!=null? first.MedicationDesc:String.Empty))
+
+                <div class="subjective-message with-border border-bottom">
+
+                    <!-- medication here -->
+                    @{
+                        Html.RenderAction("GetMedicationView", "PatientMedicalRecord", new {area = "Doctor", recNo = Model.RecordNo});
+                    }
+
+
+                </div>
+
+
+                <!--- prescreiption -->
+
+
+
+                <div class="mailbox-read-info pl-2 bg-info">
+                    <h5 class="text-white">Prescription: </h5>
+
+                </div>
+
+                <!-- /.mailbox-read-info -->
+                <div class="mailbox-controls with-border text-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm" id="btn-newprescription" data-toggle="tooltip" data-container="body" title="Add Prescription">
+                            <i class="far fa-plus-square fa-fw"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-default btn-sm btn-x" disabled="disabled" id="btn-modifyPrescription" data-toggle="tooltip" data-container="body" title="Edit Prescription">
+                            <i class="fas fa-edit fa-fw"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-default btn-sm btn-x" disabled="disabled" id="btn-prescriptionremove" data-toggle="tooltip" data-container="body" title="Remove Prescription">
+                            <i class="fas fa-trash fa-fw"></i>
+                        </button>
+                    </div>
+                    <!-- /.btn-group -->
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                        <i class="fas fa-print"></i>
+                    </button>
+                </div>
+                <!-- /.mailbox-controls -->
+
+
+                <div class="subjective-message with-border border-bottom table-responsive p-0" id="med_prescription">
+
+                    @{
+                        Html.RenderAction("GetMedPrescription", "PatientMedicalRecord", new {area = "Doctor", recordNo = Model.RecordNo});
+                    }
+
+
+                </div>
+
+            </div>
 
         </div>
+    }
 
+    else
+    {
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="nav-icon fal fa-file-medical-alt"> </i>
+                    Patient Record
+                </h3>
+                <div class="card-tools">
 
-    </div>
-   
-</div>
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" id="return_to_list" data-container="body" title="Return to List">
+                        <i class="fas fa-reply"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card-body p-0" style="min-height: 250px;">
+                    
+            </div>
+        </div>
+    }
+}
