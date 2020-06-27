@@ -14,11 +14,15 @@ namespace PMIS.Controllers
     public class PrescriptionController : Controller
     {
         private readonly IPrescriptionServices _prescriptionServices;
+        private readonly IPatientRecordServices _patientRecordServices;
+        private readonly IPatientServices _patientServices;
         private readonly IUnitOfWork _unitOfWork;
-        public PrescriptionController(IPrescriptionServices prescriptionServices, IUnitOfWork unitOfWork)
+        public PrescriptionController(IPrescriptionServices prescriptionServices, IUnitOfWork unitOfWork, IPatientRecordServices patientRecordServices, IPatientServices patientServices)
         {
             _prescriptionServices = prescriptionServices;
             _unitOfWork = unitOfWork;
+            _patientRecordServices = patientRecordServices;
+            _patientServices = patientServices;
         }
         // GET: Prescription
         public ActionResult Index()
@@ -77,6 +81,44 @@ namespace PMIS.Controllers
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             return Json(new {success = false}, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> PrintPrescript(int medRecNo)
+        {
+            //var reportOption = new ReportOptionViewModel()
+            //{
+            //   recordNo = medRecNo
+            //};
+
+            var medicalRecordList = await _patientRecordServices.GetAllRecordsAsync();
+            ContainerClass.MedicalRecord = (from m in medicalRecordList where m.RecordNo==medRecNo
+                                            select new PrintMedicalRecordViewModel()
+                                            {
+                                                RecordNo = (int)m.RecordNo,
+                                                PatientId = m.Pat_Id,
+                                                PhyId = m.Phys_id,
+                                                RecordedDate = (DateTime) m.RecordDate
+                                               
+
+                                            }).ToList();
+
+           var docprescription = _prescriptionServices.GetDocPrescriptionByRecNo(medRecNo).ToList();
+            ContainerClass.DocPrescription = (from p in docprescription
+                                               select new PrintDocPrescriptionViewModel()
+                                                {
+                                                    PrescNo = p.PrescNo,
+                                                    RecNo = p.RecNo,
+                                                    PrescriptionDetails = p.PrescriptionDetails,
+                                                    Sig = p.Sig,
+                                                    DispInst = p.DispInst
+
+                                                }).ToList();
+
+           var patientList = await _patientServices.GetAllPatients();
+            ContainerClass.PatientDetails = patientList.Where(t => t.PatientId == ContainerClass.MedicalRecord[0].PatientId).ToList();
+
+            return View("~/Views/Shared/ReportContainer.cshtml");
         }
     }
 } 

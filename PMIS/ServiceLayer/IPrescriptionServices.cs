@@ -16,5 +16,8 @@ namespace PMIS.ServiceLayer
         IEnumerable<SelectListItem> GetCategoryListItems();
         IEnumerable<SelectListItem> GetPrescriptionListItems(int? catId);
         IEnumerable<DocPrescriptionViewModel> GetDocPrescriptionByRecNo(int recNo);
+        Task<int> PrescriptionCount();
+
+
     }
 }

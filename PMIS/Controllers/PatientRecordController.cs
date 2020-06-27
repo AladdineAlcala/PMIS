@@ -17,15 +17,16 @@ namespace PMIS.Controllers
         private readonly IUnitOfWork _unitofwork;
         private readonly IPatientRecordServices _patientrecordservices;
         private readonly IPatientServices _patientservices;
+        private readonly IPrescriptionServices _prescriptionServices;
 
-       
 
         // GET: PatientRecord
-        public PatientRecordController(IUnitOfWork unitofwork, IPatientRecordServices patientrecordservices, IPatientServices patientservices)
+        public PatientRecordController(IUnitOfWork unitofwork, IPatientRecordServices patientrecordservices, IPatientServices patientservices, IPrescriptionServices prescriptionServices)
         {
             _unitofwork = unitofwork;
             _patientrecordservices = patientrecordservices;
             _patientservices = patientservices;
+            _prescriptionServices = prescriptionServices;
         }
 
         public ActionResult Index()
@@ -34,12 +35,14 @@ namespace PMIS.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddRecord(string patientId,string physicianId)
+        public ActionResult AddRecord(string patientId,string physicianId,int? appNo)
         {
             var newrecord = new MedicalRecordViewModel()
             {
                 PatientId = patientId,
-                PhyId = physicianId
+                PhyId = physicianId,
+                ApppointmentNo = (int) appNo
+
             };
 
             return PartialView("_AddPatientRecordPartialView",newrecord);
@@ -71,6 +74,54 @@ namespace PMIS.Controllers
             return Json(new {success=true},JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> ModifyPatientRecord(int recordNo)
+        {
+          
+            var medicalRecord = await _patientrecordservices.GetMedicalRecord(recordNo);
+
+            var medicalRecordViewModel = new MedicalRecordViewModel()
+            {
+                RecordNo = recordNo,
+                PatientId = medicalRecord.Pat_Id,
+                RecordedDate = (DateTime) medicalRecord.RecordDate,
+                PhyId = medicalRecord.Phys_id,
+                Desciption = medicalRecord.RecordDetails,
+                Subject = medicalRecord.ActivityName,
+                ApppointmentNo = (int) medicalRecord.AppointmentNo
+
+            };
+
+            return PartialView("_ModifyPatientRecord", medicalRecordViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ModifyPatientRecord(MedicalRecordViewModel medicalRecord)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_ModifyPatientRecord", medicalRecord);
+            }
+
+            var medicalrecord = new MedicalRecord()
+            {
+
+                RecordNo =medicalRecord.RecordNo,
+                Pat_Id = medicalRecord.PatientId.Trim(),
+                Phys_id = medicalRecord.PhyId,
+                RecordDate = DateTime.Now,
+                ActivityName = medicalRecord.Subject,
+                RecordDetails = medicalRecord.Desciption,
+                AppointmentNo = medicalRecord.ApppointmentNo
+            };
+
+            _patientrecordservices.UpdateMedicalRecord(medicalrecord);
+            _unitofwork.Commit();
+
+            return Json(new {success=true }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult> RemovePatientRecord(int recordId)
@@ -91,17 +142,36 @@ namespace PMIS.Controllers
 
 
         [HttpGet]
-        public ActionResult MedicalHistory(string patientid, string phyid)
+        public ActionResult MedicalHistory(string patientid, string phyid,int? page)
         {
+            int pageIndex = page ?? 1;
+            int dataCount = 3;
 
-            var patient_record_details = new PatientMedicalRecordDetailsViewModel
+
+            ViewBag.patId = patientid;
+            ViewBag.phyId = phyid;
+
+            ViewBag.appointNo =_patientrecordservices.GetAppointmentNo(patientid,DateTime.Now);
+
+            var patientRecordDetails = new PatientMedicalRecordDetailsViewModel
             {
                 PatientId = patientid,
                 PhyId = phyid,
                 Patient = _patientservices.GetPatientById(patientid)
             };
+            
+            var medicalRecord = _patientrecordservices.GetAllRecords(patientid, phyid);
 
-            return View(patient_record_details);
+            patientRecordDetails.MedicalRecordList = medicalRecord.OrderByDescending(t => t.RecordNo).ToList()
+                .ToPagedList(pageIndex, dataCount);
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_RecordListPartialView", (PagedList<MedicalRecord>)patientRecordDetails.MedicalRecordList);
+            }
+
+
+            return View(patientRecordDetails);
         }
 
 
@@ -154,7 +224,24 @@ namespace PMIS.Controllers
 
             return PartialView("_GetRecord", medicalRecord);
         }
-        
+
+        [HttpGet]
+        public ActionResult GetMedicationView(int recNo)
+        {
+            var patientMedication = _patientrecordservices.GetMedication(recNo);
+
+            return PartialView("_GetMedicationView", patientMedication);
+        }
+
+        [HttpGet]
+        public ActionResult GetMedPrescription(int recordNo)
+        {
+            var docprescriptionList = _prescriptionServices.GetDocPrescriptionByRecNo(recordNo);
+
+            return PartialView("_GetMedPrescription", docprescriptionList);
+        }
+
+
         [HttpGet]
         public ActionResult CreateMedication(int recNo)
         {

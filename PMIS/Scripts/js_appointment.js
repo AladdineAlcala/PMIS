@@ -117,7 +117,8 @@ function loadAppointmentDateSetting() {
     });
 }
 
-function AutocompleteName() {
+
+function autocompleteName() {
 
     let patients = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('PatientName'),
@@ -130,8 +131,8 @@ function AutocompleteName() {
 
 
     $('#patientname').typeahead({
-        highlight: true
-    },
+            highlight: true
+        },
         {
             name: 'patients',
             display: 'PatientName',
@@ -143,7 +144,7 @@ function AutocompleteName() {
 
             $('#patientId').val(patient.PatientId);
 
-            //console.log(patient.PatientId);
+            console.log(patient.PatientId);
 
         });
 }
@@ -172,41 +173,75 @@ function AutocompleteName() {
 
     document.getElementsByClassName('appointOptions').selectedIndex = 0;
 
+
+    $(document).on('click', "#add-appointment", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'Get',
+            url: '/Appointment/CreateAppointment',
+            contentType: 'application/html;charset=utf8',
+            datatype: 'html',
+            cache: false,
+            success: function(result) {
+
+                var modal = $('#modal-createAppointment');
+                modal.find('.modal-body').html(result);
+
+
+                let patients = new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('PatientName'),
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    remote: {
+                        url: '/Patient/GetPatientAutoComplete?query=%QUERY',
+                        wildcard: '%QUERY'
+                    }
+                });
+
+
+                $('#patientname').typeahead({
+                                highlight: true
+                            },
+                            {
+                                name: 'patients',
+                                display: 'PatientName',
+                                source: patients
+                            }
+
+
+                        ).on("typeahead:selected typeahead:autocompleted",
+                            function(e, patient) {
+                                e.preventDefault();
+                      
+                                $('#patientId').val(patient.PatientId);
+
+                       
+
+                            });
+            
+                      
+
+                loadAppointmentDateSetting();
+
+                modal.modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    },
+                    'show');
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                Swal.fire('Error adding record!', 'Please try again', 'error');
+            }
+        });
+
+
+    });
+
 })(jQuery);
 
 
-$(document).on('click', '#add-appointment', function (e) {
-    e.preventDefault();
 
-    $.ajax({
-        type: 'Get',
-        url: appointment.newAppointment,
-        contentType: 'application/html;charset=utf8',
-        datatype: 'html',
-        cache: false,
-        success: function (result) {
-
-            var modal = $('#modal-createAppointment');
-            modal.find('.modal-body').html(result);
-
-            AutocompleteName();
-
-            loadAppointmentDateSetting();
-
-            modal.modal({
-                backdrop: 'static',
-                keyboard: false
-            },
-                'show');
-
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            Swal.fire('Error adding record!', 'Please try again', 'error');
-        }
-    });
-
-
-});
 
 
 $(document).on('click', '#btn-saveAppointment', function (e) {
@@ -390,7 +425,35 @@ $(document).on('click', '#btnconsultationoption', function (e) {
             var modal = $('#modal-appointoptions');
             modal.find('.modal-body').html(result);
 
-            AutocompleteName();
+
+            let patients = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('PatientName'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/Patient/GetPatientAutoComplete?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+
+            $('#patientname').typeahead({
+                    highlight: true
+                },
+                {
+                    name: 'patients',
+                    display: 'PatientName',
+                    source: patients
+                }
+            ).on("typeahead:selected typeahead:autocompleted",
+                function (e, patient) {
+                    e.preventDefault();
+
+                    $('#patientId').val(patient.PatientId);
+
+                    //console.log(patient.PatientId);
+
+                });
+
 
             $('#replacement').hide();
 

@@ -7,7 +7,6 @@
     if (Model != null)
     {
         @Html.HiddenFor(m => m.RecordNo, new {id = "recNo"})
-
         <div class="card card-primary card-outline">
             <div class="card-header p-2">
                 <h3 class="card-title">
@@ -15,6 +14,10 @@
                     Patient Record
                 </h3>
                 <div class="card-tools mr-2">
+                    
+                    @*<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" id="printMedicalRecord" title="Print Record">
+                       <i class="fas fa-print"></i>
+                    </button>*@
 
                     <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" id="return_to_list" data-container="body" title="Return to List">
                         <i class="fas fa-reply"></i>
@@ -61,17 +64,17 @@
                             <i class="fas fa-trash fa-fw"></i>
                         </button>
                     </div>
-                    <!-- /.btn-group -->
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                   
+                    @*<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
                         <i class="fas fa-print"></i>
-                    </button>
+                    </button>*@
                 </div>
                 <!-- /.mailbox-controls -->
 
 
                 <div class="subjective-message with-border border-bottom">
 
-                <!-- medication here -->
+                    <!-- medication here -->
                     @{
                         Html.RenderAction("GetMedicationView", "PatientMedicalRecord", new { area = "Doctor", recNo = Model.RecordNo });
                     }
@@ -124,6 +127,7 @@
             </div>
 
         </div>
+       
     }
     else
     {

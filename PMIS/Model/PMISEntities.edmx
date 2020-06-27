@@ -146,6 +146,7 @@
           <Property Name="Lastname" Type="nvarchar" MaxLength="50" />
           <Property Name="Middle" Type="nvarchar" MaxLength="50" />
           <Property Name="Abr" Type="char" MaxLength="10" />
+          <Property Name="ProfilePic" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_Appointment_Patient">
           <End Role="Patient" Type="Self.Patient" Multiplicity="0..1">
@@ -528,6 +529,7 @@
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_dbo_UserLogins_dbo_Users_UserId" FromRole="Users" ToRole="UserLogins" />
           <NavigationProperty Name="Roles" Relationship="PMISModel.UserRoles" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="MedicalRecords" Relationship="PMISModel.FK_MedicalRecord_Users" FromRole="User" ToRole="MedicalRecord" />
+          <Property Name="ProfilePic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Appointment_Patient">
           <End Role="Patient" Type="Self.Patient" Multiplicity="0..1">
@@ -852,6 +854,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PMISModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ProfilePic" ColumnName="ProfilePic" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

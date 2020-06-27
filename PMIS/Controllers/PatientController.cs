@@ -288,5 +288,14 @@ namespace PMIS.Controllers
 
             return Json(new {success = _success, randomFileName}, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAllAppointmentByPatient(string patientId)
+        {
+            var appointmentList = await _appointmentServices.GetAllAppointmentByPatient(patientId);
+
+            return PartialView("_PatientAppointmentListPartialView", appointmentList);
+        }
+
     }
 }

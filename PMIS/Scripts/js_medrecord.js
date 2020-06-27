@@ -44,14 +44,14 @@ function loadMedicalRecord(patId, phyId) {
 
 
 function loadChart(recordno) {
-    
+
     $('#spinn-loader').show();
 
     $.ajax({
         type: 'Get',
         url: '/PatientRecord/GetRecordChart',
         contentType: 'application/html;charset=utf8',
-        data: { recordNo:recordno},
+        data: {recordNo:recordno},
         datatype: 'html',
         cache: false,
         success: function (result) {
@@ -118,44 +118,40 @@ function get_physician(patId) {
 
 
 }
+function autocompleteName() {
 
+    let patients = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('PatientName'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/Patient/GetPatientAutoComplete?query=%QUERY',
+            wildcard: '%QUERY'
+        }
+    });
+
+
+    $('#search-patient').typeahead({
+            highlight: true
+        },
+        {
+            name: 'patients',
+            display: 'PatientName',
+            source: patients
+        }
+    ).on("typeahead:selected typeahead:autocompleted",
+        function (e, patient) {
+            e.preventDefault();
+
+            get_physician(patient.PatientId);
+
+        });
+}
 
 
 $(function () {
 
 
     $('#get-age').html(getAge($('#patient-info').val()));
-
-
-    function autocompleteName() {
-
-        let patients = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('PatientName'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '/Patient/GetPatientAutoComplete?query=%QUERY',
-                wildcard: '%QUERY'
-            }
-        });
-
-
-        $('#search-patient').typeahead({
-            highlight: true
-        },
-            {
-                name: 'patients',
-                display: 'PatientName',
-                source: patients
-            }
-        ).on("typeahead:selected typeahead:autocompleted",
-            function (e, patient) {
-                e.preventDefault();
-
-                get_physician(patient.PatientId);
-
-            });
-    }
-
 
 
     autocompleteName();
@@ -171,12 +167,12 @@ $(document).on('click', '#addActivity', function (e) {
 
     const patientId = $('#patientid').val();
     const phyId = $('#phyid').val();
-
+    const appno = $('#appointmentNo').val();
 
     $.ajax({
         type: 'Get',
         url: '/PatientRecord/AddRecord',
-        data: { patientId: patientId, physicianId: phyId },
+        data: { patientId: patientId, physicianId: phyId, appNo: appno },
         contentType: 'application/html;charset=utf8',
         datatype: 'html',
         cache: false,
@@ -287,7 +283,105 @@ $(document).on('click', '.post #modifychart', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-    alert('sadsadas');
+
+   // alert($(this).closest('.post').attr('data-postId'));
+
+    $.ajax({
+        type: 'Get',
+        url: '/PatientRecord/ModifyPatientRecord',
+        data: { recordNo: $(this).closest('.post').attr('data-postId') },
+        contentType: 'application/html;charset=utf8',
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            var modal = $('#modal-modifyRecord');
+            modal.find('.modal-body').html(result);
+
+            loadsummernote();
+
+            modal.modal({
+                    backdrop: 'static',
+                    keyboard: false
+                },
+                'show');
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
+    });
+
+
+});
+
+
+$(document).on('click', '#update-record', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const patientId = $('#patientid').val();
+    const phyId = $('#phyid').val();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Updating Medical Record..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Proceed operation..!'
+
+    }).then((result) => {
+
+            if (result.value) {
+
+                var formUrl = $('#formModifyPatientRecord').attr('action');
+                var form = $('[id*=formModifyPatientRecord]');
+
+                $.validator.unobtrusive.parse(form);
+                form.validate();
+
+
+                if (form.valid()) {
+
+                    $.ajax({
+                        type: 'Post',
+                        url: formUrl,
+                        data: form.serialize(),
+                        datatype: 'json',
+                        cache: false,
+                        success: function (data) {
+
+                            if (data.success) {
+
+                                $("#modal-modifyRecord").modal('hide');
+
+                                toast.fire({
+                                    type: 'success',
+                                    title: 'Record Succesfully Updated.'
+                                });
+                            }
+
+
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            Swal.fire('Error adding record!', 'Please try again', 'error');
+                        }
+
+                    }).done(function () {
+
+                        loadMedicalRecord(patientId, phyId);
+
+
+                    });
+
+                }
+
+            }
+        }
+
+    );
 
 });
 
@@ -296,34 +390,9 @@ $(document).on('click', '.post #viewchart', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-    $('#spinn-loader').show();
+    var pageSelected = $('.pagination').find('li.active').next().text();
 
-    $.ajax({
-        type: 'Get',
-        url: '/PatientRecord/GetRecordChart',
-        contentType: 'application/html;charset=utf8',
-        data: { recordNo: $(this).parents('.post').attr('data-recorId') },
-        datatype: 'html',
-        cache: false,
-        success: function (result) {
-
-            $('#medicalrecord').html(result);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            Swal.fire('Error on retrieving record!', 'Please try again', 'error');
-        }
-
-
-    }).done(function () {
-
-        setTimeout(function () {
-
-            $('#spinn-loader').hide();
-
-        }, 1000);
-
-
-    });
+    loadChart($(this).closest('.post').attr('data-postId'));
 
 });
 
@@ -498,4 +567,13 @@ $(document).on('click', '#removechart', function (e) {
         }
 
     );
+});
+
+$(document).on('click', '#printPrescription', function (e) {
+    e.preventDefault();
+
+    var medRecordNo = document.getElementById('recNo').value;
+    
+    var url = "/Prescription/PrintPrescript?medRecNo=" + medRecordNo;
+    window.open(url,"_blank");
 });

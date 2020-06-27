@@ -137,6 +137,10 @@ table.dataTable tr.even:hover {
     color: #6c757d;
     font-size:11px;
     margin-top: -3px;
+    float: right;
+    text-align: right;
+    margin-right: 5px;
+    padding-top: 4px;
 }
 .post-content {
     margin-top: 10px;
@@ -205,9 +209,10 @@ table.dataTable tr.even:hover {
 .user-block .username,
 .user-block .description
  {
-
+    width: 300px;
     margin-top: 5px;
     margin-left: 5px;
+    display: inline-block;
 }
 .medical-history {
     margin: 3px;
@@ -272,8 +277,14 @@ table.dataTable tr.even:hover {
     width: 50px;
 }
 
+#img-portrait {
+   width: 210px;
+    margin-left: 60px;
+}
+
 .img-thumbnail {
-    width: 70%;
+   /*width: 100%;*/
+    width: 210px;
     padding:6px;
 }
 .profile_info {
@@ -281,3 +292,24 @@ table.dataTable tr.even:hover {
     margin-bottom:15px;
 }
 
+.content-wrapper,
+.container-login100
+{
+    background-image: url('../Images/61802.jpg');
+    -ms-background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    -ms-background-position: center;
+    background-position: center;
+}
+
+.last-visit {
+    margin-left: 60px;
+    font-style: italic;
+    color: #FF0000;
+}
+
+.basic-info {
+    margin-left: 5px;
+    font-size: 13px;
+    color: #1a4970;
+}

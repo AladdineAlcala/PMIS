@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             @Html.HiddenFor(m => m.PatientId, new { id = "patient-Id" })
             <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
@@ -11,37 +11,33 @@
 
                           if (Model.PatientDetails.ProfileImage == null)
                           {
-                              if (Model.PatientDetails.Gender == "Female")
-                              {
-                                  <img class="img-thumbnail img-fluid"
-                                       src="@Url.Content("~/Content/dist/img/avatar3.png")"
-                                       alt="User profile picture">
-                              }
-                              else
-                              {
-                                  <img class="img-thumbnail img-fluid"
-                                       src="@Url.Content("~/Content/dist/img/avatar04.png")"
-                                       alt="User profile picture">
-                              }
+
+                              <img class="img-thumbnail img-fluid"
+                                   src="@Url.Content("~/Content/dist/img/no-photo.png")"
+                                   alt=@Model.PatientDetails.Lastname >
+                             
                           }
                           else
                           {
                               <img class="img-thumbnail img-fluid"
-                                   src="@Url.Content("~/Content/Images/" + Model.PatientDetails.ProfileImage)"
-                                   alt="User profile picture">
+                                   src="@Url.Content($"~/Content/Images/{Model.PatientDetails.ProfileImage}")"
+                                   alt=@Model.PatientDetails.Lastname >
                           }
+
+                         
                       }
                        
                     </div>
                     <div class="uploadpics">
                         <button id="profilepicbtn" class="btn btn-default btn-xs"><i class="fas fa-camera"></i> </button>
                     </div>
-                    <h5 class="profile-username text-center">@($"{Model.PatientDetails.Lastname},{Model.PatientDetails.Firstname}")</h5>
-                    <p class="text-muted text-center">@Model.PatientId</p>
+                    @*<h5 class="profile-username text-center">@($"{Model.PatientDetails.Lastname},{Model.PatientDetails.Firstname}")</h5>
+                    <p class="text-muted text-center">@Model.PatientId</p>*@
 
                     <h6 class="text-center text-blue mt-2"> Doctor's In-charge</h6>
-                    <ul class="list-group list-group-unbordered mb-3">
 
+                    <ul class="list-group list-group-unbordered mb-3">
+            
 
                         @{
                             if (Model.Listofdoctors.Any())
@@ -50,6 +46,8 @@
                                 {
                                     <li class="list-group-item">
                                         <b>DR. @item.PhysName</b>
+                                        <span class="last-visit"> Last Visit:</span>
+                                        @(Model.Lastvisited != null ? Model.Lastvisited.AppointDate.Value.ToString("MMM-dd-yyyy") : "No Visit Found")
                                     </li>
                                 }
                             }
@@ -69,19 +67,50 @@
 
             <div class="card">
                 <div class="card-body">
-                    <span class="text-info"> Last Visited:</span>
-                    @(Model.Lastvisited != null ? Model.Lastvisited.AppointDate.Value.ToString("MMM-dd-yyyy") : "No Visit Found")
+                    @Html.HiddenFor(m=>m.PatientDetails.DateofBirth,new {id="dob"})
+                        <ul class="list-group list-group-unbordered mb-3">
+                        <li class="list-group-item">
+                            <b>Name:</b> <span style="margin-left: 5px;">@($"{Model.PatientDetails.Lastname},{Model.PatientDetails.Firstname}")</span>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Age:</b> <span class="basic-info get-age"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Gender:</b> <span class="basic-info">@Model.PatientDetails.Gender</span>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Contact#:</b>
+                            <span class="basic-info">
+                                @{
+                                    if (!String.IsNullOrEmpty(Model.PatientDetails.ContactCell) && !String.IsNullOrEmpty(Model.PatientDetails.ContactTell))
+                                    {
+                                        @($"{Model.PatientDetails.ContactCell} / {Model.PatientDetails.ContactTell}")
+                                    }
+                                    else
+                                    {
+                                        @Model.PatientDetails.ContactCell
+
+                                    }
+                                }
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Address:</b> <span class="basic-info">@($"{Model.PatientDetails.AddStreetBrgy},{Model.PatientDetails.Municipality},{Model.PatientDetails.Province}")</span>
+                        </li>
+                    </ul>
+
+
 
                 </div>
             </div>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link active" href="#basic-info" data-toggle="tab">BASIC INFO</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#advance-info" data-toggle="tab">ADVANCE INFO</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#medical-info" data-toggle="tab">MEDICAL INFO</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#appointment-info" data-toggle="tab">APPOINTMENT HISTORY</a></li>
 
                     </ul>
 
@@ -90,118 +119,58 @@
 
                 <div class="card-body">
                     <div class="tab-content">
-                        <div class="active tab-pane" id="basic-info">
-                            <div class="basic-info">
-                                <strong><i class="fas fa-map-marker-alt mr-1"></i> Address:</strong>
+                        <div class="active tab-pane" id="medical-info">
+                            
+                            <strong><i class="fas fa-text-height mr-1"></i> Height (cm.):</strong>
 
-                                <p class="text-muted">
-                                    @($"{Model.PatientDetails.AddStreetBrgy},{Model.PatientDetails.Municipality},{Model.PatientDetails.Province}")
-                                </p>
+                            <p class="text-muted">
+                                @(Model.PatientDetails.Height != null ? string.Concat(Model.PatientDetails.Height, " cm") : String.Empty)
+                            </p>
 
-                                <hr>
-                                <strong><i class="fas fa-venus-mars mr-1"></i> Gender:</strong>
+                            <hr>
+                            
+                            <strong><i class="fas fa-weight mr-1"></i> Weight (kls.):</strong>
 
-                                <p class="text-muted">
-                                    @Model.PatientDetails.Gender
-                                </p>
+                            <p class="text-muted">
+                                @(Model.PatientDetails.Weight != null ? string.Concat(Model.PatientDetails.Weight, " cm") : String.Empty)
+                            </p>
 
-                                <hr>
-                                <strong><i class="fas fa-birthday-cake mr-1"></i> Date of Birth:</strong>
+                            <hr>
 
-                                <p class="text-muted">
-                                    @Model.PatientDetails.DateofBirth.ToString("yyyy MMMM dd")
-                                </p>
+                            <strong><i class="fas fa-dna mr-1"></i> Blood Group:</strong>
 
-                                <hr>
+                            <p class="text-muted">
+                                @Model.PatientDetails.BloodType
+                            </p>
 
-                                <strong><i class="fas fa-user-md mr-1"></i> Occupation:</strong>
+                            <hr>
+                            <strong><i class="fas fa-users-medical mr-1"></i> Guardian Name:</strong>
 
-                                <p class="text-muted">
-                                    @Model.PatientDetails.Occupation
-                                </p>
+                            <p class="text-muted">
+                                @Model.PatientDetails.GuardianName
+                            </p>
 
-                                <hr>
+                            <hr>
 
-                                <strong><i class="fas fa-building mr-1"></i> Company:</strong>
+                            <strong><i class="fas fa-users-medical mr-1"></i> Guardian Contact No:</strong>
 
-                                <p class="text-muted">
-                                    @Model.PatientDetails.Company
-                                </p>
+                            <p class="text-muted">
+                                @Model.PatientDetails.GuardianContact
+                            </p>
 
-                                <hr>
+                            <hr>
+                            <strong><i class="fas fa-users-medical mr-1"></i> Guardian Relation:</strong>
 
-                                <strong><i class="fas fa-phone-alt mr-1"></i> Contacts:</strong>
+                            <p class="text-muted">
+                                @Model.PatientDetails.GuardianRelation
+                            </p>
 
-                                <p class="text-muted">
-                                    @{
-                                        if (!String.IsNullOrEmpty(Model.PatientDetails.ContactCell) && !String.IsNullOrEmpty(Model.PatientDetails.ContactTell))
-                                        {
-                                            @($"{Model.PatientDetails.ContactCell} / {Model.PatientDetails.ContactTell}")
-                                        }
-                                        else
-                                        {
-                                            @Model.PatientDetails.ContactCell;
-                                        }
-                                    }
-                                </p>
-
-                                <hr>
-
-
-                            </div>
+                            <hr>
                         </div>
 
-                        <div class="tab-pane" id="advance-info">
-                            <div class="advance-info">
+                        <div class="tab-pane" id="appointment-info">
+                         
 
-                                <strong><i class="fas fa-text-height mr-1"></i> Height (cm.):</strong>
-
-                                <p class="text-muted">
-                                    @(Model.PatientDetails.Height != null ? string.Concat(Model.PatientDetails.Height, " cm") : String.Empty)
-                                </p>
-
-                                <hr>
-
-                                <strong><i class="fas fa-weight mr-1"></i> Weight (kls.):</strong>
-
-                                <p class="text-muted">
-                                    @(Model.PatientDetails.Weight != null ? string.Concat(Model.PatientDetails.Weight, " cm") : String.Empty)
-                                </p>
-
-                                <hr>
-
-                                <strong><i class="fas fa-dna mr-1"></i> Blood Type:</strong>
-
-                                <p class="text-muted">
-                                    @Model.PatientDetails.BloodType
-                                </p>
-
-                                <hr>
-
-                                <strong><i class="fas fa-users-medical mr-1"></i> Guardian Name:</strong>
-
-                                <p class="text-muted">
-                                    @Model.PatientDetails.GuardianName
-                                </p>
-
-                                <hr>
-
-                                <strong><i class="fas fa-users-medical mr-1"></i> Guardian Contact No:</strong>
-
-                                <p class="text-muted">
-                                    @Model.PatientDetails.GuardianContact
-                                </p>
-
-                                <hr>
-                                <strong><i class="fas fa-users-medical mr-1"></i> Guardian Relation:</strong>
-
-                                <p class="text-muted">
-                                    @Model.PatientDetails.GuardianRelation
-                                </p>
-
-                                <hr>
-
-                            </div>
                         </div>
                     </div>
                 </div>

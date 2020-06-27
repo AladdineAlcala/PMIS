@@ -40,6 +40,7 @@ namespace PMIS.Model
         public string Lastname { get; set; }
         public string Middle { get; set; }
         public string Abr { get; set; }
+        public string ProfilePic { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }

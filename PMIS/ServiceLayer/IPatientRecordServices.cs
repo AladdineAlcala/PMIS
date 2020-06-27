@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PMIS.Model;
@@ -8,7 +9,8 @@ namespace PMIS.ServiceLayer
     public interface IPatientRecordServices
     {
        void AddMedicalRecord(MedicalRecord record);
-        void RemoveMedicalRecord(MedicalRecord record);
+       void UpdateMedicalRecord(MedicalRecord record);
+       void RemoveMedicalRecord(MedicalRecord record);
        void AddMedication(Medication medrecord);
        void UpdateMedication(Medication medication);
        void RemoveMedication(Medication medication);
@@ -18,6 +20,7 @@ namespace PMIS.ServiceLayer
        Task<Medication> GetMedicationBymedNo(int medNo);
        Task <MedicalRecord> GetMedicalRecord(long recordNo);
        IEnumerable<MedicalRecord> GetAllRecords(string patId,string phyid);
-       
+       int GetAppointmentNo(string patId, DateTime thisDate);
+       MedicalRecord GetMedicalRecordByAppointment(int appNo);
     }
 }

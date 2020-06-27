@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using PMIS.Model;
 
 namespace PMIS.HelperClass
@@ -43,6 +45,22 @@ namespace PMIS.HelperClass
             }
 
             return (string.Format("{0:000000}", id));
+        }
+
+        public static string ReportPath(string repName)
+        {
+
+            return HostingEnvironment.MapPath(string.Format("~/Reports/{0}.rpt", repName));
+
+        }
+
+        public static string DBGateway()
+        {
+
+            ConnectionStringSettings dbconnString = ConfigurationManager.ConnectionStrings["PMISEntitiesUserIdentity"];
+
+            return dbconnString.ConnectionString;
+
         }
     }
 }

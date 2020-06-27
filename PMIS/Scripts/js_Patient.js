@@ -1,4 +1,7 @@
 ﻿
+
+
+
 function take_snapshot() {
     // take snapshot and get image data
     Webcam.snap(function (data_uri) {
@@ -17,6 +20,8 @@ function take_snapshot() {
 
     $("#modal-picsnapshot").modal('hide');
 }
+
+
 
 
 const saveSnapShot = (file) => {
@@ -43,28 +48,31 @@ const saveSnapShot = (file) => {
 
 }
 
+var getAge = function (dob) {
 
+    //debugger;
+
+    var today = new Date();
+    var d = moment.utc(dob).format('MM/DD/YYYY');
+    var bday = new Date(d);
+
+    var age = today.getFullYear() - bday.getFullYear();
+    var mo = today.getMonth() - bday.getMonth();
+
+    if (mo < 0 || mo === 0 && (today.getDate() < bday.getDate())) {
+
+        age--;
+    }
+
+    return age;
+}
 
 $(document).ready(function () {
 
-    var getAge = function (dob) {
+    var patId = $('#patient-Id').val();
+    var dateofbirth = $('#dob').val();
 
-        //debugger;
-
-        var today = new Date();
-        var d = moment.utc(dob).format('MM/DD/YYYY');
-        var bday = new Date(d);
-
-        var age = today.getFullYear() - bday.getFullYear();
-        var mo = today.getMonth() - bday.getMonth();
-
-        if (mo < 0 || mo === 0 && (today.getDate() < bday.getDate())) {
-
-            age--;
-        }
-
-        return age;
-    }
+    $('span.get-age').html(getAge(dateofbirth));
 
     var createPatientProfile = function createnewPatientProfile() {
 
@@ -272,6 +280,48 @@ $(document).ready(function () {
 
     //    });
 
+
+
+    var patientAppointmentList = (patId) => {
+
+        $.ajax({
+            type: 'Get',
+            url: '/Patient/GetAllAppointmentByPatient',
+            ajaxasync: true,
+            data: { patientId: patId },
+            contentType: 'application/html;charset=utf8',
+            datatype: 'html',
+            cache: false,
+            success: function (result) {
+
+                $('#appointment-info').html(result);
+            }
+        });
+    }
+
+    if (patId != null) {
+
+        patientAppointmentList(patId);
+
+       
+    }
+
+    if ($.fn.DataTable.isDataTable('#table-appointmentList')) {
+
+        $('#table-appointmentList').dataTable().fnDestroy();
+        $('#table-appointmentList').dataTable().empty();
+
+    }
+
+
+    var tableAppointmentList = $('#table-appointmentList').DataTable({
+        "paging": true,
+        "searching": false,
+        "ordering": false,
+        //"info": false,
+        "serverSide": false
+    });
+ 
 
 });
 

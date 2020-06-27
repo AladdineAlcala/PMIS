@@ -131,6 +131,38 @@ namespace PMIS.ServiceLayer
             }).FirstOrDefaultAsync(t => t.PatientId == patientid);
         }
 
+        public Task<PatientDetailsViewModel> GetPatientDetailsByMedicalRecordNo(int medicalRecordNo)
+        {
+
+            return (from mr in _pmisEntities.MedicalRecords
+                join t in _pmisEntities.Patients on mr.Pat_Id equals t.Pat_Id where mr.RecordNo==medicalRecordNo select new PatientDetailsViewModel()
+                {
+
+                    PatientId = t.Pat_Id,
+                    Firstname = t.Firstname,
+                    Lastname = t.Lastname,
+                    Middle = t.Middle,
+                    Gender = t.Gender,
+                    AddStreetBrgy = t.AddStreetBrgy,
+                    Municipality = t.Muncity,
+                    Province = t.Province,
+                    DateofBirth = (DateTime)t.DoB,
+                    ContactCell = t.ContactCell,
+                    ContactTell = t.ContactPhone,
+                    Height = t.Height == null ? t.Height : 0,
+                    Weight = t.Weight == null ? t.Weight : 0,
+                    BloodType = t.BType,
+                    Occupation = t.Occupation,
+                    Company = t.Company,
+                    GuardianName = t.GuardianName,
+                    GuardianContact = t.GuardianContact,
+                    GuardianRelation = t.GuardianRelation,
+                    ProfileImage = t.Image
+
+                }).FirstOrDefaultAsync();
+        }
+
+
 
         public List<PhysicianDetailsViewModel> GetDoctorsByPatient(string id)
         {
@@ -149,7 +181,11 @@ namespace PMIS.ServiceLayer
 
         }
 
-      
+
+        public async Task<int> CountAllPatients()
+        {
+            return await _pmisEntities.Patients.CountAsync();
+        }
 
 
         #region IDisposable Support
@@ -187,7 +223,9 @@ namespace PMIS.ServiceLayer
              GC.SuppressFinalize(this);
         }
 
-      
+   
+
+
 
 
         #endregion

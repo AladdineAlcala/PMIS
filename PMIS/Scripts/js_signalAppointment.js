@@ -50,12 +50,12 @@
                         '<button class="btn btn-info btn-sm mr-1" data-patientId="' +
                         el.PatientNo +
                         '" id="view_medicalrecords">' +
-                        '<i class="fal fa-file-medical-alt"></i>' +
+                        '<i class="fal fa-binoculars"></i> View' +
                         '</button>' +
                         '<button class="btn btn-success btn-sm" data-patientId="' +
                         el.PatientNo +
                         '"id="btnconsultationserve">'+
-                        '<i class="fal fa-lightbulb-on"></i>'+
+                        '<i class="fal fa-lightbulb-on"></i> Status ' +
                         '</button>' +
 
                         '</td>' +

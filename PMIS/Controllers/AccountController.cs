@@ -18,14 +18,12 @@ namespace PMIS.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
-        //private IAppointmentServices _appointmentServices;
         private readonly IUnitOfWork _unitofwork;
         private readonly ApplicationDbContext _context = new ApplicationDbContext();
 
         // GET: Account
-        public AccountController(IAppointmentServices appointmentServices,IUnitOfWork unitofwork)
-        {
-            //_appointmentServices = appointmentServices;
+        public AccountController(IUnitOfWork unitofwork)
+        {;
             _unitofwork = unitofwork;
         }
 
@@ -77,8 +75,10 @@ namespace PMIS.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult LogIn(string returnUrl)
         {
+            ViewBag.ReturnUrl = "";
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -141,14 +141,7 @@ namespace PMIS.Controllers
             if (String.IsNullOrEmpty(returnUrl))
             {
 
-              
-                if (User.IsInRole("superadmin"))
-                {
-              
-                    return RedirectToLocal("/Dashboard");
-                }
-
-                else if (User.IsInRole("doctor"))
+                if (User.IsInRole("doctor"))
                 {
 
                     //ViewBag.phyId = _userPhysicianService.GetPhysicianId(User.Identity.GetUserId());
@@ -157,9 +150,29 @@ namespace PMIS.Controllers
 
                     return RedirectToLocal(url);
                 }
-            }
 
-            return RedirectToLocal(returnUrl);
+                else
+                {
+                    var url = Url.Action("Index", "Home");
+
+                    return RedirectToLocal(url);
+                }
+            }
+            else
+            {
+                if (User.IsInRole("doctor"))
+                {
+                    var url = Url.Action("Index", "DocAppointment", new {area = "Doctor"});
+
+                    return RedirectToLocal(url);
+                }
+                else
+                {
+                    return RedirectToLocal(returnUrl);
+                }
+            }
+           
+           
 
         }
 
@@ -504,7 +517,15 @@ namespace PMIS.Controllers
 
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-     
+
+
+
+
+        public ActionResult UnauthorizedAccess()
+        {
+            return View("UnauthorizedAccess");
+        }
+
 
         private IAuthenticationManager AuthenticationManager
         {

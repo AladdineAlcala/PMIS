@@ -120,19 +120,7 @@ var onremovePrescription = ()=> {
             { "data": "PrescriptionCatDetails", "className": "text-capitalize" },
             { "data": "PrescriptionDetails", "className": "text-capitalize" },
             { "data": "PrescUnit", "className": "text-capitalize" }
-            //{
-            //    "data": null,
-            //    "className": "text-center",
-            //    "render": function () {
-
-            //        return '<div class="btn-group btn-group-sm">' +
-            //                '<a href="#" class="btn btn-warning"><i class="fas fa-eye"></i></a>' +
-            //                '<a href="#" class="btn btn-success"><i class="fas fa-edit"></i></a>' +
-            //                '<a href="#" class="btn btn-danger" id="remove-prescription"><i class="fas fa-trash"></i></a>' +
-            //                '</div>'
-            //            ;
-            //    }
-            //}
+          
         ]
         ,
         "columnDefs":
@@ -175,7 +163,7 @@ var onremovePrescription = ()=> {
         buttons: [
             {
                 text: '<i class="fa fa-plus-square fa-fw"></i>',
-                className: 'btn btn-primary btnAddCustomer',
+                className: 'btn btn-default btn-flat btnAddCustomer',
                 titleAttr: 'Add a new record',
                 action: function () {
 
@@ -186,7 +174,7 @@ var onremovePrescription = ()=> {
             
             {
                 text: '<i class="fa fa-edit fa-fw"></i>',
-                className: 'btn btn-primary btnModifyCustomer',
+                className: 'btn btn-default btn-flat btnModifyCustomer',
                 titleAttr: 'Modify record',
                 action: function () {
 
@@ -196,7 +184,7 @@ var onremovePrescription = ()=> {
             },
             {
                 text: '<i class="fa fa-trash fa-fw"></i>',
-                className: 'btn btn-primary btnRemoveCustomer',
+                className: 'btn btn-default btn-flat btnRemoveCustomer',
                 titleAttr: 'Remove record',
                 action: function () {
                    

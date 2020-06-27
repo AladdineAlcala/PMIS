@@ -25,6 +25,14 @@ namespace PMIS.ServiceLayer
             _pmisEntities.MedicalRecords.Add(record);
         }
 
+        public void UpdateMedicalRecord(MedicalRecord record)
+        {
+            _pmisEntities.MedicalRecords.Attach(record);
+
+            _pmisEntities.Entry(record).State = EntityState.Modified;
+        }
+
+
         public void RemoveMedicalRecord(MedicalRecord record)
         {
             _pmisEntities.MedicalRecords.Remove(record);
@@ -53,8 +61,11 @@ namespace PMIS.ServiceLayer
             return await  _pmisEntities.MedicalRecords.FindAsync(recordNo);
         }
 
-     
 
+        public MedicalRecord GetMedicalRecordByAppointment(int appNo)
+        {
+            return _pmisEntities.MedicalRecords.FirstOrDefault(t => t.AppointmentNo==appNo);
+        }
 
         public Medication GetMedication(int recordNo)
         {
@@ -85,13 +96,20 @@ namespace PMIS.ServiceLayer
             return _pmisEntities.MedicalRecords.Where(t => t.Pat_Id == patId && t.Phys_id == phyid);
         }
 
-
+     
         public void RemoveMedication(Medication medication)
         {
             _pmisEntities.Medications.Remove(medication);
         }
 
+        public int GetAppointmentNo(string patId, DateTime thisDate)
+        {
+            var firstOrDefault = _pmisEntities.Appointments
+                .FirstOrDefault(t => t.Pat_Id == patId && t.AppointDate.Value == thisDate.Date);
+            return firstOrDefault?.No ?? 0;
+        }
 
+      
 
 
         #region IDisposable Support
@@ -113,6 +131,11 @@ namespace PMIS.ServiceLayer
             }
         }
 
+
+     
+
+
+
         // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
         // ~PatientRecordServices() {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
@@ -128,7 +151,8 @@ namespace PMIS.ServiceLayer
             GC.SuppressFinalize(this);
         }
 
-      
+     
+
 
 
         #endregion

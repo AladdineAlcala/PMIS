@@ -87,6 +87,11 @@ namespace PMIS.ServiceLayer
             }).Where(t => t.RecNo == recNo).ToList();
         }
 
+        public async Task<int> PrescriptionCount()
+        {
+            return await _pmisEntities.Prescriptions.CountAsync();
+        }
+
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -131,6 +136,7 @@ namespace PMIS.ServiceLayer
 
 
         #endregion
+
 
 
     }

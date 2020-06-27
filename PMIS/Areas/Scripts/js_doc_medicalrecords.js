@@ -11,7 +11,6 @@ function loadMedicalRecord(patId, phyId) {
     //var thisPage = $('#currPage').val();
     //console.log(thisPage);
 
-
     $.ajax({
         type: "Get",
         url: '/Doctor/PatientMedicalRecord/MedicalHistory',
@@ -21,7 +20,7 @@ function loadMedicalRecord(patId, phyId) {
         cache: false,
         success: function (result) {
 
-            $('#medicalrecord').html(result);
+            $('#docmedicalrecord').html(result);
 
         },
         error: function (thrownError) {
@@ -48,6 +47,9 @@ function loadMedicalRecord(patId, phyId) {
 
 function loadChart(recordno) {
 
+    //alert(recordno);
+
+
     $('#spinn-loader').show();
 
     $.ajax({
@@ -59,7 +61,8 @@ function loadChart(recordno) {
         cache: false,
         success: function (result) {
 
-            $('#medicalrecord').html(result);
+            console.log(result);
+            $('#docmedicalrecord').html(result);
         },
         error: function (thrownError) {
             Swal.fire('Error on retrieving record!', 'Please try again', 'error');
@@ -149,19 +152,18 @@ $(document).on('click', '.post #modifychart', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-    alert($(this).closest('.post').attr('data-postId'));
+    //alert($(this).closest('.post').attr('data-postId'));
 
 
 });
 
 
-$(document).on('click', '.post #viewchart', function (e) {
+$(document).on('click', '#viewchart', function (e) {
     e.preventDefault();
-    e.stopPropagation();
 
     //var recordNo = $(this).closest('.post').attr('data-postId');
 
-    var pageSelected = $('.pagination').find('li.active').next().text();
+   // var pageSelected = $('.pagination').find('li.active').next().text();
 
    // console.log(parseInt(pageSelected) - 1);
 
@@ -288,7 +290,7 @@ $(document).on('click', '#save-docmedication',(e)=> {
 $(document).on('click', '#return_to_list',(e)=>{
     e.preventDefault();
     e.stopPropagation();
-
+   // alert('asdsadsa');
     loadMedicalRecord($('#patientid').val(), $('#phyid').val());
 });
 
@@ -371,7 +373,7 @@ $(document).on('click', '#update-docmedication', (e) => {
 
                             if (data.success) {
 
-                                $("#modal-createMedication").modal('hide');
+                                $("#modal-ModifyMedication").modal('hide');
 
                                 toast.fire({
                                     type: 'success',

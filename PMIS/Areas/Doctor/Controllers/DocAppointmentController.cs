@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using PMIS.HelperClass;
 using PMIS.ServiceLayer;
 
 namespace PMIS.Areas.Doctor.Controllers
 {
-    [Authorize]
+    [UserPermissionAuthorized(UserPermisionLevelEnum.doctor)]
     public class DocAppointmentController : Controller
     {
         private readonly IAppointmentServices _appointmentServices;
@@ -41,9 +42,9 @@ namespace PMIS.Areas.Doctor.Controllers
         }
 
         [HttpPost]
-        public ActionResult ServeAppointment(int apptId)
+        public async Task<ActionResult> ServeAppointment(int apptId)
         {
-            var appointment = _appointmentServices.GetAppointment(apptId);
+            var appointment = await _appointmentServices.GetAppointment(apptId);
 
             if (appointment!=null)
             {

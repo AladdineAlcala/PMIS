@@ -86,7 +86,7 @@ namespace PMIS
                 "~/Content/plugins/summernote/summernote-bs4.css",
                 "~/Content/dist/css/adminlte.min.css",
                 "~/Content/customcss/pmis_css.css"
-                    ));
+                  ));
         }
     }
 }

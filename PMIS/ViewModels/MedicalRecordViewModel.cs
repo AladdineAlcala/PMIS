@@ -15,7 +15,6 @@ namespace PMIS.ViewModels
         public string Subject { get; set; }
         [AllowHtml]
         public string Desciption { get; set; }
-
         public int ApppointmentNo { get; set; }
 
     }

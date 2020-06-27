@@ -140,3 +140,9 @@ document.getElementById('btn-saveUserSecurity').addEventListener('click',
             }
         );
     });
+
+
+document.getElementById("UpImage").onchange = function () {
+    alert(this.value);
+   
+};

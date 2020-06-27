@@ -67,6 +67,23 @@ namespace PMIS.ServiceLayer
             }).ToListAsync();
         }
 
+        public async Task<IEnumerable<AppointmentScheduleViewModel>> GetAllAppointmentByPatient(string patientId)
+        {
+            return await _pmisEntities.Appointments.Where(t =>t.Pat_Id==patientId).Select(t => new AppointmentScheduleViewModel()
+            {
+                No = t.No,
+                PatientNo = t.Pat_Id,
+                PatientName = t.Patient.Lastname + " ," + t.Patient.Firstname,
+                PhyId = t.User.Id,
+                PhyName = t.User.Abr,
+                AppointDate = (DateTime)t.AppointDate,
+                Stat = (bool)t.Status ? "Served" : "Pending",
+                Iscancelled = (bool)t.IsCancelled
+
+
+            }).OrderByDescending(t=>t.AppointDate).ToListAsync();
+        }
+
 
         public IEnumerable<SelectListItem> GetAllDoctors()
         {
@@ -91,9 +108,9 @@ namespace PMIS.ServiceLayer
                                                      t.AppointDate == dateAppoint);
         }
 
-        public Appointment GetAppointment(int appId)
+        public async Task<Appointment> GetAppointment(int appId)
         {
-            return _pmisEntities.Appointments.Find(appId);
+            return await _pmisEntities.Appointments.FindAsync(appId);
         }
 
         
@@ -171,6 +188,6 @@ namespace PMIS.ServiceLayer
             this._disposed = true;
         }
 
- 
+      
     }
 }

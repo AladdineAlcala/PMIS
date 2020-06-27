@@ -8,10 +8,11 @@ using PMIS.Model;
 using PMIS.ServiceLayer;
 using PMIS.ViewModels;
 using PagedList;
+using PMIS.HelperClass;
 
 namespace PMIS.Areas.Doctor.Controllers
 {
-    [Authorize]
+   [UserPermissionAuthorized(UserPermisionLevelEnum.doctor)]
     public class PatientMedicalRecordController : Controller
     {
         private readonly IPatientRecordServices _patientrecordservices;
@@ -51,7 +52,7 @@ namespace PMIS.Areas.Doctor.Controllers
                 PatientId = id,
                 PhyId = phyid,
                 Patient = _patientservices.GetPatientById(id)
-        };
+             };
             var medicalRecord = _patientrecordservices.GetAllRecords(id, phyid);
 
             patientRecordDetails.MedicalRecordList = medicalRecord.OrderByDescending(t => t.RecordNo).ToList()

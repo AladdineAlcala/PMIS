@@ -1,0 +1,57 @@
+﻿@using PMIS.ViewModels
+@model ReportOptionViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title></title>
+
+    <link href="~/Content/dist/css/adminlte.min.css" rel="stylesheet" />
+    <link href="~/Content/customcss/pmis_css.css" rel="stylesheet" />
+</head>
+<body>
+
+    @if (Request.IsAuthenticated)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div id="frameholder" style="display: block;">
+                    <iframe id="ReportFrame" src="" onload="document.getElementById('spinn-loader').style.display = 'none';" width="100%" height="1000" style="border: none"></iframe>
+                </div>
+
+            </div>
+        </div>
+    }
+
+    <div id="spinn-loader">
+        Loading data Pls. wait....
+    </div>
+    
+    @Html.HiddenFor(m=>m.recordNo,new {id="recordNo"})
+    
+
+<script src="~/Content/plugins/jquery/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    $('#spinn-loader').show();
+
+    var recordNo = document.getElementById('recordNo').value;
+
+
+    $("#ReportFrame").attr("src", "@Url.Content("~/Reports/ReportViewer/Prescription.aspx")");
+
+</script>
+
+
+</body>
+</html>
+
+
+

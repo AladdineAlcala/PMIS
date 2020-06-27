@@ -9,7 +9,7 @@
 
 @Html.HiddenFor(m => m.Patient.DoB, new { @id = "patient-info" })
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-lg">
             <!-- Default box -->
@@ -62,10 +62,11 @@
 
 
 
-                            @*<div class="text-center mt-5 mb-3">
-                                <a href="#" class="btn btn-sm btn-primary">Add files</a>
-                                <a href="#" class="btn btn-sm btn-warning">Report contact</a>
-                            </div>*@
+                            <div class="text-center mt-5 mb-3">
+                                <button class="btn btn-sm btn-primary" id="addActivity">Add Medical Record</button>
+                               
+                                @*<a href="#" class="btn btn-sm btn-warning">Report contact</a>*@
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,7 +80,7 @@
 
 
 <div class="modal fade" id="modal-createRecord">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Create Medical Record</h4>
@@ -99,6 +100,25 @@
 <!-- /.modal -->
 
 
+<div class="modal fade" id="modal-modifyRecord">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Create Medical Record</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <div class="modal fade" id="modal-createMedication">
     <div class="modal-dialog modal-lg">

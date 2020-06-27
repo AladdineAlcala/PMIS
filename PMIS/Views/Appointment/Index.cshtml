@@ -4,19 +4,8 @@
 
 <div class="container-fluid">
     <div class="row">
-        @*<div class="col-md-7 col-sm-12">
 
-            <div class="card" style="min-height: 530px;">
-
-
-                <div class="card-body p-0">
-                     THE CALENDAR 
-                    <div id="app-calendar"></div>
-                </div>
-            </div>
-        </div>*@
-
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-7 col-sm-12">
 
             <div class="card" style="min-height: 550px;">
                 <div class="card-header">
@@ -32,7 +21,7 @@
                     <div class="appointinfo-date">
                         <div class="row">
                             <div class="d-flex">
-                                @Html.DropDownListFor(m => m.PhysId, Model.PhysicianListItems, "---- Select Doctor ---", new { @class = "form-control mr-1", @id = "select-doctor" })
+                                @Html.DropDownListFor(m => m.PhysId, Model.PhysicianListItems, "---- Select Doctor ---", new { @class = "form-control mr-1", id = "select-doctor" })
                                 <button class="btn btn-info" id="add-appointment"><i class="fal fa-plus"></i> New </button>
                             </div>
                         </div>

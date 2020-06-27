@@ -102,5 +102,12 @@ namespace PMIS.Hubs
 
             }
         }
+
+
+        public List<UsersConnectionViewModel> GetAllLoggedUsers()
+        {
+            return UsersConnectionDict.Values.ToList();
+        }
+
     }
 }

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Prescription" targetNamespace="http://tempuri.org/Prescription.xsd" xmlns:mstns="http://tempuri.org/Prescription.xsd" xmlns="http://tempuri.org/Prescription.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Prescription" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="Prescription" msprop:Generator_UserDSName="Prescription">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Patient" msprop:Generator_TableClassName="PatientDataTable" msprop:Generator_TableVarName="tablePatient" msprop:Generator_TablePropName="Patient" msprop:Generator_RowDeletingName="PatientRowDeleting" msprop:Generator_RowChangingName="PatientRowChanging" msprop:Generator_RowEvHandlerName="PatientRowChangeEventHandler" msprop:Generator_RowDeletedName="PatientRowDeleted" msprop:Generator_UserTableName="Patient" msprop:Generator_RowChangedName="PatientRowChanged" msprop:Generator_RowEvArgName="PatientRowChangeEvent" msprop:Generator_RowClassName="PatientRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Pat_Id" msprop:Generator_ColumnVarNameInTable="columnPat_Id" msprop:Generator_ColumnPropNameInRow="Pat_Id" msprop:Generator_ColumnPropNameInTable="Pat_IdColumn" msprop:Generator_UserColumnName="Pat_Id" type="xs:string" />
+              <xs:element name="Lastname" msprop:Generator_ColumnVarNameInTable="columnLastname" msprop:Generator_ColumnPropNameInRow="Lastname" msprop:Generator_ColumnPropNameInTable="LastnameColumn" msprop:Generator_UserColumnName="Lastname" type="xs:string" minOccurs="0" />
+              <xs:element name="Firstname" msprop:Generator_ColumnVarNameInTable="columnFirstname" msprop:Generator_ColumnPropNameInRow="Firstname" msprop:Generator_ColumnPropNameInTable="FirstnameColumn" msprop:Generator_UserColumnName="Firstname" type="xs:string" minOccurs="0" />
+              <xs:element name="Middle" msprop:Generator_ColumnVarNameInTable="columnMiddle" msprop:Generator_ColumnPropNameInRow="Middle" msprop:Generator_ColumnPropNameInTable="MiddleColumn" msprop:Generator_UserColumnName="Middle" type="xs:string" minOccurs="0" />
+              <xs:element name="Gender" msprop:Generator_ColumnVarNameInTable="columnGender" msprop:Generator_ColumnPropNameInRow="Gender" msprop:Generator_ColumnPropNameInTable="GenderColumn" msprop:Generator_UserColumnName="Gender" type="xs:string" minOccurs="0" />
+              <xs:element name="AddStreetBrgy" msprop:Generator_ColumnVarNameInTable="columnAddStreetBrgy" msprop:Generator_ColumnPropNameInRow="AddStreetBrgy" msprop:Generator_ColumnPropNameInTable="AddStreetBrgyColumn" msprop:Generator_UserColumnName="AddStreetBrgy" type="xs:string" minOccurs="0" />
+              <xs:element name="Muncity" msprop:Generator_ColumnVarNameInTable="columnMuncity" msprop:Generator_ColumnPropNameInRow="Muncity" msprop:Generator_ColumnPropNameInTable="MuncityColumn" msprop:Generator_UserColumnName="Muncity" type="xs:string" minOccurs="0" />
+              <xs:element name="Province" msprop:Generator_ColumnVarNameInTable="columnProvince" msprop:Generator_ColumnPropNameInRow="Province" msprop:Generator_ColumnPropNameInTable="ProvinceColumn" msprop:Generator_UserColumnName="Province" type="xs:string" minOccurs="0" />
+              <xs:element name="ContactCell" msprop:Generator_ColumnVarNameInTable="columnContactCell" msprop:Generator_ColumnPropNameInRow="ContactCell" msprop:Generator_ColumnPropNameInTable="ContactCellColumn" msprop:Generator_UserColumnName="ContactCell" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MedicalRecord" msprop:Generator_TableClassName="MedicalRecordDataTable" msprop:Generator_TableVarName="tableMedicalRecord" msprop:Generator_TablePropName="MedicalRecord" msprop:Generator_RowDeletingName="MedicalRecordRowDeleting" msprop:Generator_RowChangingName="MedicalRecordRowChanging" msprop:Generator_RowEvHandlerName="MedicalRecordRowChangeEventHandler" msprop:Generator_RowDeletedName="MedicalRecordRowDeleted" msprop:Generator_UserTableName="MedicalRecord" msprop:Generator_RowChangedName="MedicalRecordRowChanged" msprop:Generator_RowEvArgName="MedicalRecordRowChangeEvent" msprop:Generator_RowClassName="MedicalRecordRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RecordNo" msprop:Generator_ColumnVarNameInTable="columnRecordNo" msprop:Generator_ColumnPropNameInRow="RecordNo" msprop:Generator_ColumnPropNameInTable="RecordNoColumn" msprop:Generator_UserColumnName="RecordNo" type="xs:string" />
+              <xs:element name="RecordDate" msprop:Generator_ColumnVarNameInTable="columnRecordDate" msprop:Generator_ColumnPropNameInRow="RecordDate" msprop:Generator_ColumnPropNameInTable="RecordDateColumn" msprop:Generator_UserColumnName="RecordDate" type="xs:string" minOccurs="0" />
+              <xs:element name="Pat_Id" msprop:Generator_ColumnVarNameInTable="columnPat_Id" msprop:Generator_ColumnPropNameInRow="Pat_Id" msprop:Generator_ColumnPropNameInTable="Pat_IdColumn" msprop:Generator_UserColumnName="Pat_Id" type="xs:string" minOccurs="0" />
+              <xs:element name="Phys_id" msprop:Generator_ColumnVarNameInTable="columnPhys_id" msprop:Generator_ColumnPropNameInRow="Phys_id" msprop:Generator_ColumnPropNameInTable="Phys_idColumn" msprop:Generator_UserColumnName="Phys_id" type="xs:string" minOccurs="0" />
+              <xs:element name="ActivityName" msprop:Generator_ColumnVarNameInTable="columnActivityName" msprop:Generator_ColumnPropNameInRow="ActivityName" msprop:Generator_ColumnPropNameInTable="ActivityNameColumn" msprop:Generator_UserColumnName="ActivityName" type="xs:string" minOccurs="0" />
+              <xs:element name="RecordDetails" msprop:Generator_ColumnVarNameInTable="columnRecordDetails" msprop:Generator_ColumnPropNameInRow="RecordDetails" msprop:Generator_ColumnPropNameInTable="RecordDetailsColumn" msprop:Generator_UserColumnName="RecordDetails" type="xs:string" minOccurs="0" />
+              <xs:element name="AppointmentNo" msprop:Generator_ColumnVarNameInTable="columnAppointmentNo" msprop:Generator_ColumnPropNameInRow="AppointmentNo" msprop:Generator_ColumnPropNameInTable="AppointmentNoColumn" msprop:Generator_UserColumnName="AppointmentNo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Patient" />
+      <xs:field xpath="mstns:Pat_Id" />
+    </xs:unique>
+    <xs:unique name="MedicalRecord_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:MedicalRecord" />
+      <xs:field xpath="mstns:RecordNo" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="MedicalRecord_Patient" msdata:parent="MedicalRecord" msdata:child="Patient" msdata:parentkey="RecordNo" msdata:childkey="Pat_Id" msprop:Generator_UserChildTable="Patient" msprop:Generator_ChildPropName="GetPatientRows" msprop:Generator_UserRelationName="MedicalRecord_Patient" msprop:Generator_RelationVarName="relationMedicalRecord_Patient" msprop:Generator_UserParentTable="MedicalRecord" msprop:Generator_ParentPropName="MedicalRecordRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

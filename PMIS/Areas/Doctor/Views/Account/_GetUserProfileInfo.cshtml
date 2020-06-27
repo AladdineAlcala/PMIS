@@ -9,36 +9,51 @@
     @Html.ValidationSummary(true)
     @Html.HiddenFor(m => m.userId, new { @id = "userId" })
     <div class="row">
-        <div class="col-lg">
+        <div class="col-lg-7">
                                       
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label required">Username:</label>
-                <div class="col-sm-5">
+                <label class="col-sm-3 col-form-label required">Username:</label>
+                <div class="col-sm-7">
                     @Html.TextBoxFor(m => m.userName, new {@class = "form-control required", @placeholder = " Physician Name"})
                     @*@Html.ValidationMessageFor(m => m.PhysName, null, new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label required">Lastname:</label>
-                <div class="col-sm-5">
+                <label class="col-sm-3 col-form-label required">Lastname:</label>
+                <div class="col-sm-7">
                     @Html.TextBoxFor(m => m.lastName, new {@class = "form-control required", @placeholder = "Lastname"})
                     @*@Html.ValidationMessageFor(m => m.PhysAbr, null, new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label required">Firstname:</label>
-                <div class="col-sm-5">
+                <label class="col-sm-3 col-form-label required">Firstname:</label>
+                <div class="col-sm-7">
                     @Html.TextBoxFor(m => m.firstName, new {@class = "form-control required", @placeholder = "Lastname"})
                     @*@Html.ValidationMessageFor(m => m.PhysAbr, null, new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label required">Abrevation (Abr):</label>
-                <div class="col-sm-5">
+                <label class="col-sm-3 col-form-label required">Abrevation (Abr):</label>
+                <div class="col-sm-7">
                     @Html.TextBoxFor(m => m.userAbr, new {@class = "form-control required", @placeholder = "Lastname"})
                     @*@Html.ValidationMessageFor(m => m.PhysAbr, null, new { @class = "text-danger" })*@
                 </div>
             </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="text-center" id="img-portrait">
+                @{
+
+                    <img class="img-thumbnail img-fluid"
+                         src="@Url.Content("~/Content/dist/img/no-photo.png")"
+                         alt=@Model.lastName>
+
+                         
+                }
+                       
+            </div>
+            <input type="file" name="UploadImage" id="UpImage"/>
+          
         </div>
     </div>
     <div class="row">

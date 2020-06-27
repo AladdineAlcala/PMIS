@@ -7,18 +7,9 @@
        
         if (Model.Image == null)
         {
-            if (Model.Gender == "Female")
-            {
-                <img class="img-thumbnail img-fluid"
-                     src="@Url.Content("~/Content/dist/img/avatar3.png")"
-                     alt="User profile picture">
-            }
-            else
-            {
-                <img class="img-thumbnail img-fluid"
-                     src="@Url.Content("~/Content/dist/img/avatar04.png")"
-                     alt="User profile picture">
-            }
+            <img class="img-thumbnail img-fluid"
+                 src="@Url.Content("~/Content/dist/img/no-photo.png")"
+                 alt=@Model.Lastname>
         }
         else
         {
@@ -73,6 +64,20 @@
     </li>*@
 </ul>
 
+<hr />
+<ul class="list-unstyled">
+    <li>
+        Height: @($"{Model.Height}")  ( <span class="d-inline-block text-bold"></span> cm. )
+    </li>
+    <li>
+        Weight: @($"{Model.Weight}")  ( <span class="d-inline-block text-bold"></span> lbs. )
+    </li>
+    <li>
+        Blood Group:@($"{Model.BType}") 
+
+    </li>
+  
+</ul>
 
 <script type="text/javascript">
 

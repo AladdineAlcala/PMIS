@@ -19,6 +19,7 @@ namespace PMIS.Model
         public string Lastname { get; set; }
         public string Middle { get; set; }
         public string Abr { get; set; }
+        public string ProfilePic { get; set; }  
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

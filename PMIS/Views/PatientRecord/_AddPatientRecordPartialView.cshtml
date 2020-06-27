@@ -10,6 +10,7 @@
 
         @Html.HiddenFor(m => m.PatientId)
         @Html.HiddenFor(m => m.PhyId)
+        @Html.HiddenFor(m=> m.ApppointmentNo)
         <div class="row">
             <div class="col-lg">
 
@@ -19,7 +20,7 @@
 
                 <div class="form-group">
 
-                    @Html.TextAreaFor(m => m.Desciption, new {@class = "form-control", @id = "compose-record", rows = "5", style = "resize:none;"})
+                    @Html.TextAreaFor(m => m.Desciption, new {@class = "form-control",id = "compose-record", rows = "15", style = "resize:none;"})
                 </div>
             </div>
 

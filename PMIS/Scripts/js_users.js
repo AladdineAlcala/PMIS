@@ -4,8 +4,6 @@ var $tableUsers;
 
 (function($) {
 
-   
-
     function addUserRole(selectedobj) {
 
         if (selectedobj.hasClass('selected')) {

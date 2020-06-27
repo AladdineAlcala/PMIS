@@ -7,24 +7,15 @@
        
         if (Model.Image == null)
         {
-            if (Model.Gender == "Female")
-            {
-                <img class="img-thumbnail img-fluid"
-                     src="@Url.Content("~/Content/dist/img/avatar3.png")"
-                     alt="User profile picture">
-            }
-            else
-            {
-                <img class="img-thumbnail img-fluid"
-                     src="@Url.Content("~/Content/dist/img/avatar04.png")"
-                     alt="User profile picture">
-            }
+            <img class="img-thumbnail img-fluid"
+                 src="@Url.Content("~/Content/dist/img/no-photo.png")"
+                 alt=@Model.Lastname>
         }
         else
         {
             <img class="img-thumbnail img-fluid"
                  src="@Url.Content("~/Content/Images/" + Model.Image)"
-                 alt="User profile picture">
+                 alt=@Model.Lastname>
         }
     }
 
@@ -32,6 +23,7 @@
 <h3 class="profile-username text-center">@($"{Model.Lastname},{Model.Firstname}")</h3>
 
 <p class="text-muted text-center">Pat. Id: <span class="text-danger">@Model.Pat_Id</span></p>
+
 <br/>
 @*<div class="profile_info">
     <button class="btn btn-primary btn-sm"> <i class="fas fa-user"> </i> View Profile</button>
@@ -42,6 +34,8 @@
 <p class="text-muted">@($"{Model.AddStreetBrgy},{Model.Muncity},{Model.Province}")</p>
                              
 <hr>
+
+
 @Html.HiddenFor(m=>m.DoB,new {id="dateofbirth"})
 
 <ul class="list-unstyled">
@@ -65,14 +59,24 @@
         }
 
     </li>
-    @*<li>
-        <span><i class="far fa-fw fa-image "></i> Logo.png</span>
-    </li>
-    <li>
-        <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
-    </li>*@
+  
 </ul>
 
+<hr>
+
+<ul class="list-unstyled">
+    <li>
+        Height: @($"{Model.Height}")  ( <span class="d-inline-block text-bold"></span> cm. )
+    </li>
+    <li>
+        Weight: @($"{Model.Weight}")  ( <span class="d-inline-block text-bold"></span> lbs. )
+    </li>
+    <li>
+      Blood Group:@($"{Model.BType}") 
+
+    </li>
+  
+</ul>
 
 <script type="text/javascript">
 

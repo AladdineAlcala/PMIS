@@ -19,16 +19,16 @@
                 <td>@(item.Iscancelled ? "Cancelled" : item.Stat)</td>
                 <td class="text-center">
                     
-                    <button class="btn btn-info btn-sm" data-patientId="@item.PatientNo" id="view_medicalrecords">
-                        <i class="fal fa-file-medical-alt"></i>
-
+                    <button class="btn btn-info btn-sm" data-patientId="@item.PatientNo" id="view_medicalrecords" alt="View Medical Record">
+                        <i class="fal fa-binoculars"></i>
+                        View
                     </button>
 
                     @if (item.BlStat)
                     {
                         <button class="btn btn-success btn-sm" disabled="disabled" data-patientId="@item.PatientNo" id="btnconsultationserve">
                             <i class="fal fa-lightbulb-on"></i>
-
+                            Status
                         </button>
                        
                     }
@@ -37,7 +37,7 @@
                     {
                         <button class="btn btn-success btn-sm" data-patientId="@item.PatientNo" id="btnconsultationserve">
                             <i class="fal fa-lightbulb-on"></i>
-
+                            Status
                         </button>
 
                       

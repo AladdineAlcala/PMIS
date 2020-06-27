@@ -11,9 +11,11 @@ using PMIS.ViewModels;
 using Microsoft.Owin.Security;
 using PMIS.Model;
 using PMIS;
+using PMIS.HelperClass;
 
 namespace PMIS.Areas.Doctor.Controllers
 {
+    [UserPermissionAuthorized(UserPermisionLevelEnum.doctor)]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -189,6 +191,13 @@ namespace PMIS.Areas.Doctor.Controllers
 
             return RedirectToAction("LogIn", "Account",new {area=""});
         }
+
+
+        public ActionResult UnauthorizedAccess()
+        {
+            return View("UnauthorizedAccess");
+        }
+
 
 
         private const string XsrfKey = "XsrfId";

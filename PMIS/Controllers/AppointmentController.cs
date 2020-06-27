@@ -19,18 +19,20 @@ namespace PMIS.Controllers
     {
        
         private readonly IAppointmentServices _appointmentServices;
+        private readonly IPatientRecordServices _patientRecordServices;
         private readonly IPatientServices _patientServices;
         private readonly IUnitOfWork _unitofwork;
         private AppointHub appointHub;
-        private readonly IUserPhysicianService _userPhysicianService;
+        //private readonly IUserPhysicianService _userPhysicianService;
 
 
-        public AppointmentController(IAppointmentServices appointmentServices,IPatientServices patientServices,IUnitOfWork unitofwork, IUserPhysicianService userPhysicianService)
+        public AppointmentController(IAppointmentServices appointmentServices,IPatientServices patientServices,IUnitOfWork unitofwork, IUserPhysicianService userPhysicianService, IPatientRecordServices patientRecordServices)
         {
             _appointmentServices = appointmentServices;
             _patientServices = patientServices;
             _unitofwork = unitofwork;
-            _userPhysicianService = userPhysicianService;
+            //_userPhysicianService = userPhysicianService;
+            _patientRecordServices = patientRecordServices;
         }
 
 
@@ -181,7 +183,7 @@ namespace PMIS.Controllers
             {
                 AppointDate = newPatientAppointment.AppointDate,
                 Pat_Id = patientId,
-                Phys_id = newPatientAppointment.PhysId,
+                Phys_id = newPatientAppointment.Phys_Id,
                 PriorNo = 1,
                 Status = false,
                 IsCancelled = false
@@ -246,8 +248,8 @@ namespace PMIS.Controllers
                 return PartialView("_AppointmentOptions", appointmentoption);
             }
 
-            var appointment = _appointmentServices.GetAppointment(appointmentoption.AppNo);
-
+            var appointment =await _appointmentServices.GetAppointment(appointmentoption.AppNo);
+        
             string phyId = appointment.Phys_id;
             DateTime appdate = (DateTime)appointment.AppointDate;
 
@@ -263,16 +265,21 @@ namespace PMIS.Controllers
                     break;
 
                 case AppointOptions.Remove:
-                    _appointmentServices.RemoveAppointment(appointment);
-                    success = true;
-                    break;
+                        _appointmentServices.RemoveAppointment(appointment);
+                        success = true;
+                        break;
 
                 case AppointOptions.Replace:
                     if (appointment.Pat_Id != appointmentoption.RepIdNo)
                     {
+                        //get medical record
+                        var medicalRecord = _patientRecordServices.GetMedicalRecordByAppointment(appointment.No);
+                        //remove medical record
+                        _patientRecordServices.RemoveMedicalRecord(medicalRecord);
+                        //update appointment
+                         appointment.Pat_Id = appointmentoption.RepIdNo;
 
 
-                        appointment.Pat_Id = appointmentoption.RepIdNo;
                         _appointmentServices.ModifyAppointment(appointment);
 
                         success = true;
@@ -309,6 +316,16 @@ namespace PMIS.Controllers
             return Json(new { success = success, url = url }, JsonRequestBehavior.AllowGet);
         }
 
+     
+
+
+        //[HttpGet]
+        //public ActionResult GetAppointmentByPatient(string patientId)
+        //{
+        //    var appointmentList =  _appointmentServices.GetAllAppointmentByPatient(patientId);
+
+        //    return Json(new {data=appointmentList }, JsonRequestBehavior.AllowGet);
+        //}
 
     }
 }
