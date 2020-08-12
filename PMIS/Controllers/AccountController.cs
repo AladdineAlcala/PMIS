@@ -147,16 +147,24 @@ namespace PMIS.Controllers
                     //ViewBag.phyId = _userPhysicianService.GetPhysicianId(User.Identity.GetUserId());
 
                     var url = Url.Action("Index", "DocAppointment", new {area = "Doctor"});
-
                     return RedirectToLocal(url);
+
                 }
 
+                else if (User.IsInRole("admin"))
+                {
+                    var url = Url.Action("Index", "Dashboard");
+                    return RedirectToLocal(url);
+                }
                 else
                 {
                     var url = Url.Action("Index", "Home");
 
                     return RedirectToLocal(url);
                 }
+
+               
+
             }
             else
             {
@@ -166,6 +174,12 @@ namespace PMIS.Controllers
 
                     return RedirectToLocal(url);
                 }
+                else if (User.IsInRole("admin"))
+                {
+                    var url = Url.Action("Index", "Dashboard");
+                    return RedirectToLocal(url);
+                }
+
                 else
                 {
                     return RedirectToLocal(returnUrl);
@@ -227,6 +241,24 @@ namespace PMIS.Controllers
             }
 
             return PartialView("_NewUser", model);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> ModifyUser(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+
+            var modifiedUser = new RegisterViewModel
+            {
+                UserName=user.UserName,
+                Email=user.Email,
+
+
+            };
+
+   
+
+            return PartialView("_ModifyUser", modifiedUser);
         }
 
         public ActionResult GetAllUsers()

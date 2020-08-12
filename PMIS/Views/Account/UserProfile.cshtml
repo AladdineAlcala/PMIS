@@ -18,12 +18,14 @@
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="active tab-pane" id="basic-info">
+
                             <div class="basic-info">
                                            
                                 @{
                                     Html.RenderAction("GetUserProfileInfo", "Account", new {userId = Model.UserId });
                                 }
                             </div>
+
                         </div>
 
                         <div class="tab-pane" id="security-info">

@@ -9765,6 +9765,7 @@
     <Content Include="Views\Shared\ReportContainer.cshtml" />
     <Content Include="Views\Shared\Container.cshtml" />
     <Content Include="Views\Patient\_PatientAppointmentListPartialView.cshtml" />
+    <Content Include="Views\Account\_ModifyUser.cshtml" />
     <None Include="Web.TESTServer-Deply.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

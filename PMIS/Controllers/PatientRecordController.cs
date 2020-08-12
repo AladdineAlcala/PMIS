@@ -37,11 +37,13 @@ namespace PMIS.Controllers
         [HttpGet]
         public ActionResult AddRecord(string patientId,string physicianId,int? appNo)
         {
+            
+
             var newrecord = new MedicalRecordViewModel()
             {
                 PatientId = patientId,
                 PhyId = physicianId,
-                ApppointmentNo = (int) appNo
+                ApppointmentNo = appNo > 0 ? (int)appNo : 0
 
             };
 
@@ -88,7 +90,7 @@ namespace PMIS.Controllers
                 PhyId = medicalRecord.Phys_id,
                 Desciption = medicalRecord.RecordDetails,
                 Subject = medicalRecord.ActivityName,
-                ApppointmentNo = (int) medicalRecord.AppointmentNo
+                ApppointmentNo =medicalRecord.AppointmentNo==null?0: (int) medicalRecord.AppointmentNo
 
             };
 

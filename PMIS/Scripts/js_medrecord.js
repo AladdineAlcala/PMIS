@@ -168,6 +168,7 @@ $(document).on('click', '#addActivity', function (e) {
     const patientId = $('#patientid').val();
     const phyId = $('#phyid').val();
     const appno = $('#appointmentNo').val();
+    console.log(appno);
 
     $.ajax({
         type: 'Get',
@@ -394,6 +395,9 @@ $(document).on('click', '.post #viewchart', function (e) {
 
     loadChart($(this).closest('.post').attr('data-postId'));
 
+    var addActivity = document.getElementById('addActivity');
+    addActivity.style.visibility = "hidden";
+
 });
 
 $(document).on('click', '#return_to_list', function(e) {
@@ -401,7 +405,8 @@ $(document).on('click', '#return_to_list', function(e) {
     e.preventDefault();
    
     loadMedicalRecord($('#patientid').val(), $('#phyid').val());
-
+    var addActivity = document.getElementById('addActivity');
+    addActivity.style.visibility = "visible";
 });
 
 

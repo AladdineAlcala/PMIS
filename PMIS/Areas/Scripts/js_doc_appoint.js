@@ -80,7 +80,7 @@ $(document).on('click', '#btnconsultationserve', function (e) {
 
     }).then((result) => {
 
-            if (result) {
+            if (result.value) {
 
                 $.ajax({
                     type: 'Post',
@@ -91,8 +91,6 @@ $(document).on('click', '#btnconsultationserve', function (e) {
                     success: function (data) {
 
                         if (data.success) {
-
-
 
                             toast.fire({
                                 type: 'success',
@@ -120,6 +118,13 @@ $(document).on('click', '#btnconsultationserve', function (e) {
                     appointcounter($('#hdn_docuserId').val(), appointdate);
                 });
 
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+                setTimeout(function () {
+
+                    $('#spinn-loader').hide();
+
+                }, 1000);
             }
         }
 

@@ -14,7 +14,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- load styles for doctore layout-->
     @Styles.Render("~/Styles/Css")
     @Styles.Render("~/adminstyle")
-
+    <link href="@Url.Content("~/Content/plugins/summernote/summernote-bs4.css")" rel="stylesheet" />
     <!-- Google Font: Source Sans Pro -->
     @*<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">*@
 
@@ -70,7 +70,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         {
             @RenderBody()
         }
-
+        
 
     </div>
     <!-- /.content -->
@@ -108,6 +108,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <script type="text/javascript" src="@Url.Content("~/Scripts/js_signalAppointment.js")"></script>
     
+
+    
 @RenderSection("scripts", required: false)
     
     
@@ -121,5 +123,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
 
 </script>
+<script src="@Url.Content("~/Content/plugins/summernote/summernote-bs4.min.js")"></script>
 </body>
 </html>

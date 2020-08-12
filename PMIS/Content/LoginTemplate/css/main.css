@@ -164,18 +164,22 @@ iframe {
 }
 
 .container-login100 {
-  width: 100%;  
-  min-height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-  background: #f2f2f2;  
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-image: url('../../../Images/61802.jpg');
+    -ms-background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    -ms-background-position: center;
+    background-position: center;
 }
 
 .wrap-login100 {

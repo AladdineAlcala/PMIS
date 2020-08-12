@@ -134,7 +134,39 @@ var $tableUsers;
 
     };
 
-    var modifyUser = function (selectedobj) { throw new Error("Not implemented"); };
+    var modifyUser = function (selectedobj) {
+
+        var $this = selectedobj;
+
+        $.ajax({
+            type: 'Get',
+            url: '/Account/ModifyUser',
+            data: { id: $this.attr('data-userId') },
+            contentType: 'application/html;charset=utf8',
+            datatype: 'html',
+            cache: false,
+            success: function (result) {
+
+                var modal = $('#modal-modifyUser');
+                modal.find('.modal-body').html(result);
+
+                modal.modal({
+                    backdrop: 'static',
+                    keyboard: false
+                },
+                    'show');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                Swal.fire('Error adding record!', 'Please try again', 'error');
+            }
+        });
+
+
+    };
+
+
+
+
 
     if ($.fn.DataTable.isDataTable('#tbl-users')) {
 
@@ -229,7 +261,7 @@ var $tableUsers;
             {
                 text: '<i class="fas fa-user-edit fa-md fa-fw"></i>',
                 className: 'btn btn-default btn-flat btnModifyUser',
-                titleAttr: 'Remove User',
+                titleAttr: 'Modify User',
                 action: function () {
                   
                     modifyUser($selectedObject);

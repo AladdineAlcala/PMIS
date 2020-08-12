@@ -24,7 +24,7 @@ namespace PMIS
                 "~/Content/plugins/moment/datetime-moment.js",
                 "~/Content/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js",
                 "~/Content/plugins/toastr/toastr.min.js",
-                "~/Content/plugins/summernote/summernote-bs4.min.js",
+                //"~/Content/plugins/summernote/summernote-bs4.min.js",
                 "~/Content/plugins/webcam/webcam.min.js",
                 "~/Content/dist/js/adminlte.min.js"
 
@@ -63,7 +63,7 @@ namespace PMIS
                  "~/Content/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css",
                  "~/Content/plugins/toastr/toastr.min.css",
                  "~/Content/plugins/typeahead/css/typehead.css",
-                 "~/Content/plugins/summernote/summernote-bs4.css",
+                 //"~/Content/plugins/summernote/summernote-bs4.css",
                  "~/Content/PagedList.css"
                 ));
 

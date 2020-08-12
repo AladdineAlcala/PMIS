@@ -1,0 +1,72 @@
+﻿
+@using PMIS.ViewModels
+@model RegisterViewModel
+
+
+<div class="container-fluid">
+    <div class="alert alert-info alert-dismissible">
+        <h6><i class="icon fas fa-info"></i>Note:</h6>
+        <p class="text" style="margin-bottom: 0; padding-bottom: 0;">All fields marked with an * are required</p>
+    </div>
+
+    <div class="row">
+        <div class="col-lg">
+
+            @using (Html.BeginForm("RegisterUser", "Account", FormMethod.Post, new { @role = "form", @id = "registUser" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Retype password", @type = "password" })
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <!-- /.col -->
+                    <div class="col-sm-3 offset-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat" id="registerUser">Register</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>

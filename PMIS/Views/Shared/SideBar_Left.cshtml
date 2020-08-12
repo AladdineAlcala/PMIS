@@ -72,14 +72,18 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="@Url.Action("UsersIndex", "Account")" class="nav-link">
-                        <i class="nav-icon fal fa-user-alt"></i>
-                        <p>
-                            Users
-                        </p>
-                    </a>
-                </li>
+                @if (this.User.IsInRole("admin"))
+                {
+                    <li class="nav-item">
+                        <a href="@Url.Action("UsersIndex", "Account")" class="nav-link">
+                            <i class="nav-icon fal fa-user-alt"></i>
+                            <p>
+                                Users
+                            </p>
+                        </a>
+                    </li>
+                }
+                
 
             </ul>
         </nav>
