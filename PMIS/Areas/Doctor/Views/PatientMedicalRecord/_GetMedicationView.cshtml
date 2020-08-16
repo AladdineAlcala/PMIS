@@ -6,8 +6,12 @@
 @if (Model != null)
 {
     <input type="hidden" value="@Model.MidNo" id="medicationNo" />
+
     @(new HtmlString(Model.MedicationDesc))
 }
-<div class="container">
-    
-</div>
+else
+{
+    <div style="height:40px;">
+        <p style="margin-left:20px;color:#ff0000;text-align:center;font-size:15px;"> No medication found</p>
+    </div>
+}

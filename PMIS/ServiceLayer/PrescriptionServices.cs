@@ -65,9 +65,10 @@ namespace PMIS.ServiceLayer
         {
             List<Prescription> prescriptionlist = new List<Prescription>();
             prescriptionlist = catId != null ? _pmisEntities.Prescriptions.Where(t => t.CatId == catId).ToList() : _pmisEntities.Prescriptions.ToList();
+
             return prescriptionlist.AsEnumerable().Select(t => new SelectListItem()
             {
-                Text = t.PrescriptionDetails,
+                Text = t.PrescriptionDetails +" " + t.Unit,
                 Value = t.PresId.ToString()
 
             });
@@ -80,11 +81,11 @@ namespace PMIS.ServiceLayer
                 PrescNo = (int)t.No,
                 RecNo = (int)t.RecordNo,
                 PrescId = (int)t.PresId,
-                PrescriptionDetails = t.Prescription.PrescriptionDetails,
+                PrescriptionDetails = t.Prescription.PrescriptionDetails + " " +t.Prescription.Unit,
                 Sig = t.Sig,
                 DispInst = t.Disp
-
             }).Where(t => t.RecNo == recNo).ToList();
+
         }
 
         public async Task<int> PrescriptionCount()

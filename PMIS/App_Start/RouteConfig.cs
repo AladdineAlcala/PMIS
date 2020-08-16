@@ -14,11 +14,18 @@ namespace PMIS
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] {"PMIS.Controllers"}
-            );
+               name: "Default",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Account", action = "LogIn", id = UrlParameter.Optional },
+               namespaces: new[] { "PMIS.Controllers" }
+           );
+
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+            //    namespaces: new[] { "PMIS.Controllers" }
+            //);
 
             routes.MapRoute("PatientRecordById",
                "{controller}/{action}/{patientid}/{phyid}",

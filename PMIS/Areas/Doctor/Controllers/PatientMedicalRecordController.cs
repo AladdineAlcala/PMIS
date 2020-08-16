@@ -9,6 +9,7 @@ using PMIS.ServiceLayer;
 using PMIS.ViewModels;
 using PagedList;
 using PMIS.HelperClass;
+using System.Collections.Generic;
 
 namespace PMIS.Areas.Doctor.Controllers
 {
@@ -241,7 +242,7 @@ namespace PMIS.Areas.Doctor.Controllers
                     Sig = docprescription.Sig,
                     DispInst = docprescription.Disp,
                     PrescriptionCatListItem= _prescriptionServices.GetCategoryListItems(),
-                    RecipeListItem = _prescriptionServices.GetPrescriptionListItems(null)
+                    RecipeListItem = _prescriptionServices.GetPrescriptionListItems((int)docprescription.Prescription.CatId)
                 };
 
              
@@ -293,7 +294,7 @@ namespace PMIS.Areas.Doctor.Controllers
         {
             var docprescriptionList = _prescriptionServices.GetDocPrescriptionByRecNo(recordNo);
 
-            return PartialView("_GetMedPrescription",docprescriptionList);
+            return PartialView("_GetMedPrescription",docprescriptionList.ToList());
         }
 
         [HttpGet]
@@ -346,6 +347,16 @@ namespace PMIS.Areas.Doctor.Controllers
             _unitOfWork.Commit();
 
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetPrescriptionCategorySelect(int id)
+        {
+            List<SelectListItem> prescriptionlist = new List<SelectListItem>();
+
+            prescriptionlist = _prescriptionServices.GetPrescriptionListItems(id).ToList();
+
+            return Json(prescriptionlist,JsonRequestBehavior.AllowGet);
         }
     }
 }

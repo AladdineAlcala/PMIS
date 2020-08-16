@@ -512,3 +512,10 @@ $(document).on('click', '#capture-profileImage', function (e) {
     e.preventDefault();
     take_snapshot();
 });
+
+
+$(document).on('click', '#view-medicalinfo', function (e) {
+    e.preventDefault();
+
+    alert('sds');
+});

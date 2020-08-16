@@ -582,3 +582,10 @@ $(document).on('click', '#printPrescription', function (e) {
     var url = "/Prescription/PrintPrescript?medRecNo=" + medRecordNo;
     window.open(url,"_blank");
 });
+
+$(document).on('click', '#view-profile', function (e) {
+    e.preventDefault();
+
+    window.location.href = '/Patient/ViewProfile/' + $('#patientid').val();
+
+});

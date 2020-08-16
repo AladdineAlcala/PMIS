@@ -13,24 +13,39 @@
                     <i class="nav-icon fal fa-file-medical-alt"> </i>
                     Patient Record
                 </h3>
-                <div class="card-tools mr-2">
-                    
-                    @*<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" id="printMedicalRecord" title="Print Record">
-                       <i class="fas fa-print"></i>
-                    </button>*@
+                <div class="card-tools">
+                
 
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" id="return_to_list" data-container="body" title="Return to List">
-                        <i class="fas fa-reply"></i>
+                    <button type="button" class="btn btn-tool" data-toggle="tooltip" id="return_to_list" title="Return to List">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
             </div>
 
             <!--card header-->
 
-            <div class="card-body p-0">
+            <div class="card-body p-0 m-0">
                 
-                <div class="mailbox-read-info pl-2 bg-info">
-                    <h5 class="text-white" style="width: 300px;">Subjective: </h5>
+                <div class="mailbox-read-info pl-2 bg-info clearfix">
+                    
+                        <div class="user-block m-0 p-1" style="width:100%;" id="medrecDetails">
+                            <span class="text-white texthead m-0 p-0">Subjective: </span>
+                            <span class="texticon iconmedDetails pull-right m-0 p-0" style="text-align:right;visibility:hidden;">
+
+                                @{
+                                    if (Model.RecordDetails != null)
+                                    {
+                                        <button type="button" class="btn btn-flat btn-xs" id="btn-modifymedication" title="Modify Medication">
+                                            <i class="far fa-edit fa-fw text-white"></i>
+                                        </button>
+                                    }
+                                   
+                                }
+
+                               
+                            </span>
+                        </div>
+
 
                     @*<h6><span class="mailbox-read-info">@Model.RecordDate.Value.ToString("yy-MMM-dd ddd tt")</span></h6>*@
                 </div>
@@ -43,82 +58,71 @@
                 </div>
 
 
-                <div class="mailbox-read-info pl-2 bg-info">
-                    <h5 class="text-white">Current Medication</h5>
 
-                </div>
+                <div class="mailbox-read-info pl-2 bg-info clearfix">
 
-                <!-- /.mailbox-read-info -->
-                <div class="mailbox-controls with-border text-center">
-                    @{
-                        string hasrecord = Model.Medications.Count > 0 ? "disabled" : "";
-                    }
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm" id="medication" data-toggle="tooltip" data-container="body" title="Add Medication" @hasrecord>
-                            <i class="far fa-plus-square fa-fw"></i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm" id="btn-modifymedication" data-toggle="tooltip" data-container="body" title="Modify Medication">
-                            <i class="fas fa-edit fa-fw"></i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm" id="removeMedication" data-toggle="tooltip" data-container="body" title="Remove Medication ">
-                            <i class="fas fa-trash fa-fw"></i>
-                        </button>
+                    <div class="user-block m-0 p-1" style="width:100%;" id="medication">
+                        @{
+                           var hasrecordMedication = Model.Medications.Count > 0 ? "disabled" : "";
+                        }
+
+                        <span class="text-white texthead m-0 p-0">Current Medication: </span>
+                        <span class="texticon iconmedication pull-right m-0 p-0" style="text-align:right;visibility:hidden;">
+                            <button type="button" class="btn btn-flat btn-xs" id="medication" title="Add Medication" @hasrecordMedication>
+                                <i class="far fa-plus-square fa-fw text-white"></i>
+                            </button>
+                            <button type="button" class="btn btn-flat btn-xs" id="btn-modifymedication" title="Modify Medication">
+                                <i class="fas fa-edit fa-fw text-white"></i>
+                            </button>
+                            <button type="button" class="btn btn-flat btn-xs" id="removeMedication" title="Remove Medication">
+                                <i class="fas fa-trash fa-fw  text-white"></i>
+                            </button>
+                        </span>
                     </div>
-                   
-                    @*<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                        <i class="fas fa-print"></i>
-                    </button>*@
+
+
+                  
                 </div>
-                <!-- /.mailbox-controls -->
-
-
                 <div class="subjective-message with-border border-bottom">
 
                     <!-- medication here -->
                     @{
                         Html.RenderAction("GetMedicationView", "PatientMedicalRecord", new { area = "Doctor", recNo = Model.RecordNo });
                     }
-                    
+
 
                 </div>
 
 
-                <!--- prescreiption -->
+                <div class="mailbox-read-info pl-2 bg-info clearfix">
 
-
-
-                <div class="mailbox-read-info pl-2 bg-info">
-                    <h5 class="text-white">Prescription: </h5>
-
-                </div>
-
-                <!-- /.mailbox-read-info -->
-                <div class="mailbox-controls with-border text-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm" id="btn-newprescription" data-toggle="tooltip" data-container="body" title="Add Prescription">
-                            <i class="far fa-plus-square fa-fw"></i>
-                        </button>
+                    <div class="user-block m-0 p-1" style="width:100%;" id="prescription" >
                        
-                        <button type="button" class="btn btn-default btn-sm btn-x" disabled="disabled" id="btn-modifyPrescription" data-toggle="tooltip" data-container="body" title="Edit Prescription">
-                            <i class="fas fa-edit fa-fw"></i>
-                        </button>
-                        
-                        <button type="button" class="btn btn-default btn-sm btn-x" disabled="disabled" id="btn-prescriptionremove" data-toggle="tooltip" data-container="body" title="Remove Prescription">
-                            <i class="fas fa-trash fa-fw"></i>
-                        </button>
-                    </div>
-                    <!-- /.btn-group -->
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                        <i class="fas fa-print"></i>
-                    </button>
-                </div>
-                <!-- /.mailbox-controls -->
 
+                        <span class="text-white texthead m-0 p-0">Prescription: </span>
+                        <span class="texticon iconprescription pull-right m-0 p-0" style="text-align:right;visibility:hidden;">
+                            <button type="button" class="btn btn-flat btn-xs btn-x" id="btn-newprescription" title="Add Prescription">
+                                <i class="far fa-plus-square fa-fw text-white"></i>
+                            </button>
+                            <button type="button" class="btn btn-flat btn-xs btn-x" disabled="disabled" id="btn-modifyPrescription" title="Edit Prescription">
+                                <i class="fas fa-edit fa-fw text-white"></i>
+                            </button>
+                            <button type="button" class="btn btn-flat btn-xs btn-x" disabled="disabled" id="btn-prescriptionremove" title="Remove Prescription">
+                                <i class="fas fa-trash fa-fw  text-white"></i>
+                            </button>
+                        </span>
+                    </div>
+
+
+
+                </div>
 
                 <div class="subjective-message with-border border-bottom table-responsive p-0" id="med_prescription">
 
                     @{
+
                         Html.RenderAction("GetMedPrescription","PatientMedicalRecord",new {area="Doctor",recordNo=Model.RecordNo});
+
                     }
 
 

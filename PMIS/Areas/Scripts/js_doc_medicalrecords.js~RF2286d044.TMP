@@ -131,18 +131,12 @@ const patientMedPrescrioption = (recNo) => {
             function (e, patient) {
                 e.preventDefault();
 
-                $('#spinn-loader').show();
+               // $('#spinn-loader').show();
 
-             
+                //get_physician(patient.PatientId);
 
+                window.location.href = patMedicalRecord.getMedicalRecordByDoc.replace("patid", patient.PatientId).replace("phid", $('#hdnLogPhyId').val());
 
-                setTimeout(function () {
-
-
-                    window.location.href = patMedicalRecord.getMedicalRecordByDoc.replace("patid", patient.PatientId).replace("phid", $('#hdnLogPhyId').val());
-                    $('#spinn-loader').hide();
-
-                },1000);
 
                 
                 
@@ -726,13 +720,9 @@ $(document).on('click', '#tble-docPrescription > tbody >tr', function(e) {
 
     if ($(e.target).is(':checkbox')) {
 
-        var elem = document.querySelector('.iconprescription');
-       
 
         $selected = $(e.target);
         var $this = $(e.target);
-
-        
 
         $this.prop('checked')
             ? $('button.btn-x').prop("disabled", false)
@@ -741,10 +731,6 @@ $(document).on('click', '#tble-docPrescription > tbody >tr', function(e) {
         $this.prop('checked')
             ? $('#btn-newprescription').prop("disabled", true)
             : $('#btn-newprescription').prop("disabled", false);
-
-        $this.prop('checked')
-           ? elem.style.visibility = 'visible'
-           : elem.style.visibility = 'hidden';
 
     }
 });
@@ -863,27 +849,5 @@ $(document).on('click', '#btn-UpdateDoctorsPrescription', event => {
         }
 
     );
-
-});
-
-
-//update prescription selectlist from category
-
-$(document).on('change', '#selectlist-category', function () {
-
-    var val = $(this).val();
-
-    var prescription = "";
-
-    $.getJSON('/Doctor/PatientMedicalRecord/GetPrescriptionCategorySelect', { id: val }, function (data) {
-
-        $.each(data, function(index,item) {
-
-            prescription += "<option value='" + item.Value +"' >" + item.Text + "</option>"
-        });
-        //console.log(prescription);
-
-       $('#docrecipelistitem').html(prescription);
-    });
 
 });

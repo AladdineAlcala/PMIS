@@ -12,6 +12,7 @@
             <th>Date</th>
             <th>Physician</th>
             <th>Status</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -28,7 +29,10 @@
 
                         <td>@item.PhyName</td>
                         <td>@(item.Iscancelled ? "Cancelled" : item.Stat)</td>
-                       
+
+                        <td>
+                            <button type="button" class="btn btn-block btn-outline-success btn-flat btn-sm" id="view-medicalinfo"> View </button>
+                        </td>
                     </tr>
                     
                     if (item.Iscancelled == false)
