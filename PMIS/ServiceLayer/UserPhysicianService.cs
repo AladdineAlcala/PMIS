@@ -56,9 +56,9 @@ namespace PMIS.ServiceLayer
             // GC.SuppressFinalize(this);
         }
 
-        public User GetUserPhysician_By_Id(int id)
+        public User GetUserPhysician_By_Id(string id)
         {
-            throw new NotImplementedException();
+            return _pmisEntities.Users.FirstOrDefault(t => t.Id == id);
         }
 
         public IEnumerable<PhysicianDetailsViewModel> GetAllPhysician()

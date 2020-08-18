@@ -397,12 +397,19 @@ $(document).on('change', '#select-doctor', function (e) {
 
 });
 
+//============================================================================================
+//returns medical record page from appointment list (appointment page) items selected
+//============================================================================================
 $(document).on('click', '#btn-medicalrecords', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
+    const appointNo = $(this).closest('tr').attr('data-patNo');
 
-    window.location.href = '/PatientRecord/MedicalHistory/' + $(this).attr('data-patientId') + '/' + $('#select-doctor').val();
+    window.location.href = '/PatientRecord/AppointmentMedicalRecord/' + appointNo;
+
+
+    //window.location.href = '/PatientRecord/MedicalHistory/' + $(this).attr('data-patientId') + '/' + $('#select-doctor').val();
 
 });
 

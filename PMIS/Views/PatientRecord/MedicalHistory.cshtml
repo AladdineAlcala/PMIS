@@ -6,7 +6,7 @@
 
 @Html.HiddenFor(m => m.PatientId, new { @id = "patientid" })
 @Html.HiddenFor(m => m.PhyId, new { @id = "phyid" })
-
+@Html.HiddenFor(m => m.AppointmentId, new { @id = "appointmentNo" })
 @Html.HiddenFor(m => m.Patient.DoB, new { @id = "patient-info" })
 
 <div class="container-fluid">
@@ -15,7 +15,7 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Medical History</h3>
+                    <h3 class="card-title"> Medical History  - <span style="font-size:15px; font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;margin-left:15px;color:darkblue;"> @Model.Patient.Firstname @Model.Patient.Lastname / @Model.Phy_abr </span> </h3>
 
 
                 </div>

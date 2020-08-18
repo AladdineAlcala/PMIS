@@ -11,7 +11,7 @@ namespace PMIS.ServiceLayer
 {
     public interface IUserPhysicianService
     {
-        User GetUserPhysician_By_Id(int id);
+        User GetUserPhysician_By_Id(string id);
         IEnumerable<PhysicianDetailsViewModel> GetAllPhysician();
         IEnumerable<SelectListItem> GetPhysicianListItems();
 

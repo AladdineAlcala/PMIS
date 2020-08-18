@@ -9,10 +9,11 @@ namespace PMIS.ViewModels
 {
     public class PatientMedicalRecordDetailsViewModel
     {
-
+        
         public int AppointmentId { get; set; }
         public string PatientId { get; set; }
         public string PhyId { get; set; }
+        public string Phy_abr;
         public Patient Patient { get; set; }
         public IPagedList<MedicalRecord> MedicalRecordList { get; set; }
     }

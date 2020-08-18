@@ -17,16 +17,20 @@ namespace PMIS.Controllers
         private readonly IUnitOfWork _unitofwork;
         private readonly IPatientRecordServices _patientrecordservices;
         private readonly IPatientServices _patientservices;
+        public readonly IAppointmentServices _appointmentservices;
         private readonly IPrescriptionServices _prescriptionServices;
+        private readonly IUserPhysicianService _userphysicianservices;
 
 
         // GET: PatientRecord
-        public PatientRecordController(IUnitOfWork unitofwork, IPatientRecordServices patientrecordservices, IPatientServices patientservices, IPrescriptionServices prescriptionServices)
+        public PatientRecordController(IUnitOfWork unitofwork, IPatientRecordServices patientrecordservices, IPatientServices patientservices, IPrescriptionServices prescriptionServices, IAppointmentServices appointmentservices, IUserPhysicianService userphysicianservices)
         {
             _unitofwork = unitofwork;
             _patientrecordservices = patientrecordservices;
             _patientservices = patientservices;
             _prescriptionServices = prescriptionServices;
+            _appointmentservices = appointmentservices;
+            _userphysicianservices = userphysicianservices;
         }
 
         public ActionResult Index()
@@ -144,6 +148,45 @@ namespace PMIS.Controllers
 
 
         [HttpGet]
+        [Route("medicalrecords/{id:int)")]
+        public async Task<ActionResult> AppointmentMedicalRecord(int id, int? page)
+        {
+
+            var appointment = await _appointmentservices.GetAppointment(id);
+
+            int pageIndex = page ?? 1;
+            int dataCount = 3;
+
+
+            ViewBag.patId = appointment.Pat_Id;
+            ViewBag.phyId = appointment.Phys_id;
+
+            ViewBag.appointNo = appointment.No;
+
+            var patientRecordDetails = new PatientMedicalRecordDetailsViewModel
+            {
+                AppointmentId = appointment.No,
+                PatientId = appointment.Pat_Id,
+                PhyId = appointment.Phys_id,
+                Phy_abr = _userphysicianservices.GetUserPhysician_By_Id(appointment.Phys_id).Abr,
+                Patient = _patientservices.GetPatientById(appointment.Pat_Id)
+            };
+
+            var medicalRecord = _patientrecordservices.GetAllRecords(appointment.Pat_Id, appointment.Phys_id);
+
+            patientRecordDetails.MedicalRecordList = medicalRecord.OrderByDescending(t => t.RecordNo).ToList()
+                .ToPagedList(pageIndex, dataCount);
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_RecordListPartialView", (PagedList<MedicalRecord>)patientRecordDetails.MedicalRecordList);
+            }
+
+            return View("MedicalHistory", patientRecordDetails);
+        }
+
+
+        [HttpGet]
         public ActionResult MedicalHistory(string patientid, string phyid,int? page)
         {
             int pageIndex = page ?? 1;
@@ -153,12 +196,15 @@ namespace PMIS.Controllers
             ViewBag.patId = patientid;
             ViewBag.phyId = phyid;
 
-            ViewBag.appointNo =_patientrecordservices.GetAppointmentNo(patientid,DateTime.Now);
+            int appointNo = _patientrecordservices.GetAppointmentNo(patientid, DateTime.Now);
 
             var patientRecordDetails = new PatientMedicalRecordDetailsViewModel
             {
+
+                AppointmentId = appointNo,
                 PatientId = patientid,
                 PhyId = phyid,
+                Phy_abr = _userphysicianservices.GetUserPhysician_By_Id(phyid).Abr,
                 Patient = _patientservices.GetPatientById(patientid)
             };
             
