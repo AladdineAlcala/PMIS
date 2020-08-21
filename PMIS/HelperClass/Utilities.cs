@@ -12,6 +12,18 @@ namespace PMIS.HelperClass
 {
     public static class Utilities
     {
+
+
+        public static int GetAge(DateTime dob)
+        {
+            DateTime now = DateTime.Today;
+            int age = now.Year - dob.Year;
+
+
+            return age;
+
+        }
+
         public static string GeneratePatientId()
         {
             var pmisentity = new PMISEntities();

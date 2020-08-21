@@ -274,12 +274,17 @@ namespace PMIS.Controllers
                     {
                         //get medical record
                         var medicalRecord = _patientRecordServices.GetMedicalRecordByAppointment(appointment.No);
-                        //remove medical record
-                        _patientRecordServices.RemoveMedicalRecord(medicalRecord);
+
+                        if (medicalRecord != null)
+                        {
+
+                            //remove medical record
+                            _patientRecordServices.RemoveMedicalRecord(medicalRecord);
+                        }
+                        
+                       
                         //update appointment
                          appointment.Pat_Id = appointmentoption.RepIdNo;
-
-
                         _appointmentServices.ModifyAppointment(appointment);
 
                         success = true;
@@ -287,9 +292,12 @@ namespace PMIS.Controllers
 
                     break;
 
-                case AppointOptions.Served:
+                case AppointOptions.Serve:
+
                     appointment.Status = true;
                     _appointmentServices.ModifyAppointment(appointment);
+
+                    success = true;
                     break;
 
 

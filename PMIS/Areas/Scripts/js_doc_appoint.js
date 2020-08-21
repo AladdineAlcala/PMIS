@@ -67,7 +67,7 @@ $(document).on('click', '#btnconsultationserve', function (e) {
     e.preventDefault();
     var appointdate = moment(new Date()).format('YYYY-MM-DD HH:mm');
 
-    $('#spinn-loader').show();
+    //$('#spinn-loader').show();
 
     Swal.fire({
         title: "Are You Sure ?",
@@ -109,22 +109,22 @@ $(document).on('click', '#btnconsultationserve', function (e) {
 
                     $('#tableAppoint').load(data.url);
 
-                    setTimeout(function () {
+                    //setTimeout(function () {
 
-                        $('#spinn-loader').hide();
+                    //    $('#spinn-loader').hide();
 
-                    }, 1000);
+                    //}, 1000);
 
                     appointcounter($('#hdn_docuserId').val(), appointdate);
                 });
 
             }
             else if (result.dismiss === Swal.DismissReason.cancel) {
-                setTimeout(function () {
+                //setTimeout(function () {
 
-                    $('#spinn-loader').hide();
+                //    $('#spinn-loader').hide();
 
-                }, 1000);
+                //}, 1000);
             }
         }
 

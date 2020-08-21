@@ -13,7 +13,7 @@ namespace PMIS.ViewModels
         Cancel=1,
         Remove,
         Replace,
-        Served
+        Serve
     }
 
     public class AppointmentOptionsViewModel

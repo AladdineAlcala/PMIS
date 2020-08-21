@@ -174,12 +174,17 @@ namespace PMIS.Areas.Doctor.Controllers
         }
 
 
-        public ActionResult RemoveMedication(int medNo)
+        public async Task<ActionResult> RemoveMedicationAsync(int medNo)
         {
 
+            var medication = await _patientrecordservices.GetMedicationBymedNo(medNo);
+
+            if (medication == null) return Json(new { succces = false }, JsonRequestBehavior.AllowGet);
 
 
+            _patientrecordservices.RemoveMedication(medication);
 
+            _unitOfWork.Commit();
 
             return Json(new {success = true}, JsonRequestBehavior.AllowGet);
 

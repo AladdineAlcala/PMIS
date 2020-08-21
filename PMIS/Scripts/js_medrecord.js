@@ -1,7 +1,9 @@
 ﻿
 
 function loadsummernote() {
-    $('#compose-record').summernote();
+    $('#compose-record').summernote({
+        height: 350
+    });
 }
 
 function loadMedicalRecord(patId, phyId) {
@@ -159,6 +161,16 @@ $(function () {
     //console.log($('#patient-info').val());
 
 });
+
+$(document).on('click', '#close-modal-patrecord', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    $("#modal-createRecord").modal('hide');
+
+
+});
+
 
 $(document).on('click', '#addActivity', function (e) {
 

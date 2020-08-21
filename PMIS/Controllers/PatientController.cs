@@ -98,8 +98,9 @@ namespace PMIS.Controllers
             _patientServices.InsertPatient(patient);
             _unitofwork.Commit();
 
-            //var url = @Url.Action("Index", "Patient");
-            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            var patId = patient.Pat_Id;
+            // var url = @Url.Action("ViewProfile", "Patient");
+            return Json(new { success = true, patId }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

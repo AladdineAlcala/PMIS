@@ -16,6 +16,8 @@ document.getElementById('btn-saveUserProfile').addEventListener('click',
 
                 if (result.value) {
 
+                    $('#spinn-loader').show();
+
                     var formUrl = $('#formUpdateProfileInfo').attr('action');
                     var form = $('[id*=formUpdateProfileInfo]');
 
@@ -46,14 +48,17 @@ document.getElementById('btn-saveUserProfile').addEventListener('click',
                                 Swal.fire('Error adding record!', 'Please try again', 'error');
                             }
 
-                        }).done(function() {
-                            //setTimeout(function () {
+                        }).done(function () {
 
-                            //    window.location.href = patientProfile.indexPatientProfile;
+                            setTimeout(function () {
+
+                                $('#spinn-loader').hide();
 
 
-                            //}, 2000);
 
+                            }, 1000);
+
+                            window.location.href = "/Doctor/Home";
 
                         });
 
@@ -81,7 +86,7 @@ document.getElementById('btn-saveUserSecurity').addEventListener('click',
         }).then((result) => {
 
                 if (result.value) {
-
+                    $('#spinn-loader').show();
                     var formUrl = $('#formUpdatePass').attr('action');
                     var form = $('[id*=formUpdatePass]');
 
@@ -123,13 +128,15 @@ document.getElementById('btn-saveUserSecurity').addEventListener('click',
                                 Swal.fire('Error adding record!', 'Please try again', 'error');
                             }
 
-                        }).done(function() {
-                            //setTimeout(function () {
+                        }).done(function () {
 
-                            //    window.location.href = patientProfile.indexPatientProfile;
+                            setTimeout(function () {
 
+                                $('#spinn-loader').hide();
 
-                            //}, 2000);
+                            }, 1000);
+
+                            window.location.href = "/Doctor/Home";
 
 
                         });

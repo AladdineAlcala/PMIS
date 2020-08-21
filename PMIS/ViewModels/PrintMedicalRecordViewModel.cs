@@ -9,10 +9,12 @@ namespace PMIS.ViewModels
     {
         public int RecordNo { get; set; }
         public string PatientId { get; set; }
+        public string PatFullname { get; set; }
+        public string PatAddress { get; set; }
+        public int Age { get; set; }
+        public Char Gender { get; set; }
         public string PhyId { get; set; }
         public DateTime RecordedDate { get; set; }
-        //public string Subject { get; set; }
-        //public string Desciption { get; set; }
-        //public int ApppointmentNo { get; set; }
+        
     }
-}
+    }

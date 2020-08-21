@@ -222,6 +222,8 @@ $(document).ready(function () {
 
             if (result.value) {
 
+                $('#spinn-loader').show();
+
                 var formUrl = $('#form-patient').attr('action');
                 $.validator.unobtrusive.parse(form);
                 form.validate();
@@ -250,15 +252,20 @@ $(document).ready(function () {
                             Swal.fire('Error adding record!', 'Please try again', 'error');
                         }
 
-                    }).done(function () {
+                    }).done(function (data) {
+
                         setTimeout(function () {
 
-                            window.location.href = patientProfile.indexPatientProfile;
-                           
 
-                        }, 2000);
+                            $('#spinn-loader').hide();
+
+                           // window.location.href = patientProfile.indexPatientProfile;
+                           
+                            
+
+                        }, 1000);
                      
-                      
+                        window.location.href = '/Patient/ViewProfile/' + data.patId;
                     });
 
                 }
@@ -280,6 +287,14 @@ $(document).ready(function () {
 
     //    });
 
+
+    $('#btnupdateprofileclose').on('click', event=> {
+        event.preventDefault();
+        event.stopPropagation();
+
+        window.location.href = '/Patient/Index';
+
+    });
 
 
     var patientAppointmentList = (patId) => {

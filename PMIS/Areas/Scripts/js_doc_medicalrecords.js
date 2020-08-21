@@ -256,8 +256,18 @@ $(document).on('click', '#viewchart', function (e) {
 });
 
 
-$(document).on('click', '#medication', function (e) {
-    e.preventDefault();
+
+
+
+$(document).on('click', '#modalClose', function () {
+
+    $("#modal-createMedication").modal("hide");
+});
+
+
+$(document).on('click', '#newmedication',event=> {
+    event.preventDefault();
+    event.stopPropagation();
 
     $.ajax({
         type: 'Get',
@@ -291,12 +301,6 @@ $(document).on('click', '#medication', function (e) {
     });
 
 
-});
-
-
-$(document).on('click', '#modalClose', function () {
-
-    $("#modal-createMedication").modal("hide");
 });
 
 
@@ -378,9 +382,10 @@ $(document).on('click', '#return_to_list',(e)=>{
 
 
 // modify medication
-$(document).on('click', '#btn-modifymedication', event => {
+$(document).on('click', '#btnmodifymedication', event => {
     event.preventDefault();
- 
+    event.stopPropagation();
+
     $.ajax({
         type: 'Get',
         url: '/Doctor/PatientMedicalRecord/ModifyMedication',
@@ -414,6 +419,7 @@ $(document).on('click', '#btn-modifymedication', event => {
 
 
 });
+
 
 //update medication
 
@@ -486,8 +492,10 @@ $(document).on('click', '#update-docmedication', (e) => {
 
 
 
-$(document).on('click', '#removeMedication', function(e) {
-    e.preventDefault();
+$(document).on('click', '#removeMedication', event=> {
+    event.preventDefault();
+    event.stopPropagation();
+    const recordNo = $('#recNo').val();
 
     Swal.fire({
         title: "Are You Sure ?",
@@ -504,7 +512,7 @@ $(document).on('click', '#removeMedication', function(e) {
 
                 $.ajax({
                     type: 'Post',
-                    url: '/Doctor/PatientMedicalRecord/RemoveMedication',
+                    url: '/Doctor/PatientMedicalRecord/RemoveMedicationAsync',
                     data: { medNo: $('#medicationNo').val() },
                     async: true,
                     datatype: 'json',
@@ -527,7 +535,7 @@ $(document).on('click', '#removeMedication', function(e) {
 
                 }).done(function () {
 
-             
+                    loadChart(recordNo);
 
                   //  patientMedPrescrioption($('#recNo').val());
                 });

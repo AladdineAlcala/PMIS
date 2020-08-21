@@ -97,9 +97,13 @@ namespace PMIS.Controllers
                                             {
                                                 RecordNo = (int)m.RecordNo,
                                                 PatientId = m.Pat_Id,
+                                                PatFullname = m.Patient.Firstname +' ' + m.Patient.Lastname,
+                                                PatAddress=m.Patient.Muncity + ' ' + m.Patient.Province,
                                                 PhyId = m.Phys_id,
-                                                RecordedDate = (DateTime) m.RecordDate
-                                               
+                                                RecordedDate = (DateTime) m.RecordDate,
+                                                Gender= m.Patient.Gender[0],
+                                                Age=HelperClass.Utilities.GetAge((System.DateTime)m.Patient.DoB)
+
 
                                             }).ToList();
 

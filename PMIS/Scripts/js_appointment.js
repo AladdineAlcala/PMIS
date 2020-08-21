@@ -7,6 +7,8 @@ var appoint_date;
 var phyId = null;
 
 
+
+
 function callCalender() {
     var x = 5;
     var doc = 'JLV';
@@ -144,7 +146,7 @@ function autocompleteName() {
 
             $('#patientId').val(patient.PatientId);
 
-            console.log(patient.PatientId);
+            //console.log(patient.PatientId);
 
         });
 }
@@ -189,35 +191,37 @@ function autocompleteName() {
                 modal.find('.modal-body').html(result);
 
 
-                let patients = new Bloodhound({
-                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('PatientName'),
-                    queryTokenizer: Bloodhound.tokenizers.whitespace,
-                    remote: {
-                        url: '/Patient/GetPatientAutoComplete?query=%QUERY',
-                        wildcard: '%QUERY'
-                    }
-                });
+                autocompleteName();
+
+                //let patients = new Bloodhound({
+                //    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('PatientName'),
+                //    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                //    remote: {
+                //        url: '/Patient/GetPatientAutoComplete?query=%QUERY',
+                //        wildcard: '%QUERY'
+                //    }
+                //});
 
 
-                $('#patientname').typeahead({
-                                highlight: true
-                            },
-                            {
-                                name: 'patients',
-                                display: 'PatientName',
-                                source: patients
-                            }
+                //$('#patientname').typeahead({
+                //                highlight: true
+                //            },
+                //            {
+                //                name: 'patients',
+                //                display: 'PatientName',
+                //                source: patients
+                //            }
 
 
-                        ).on("typeahead:selected typeahead:autocompleted",
-                            function(e, patient) {
-                                e.preventDefault();
+                //        ).on("typeahead:selected typeahead:autocompleted",
+                //            function(e, patient) {
+                //                e.preventDefault();
                       
-                                $('#patientId').val(patient.PatientId);
+                //                $('#patientId').val(patient.PatientId);
 
                        
 
-                            });
+                //            });
             
                       
 
@@ -511,7 +515,7 @@ $(document).on('click', '#btn-saveAppointmentOption', function (e) {
                 var formUrl = $('#form-appointoption').attr('action');
                 var form = $('[id*=form-appointoption]');
 
-                //console.log(form);
+                console.log(form);
 
                 $.validator.unobtrusive.parse(form);
 
