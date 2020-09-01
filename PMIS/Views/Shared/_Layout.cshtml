@@ -6,7 +6,7 @@
     <title>Patient Informations System </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="icon" type="image/png" href="~/Content/dist/img/PMIS.png" />
     @Styles.Render("~/Styles/Css")
     @*@Styles.Render("~/stylebundles/fullcalendarcss")*@
     @Styles.Render("~/adminstyle")
@@ -54,11 +54,15 @@
             @Html.Partial("_Content_Header")
         }
 
-        <section class="content">
-                
-            @RenderBody()
+            <section class="content">
 
-        </section>
+                @if (Request.IsAuthenticated)
+                {
+                    @RenderBody()
+                }
+               
+
+            </section>
 
           
         </div>
@@ -74,7 +78,7 @@
 <!-- ./wrapper -->
     
     <div id="spinn-loader">
-        Loading data Pls. wait....
+        @*Loading data Pls. wait....*@
     </div>
     
 

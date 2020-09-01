@@ -24,7 +24,7 @@ namespace PMIS.ServiceLayer
         //    _patientservice = new PatientServices();
         //}
 
-        public AppointmentServices(PMISEntities pmisEntities,IPatientServices patientServices, IUserPhysicianService userPhysicianService, IPatientServices patientServices1)
+        public AppointmentServices(PMISEntities pmisEntities, IUserPhysicianService userPhysicianService, IPatientServices patientServices1)
         {
             this._pmisEntities = pmisEntities;
             _userPhysicianService = userPhysicianService;
@@ -44,8 +44,9 @@ namespace PMIS.ServiceLayer
                 PhyName =t.User.Abr,
                 AppointDate = (DateTime)t.AppointDate,
                 Stat =(bool) t.Status?"Served":"Pending",
-                Iscancelled = (bool) t.IsCancelled
-                
+                Iscancelled = (bool) t.IsCancelled,
+                BlStat = (bool)t.Status
+
 
             }).ToListAsync();
         }
@@ -61,8 +62,8 @@ namespace PMIS.ServiceLayer
                 PhyName = t.User.Abr,
                 AppointDate = (DateTime)t.AppointDate,
                 Stat = (bool)t.Status ? "Served" : "Pending",
-                Iscancelled = (bool)t.IsCancelled
-
+                Iscancelled = (bool)t.IsCancelled,
+                BlStat = (bool)t.Status
 
             }).ToListAsync();
         }

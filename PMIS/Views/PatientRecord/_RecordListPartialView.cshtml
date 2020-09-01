@@ -17,10 +17,17 @@
 
                 <div class="user-block">
 
-                    <span class="username text-primary">
-                        @item.ActivityName
+                    <span class="texthead">
+                        <b>@item.ActivityName</b>
                     </span>
-                    <span class="description">@item.RecordDate.Value.ToString("D")</span>
+                    @{
+                        int _days = DateTime.Now.Subtract(item.RecordDate.Value).Days;
+
+                        var noofdayspass = _days > 0 ? "(" + _days + " day(s) ago )" : " ";
+
+                    }
+
+                    <span class="description pull-right" id="daterecorded"> @($"{item.RecordDate.Value.ToString("D")}  {noofdayspass} ")</span>
                 </div>
                 <!-- /.user-block -->
 
@@ -42,7 +49,7 @@
         @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
         <span>of</span>
         @Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("MedicalHistory", new { page, id = ViewBag.patId, phyId = ViewBag.phyId }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "medicalrecord" }))
+        @Html.PagedListPager(Model, page => Url.Action("MedicalHistory", new { page=page, patientid = ViewBag.patId, phyId = ViewBag.phyId }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "patmedicalrecord" }))
     }
     else
     {

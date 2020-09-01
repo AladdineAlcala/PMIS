@@ -7,48 +7,56 @@
     if (Model.Any())
     {
         int i = 1;
+
         foreach (var item in Model)
         {
 
-            <tr data-apptNo="@item.No">
+            if (!item.BlStat)
+            {
+                <tr data-apptNo="@item.No">
 
-                <td>@(item.Iscancelled ? "" : i.ToString())</td>
+                    <td>@(item.Iscancelled ? "" : i.ToString())</td>
 
 
-                <td>@item.PatientName</td>
-                <td>@(item.Iscancelled ? "Cancelled" : item.Stat)</td>
-                <td class="text-center">
-                    
-                    <button class="btn btn-info btn-sm" data-patientId="@item.PatientNo" id="view_medicalrecords" alt="View Medical Record">
-                        <i class="fal fa-binoculars"></i>
-                        View
-                    </button>
+                    <td>@item.PatientName</td>
+                    <td>@(item.Iscancelled ? "Cancelled" : item.Stat)</td>
 
-                    @if (item.BlStat)
-                    {
-                        <button class="btn btn-success btn-sm" disabled="disabled" data-patientId="@item.PatientNo" id="btnconsultationserve">
-                            <i class="fal fa-lightbulb-on"></i>
-                            Status
-                        </button>
-                       
-                    }
+                    <td class="text-center">
 
-                    else
-                    {
-                        <button class="btn btn-success btn-sm" data-patientId="@item.PatientNo" id="btnconsultationserve">
-                            <i class="fal fa-lightbulb-on"></i>
-                            Status
+                        <button class="btn btn-info btn-sm" data-patientId="@item.PatientNo" id="view_medicalrecords" alt="View Medical Record">
+                            <i class="fal fa-binoculars"></i>
+                            View
                         </button>
 
-                      
-                    }
+                        @if (item.BlStat)
+                        {
+                            <button class="btn btn-success btn-sm" disabled="disabled" data-patientId="@item.PatientNo" id="btnconsultationserve">
+                                <i class="fal fa-lightbulb-on"></i>
+                                Status
+                            </button>
+
+                        }
+
+                        else
+                        {
+                            <button class="btn btn-success btn-sm" data-patientId="@item.PatientNo" id="btnconsultationserve">
+                                <i class="fal fa-lightbulb-on"></i>
+                                Status
+                            </button>
 
 
-                   
+                        }
 
 
-                </td>
-            </tr>
+
+
+
+                    </td>
+
+                </tr>
+            }
+
+
 
             if (item.Iscancelled == false)
             {
@@ -65,3 +73,6 @@
         </tr>
     }
 }
+
+
+

@@ -218,7 +218,7 @@ namespace PMIS.Controllers
             {
                 var appointment = await _appointmentServices.GetAllAppointmentList();
 
-                count = appointment.Where(t => t.PhyId == id && t.AppointDate.Date==appdate.Date).ToList().Count;
+                count = appointment.Where(t => t.PhyId == id && t.AppointDate.Date==appdate.Date && t.BlStat).ToList().Count;
             }
 
             return Json(count, JsonRequestBehavior.AllowGet);

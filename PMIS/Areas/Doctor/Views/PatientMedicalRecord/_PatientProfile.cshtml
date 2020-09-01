@@ -25,15 +25,11 @@
 <p class="text-muted text-center">Pat. Id: <span class="text-danger">@Model.Pat_Id</span></p>
 
 <br/>
-@*<div class="profile_info">
-    <button class="btn btn-primary btn-sm"> <i class="fas fa-user"> </i> View Profile</button>
- 
-</div>*@
-<strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+<b><i class="fas fa-map-marker-alt mr-1"></i> Location</b>
 
 <p class="text-muted">@($"{Model.AddStreetBrgy},{Model.Muncity},{Model.Province}")</p>
                              
-<hr>
 
 
 @Html.HiddenFor(m=>m.DoB,new {id="dateofbirth"})
@@ -62,7 +58,6 @@
   
 </ul>
 
-<hr>
 
 <ul class="list-unstyled">
     <li>

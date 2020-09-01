@@ -9643,6 +9643,7 @@
     <Content Include="DataSet\Prescription.xsc">
       <DependentUpon>Prescription.xsd</DependentUpon>
     </Content>
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_GetMedicalChartDetail.cshtml" />
     <None Include="DataSet\Prescription.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

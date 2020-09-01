@@ -1,0 +1,32 @@
+﻿
+@using PMIS.ViewModels
+@model MedicalRecordViewModel
+
+<div class="container-fluid" style="min-height: 350px;">
+
+@using (Html.BeginForm("UpdateMedicalRecord", "PatientMedicalRecord", FormMethod.Post, new { role = "form", id = "update-medicalchartRecord" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.RecordNo)
+    @Html.HiddenFor(m => m.PatientId)
+    @Html.HiddenFor(m => m.PhyId)
+    @Html.HiddenFor(m=> m.ApppointmentNo)
+    @Html.HiddenFor(m=>m.Subject)
+    <div class="row">
+        <div class="col-lg">
+
+            <div class="form-group">
+               @Html.TextAreaFor(m => m.Desciption, new { @class = "form-control", id = "compose-medicalrecord", rows = "15", style = "resize:none;" })
+            </div>
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-5 offset-5">
+            <button type="submit" class="btn btn-primary" id="save-medicalchart-record"><i class="far fa-envelope"></i> Save </button>
+        </div>
+    </div>
+}
+</div>

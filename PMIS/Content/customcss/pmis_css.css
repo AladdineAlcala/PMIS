@@ -1,37 +1,63 @@
 ﻿
-.spinner {
-    position: fixed;
-    top: 60%;
-    left: 50%;
-    margin-left: -50px;
-    margin-top: -50px;
-    text-align: center;
-    z-index: 1234;
-    overflow: auto;
-    width: 100px;
-    height: 102px;
-}
+
 
 div#spinn-loader {
-    display: none;
-    width: 200px;
-    height: 200px;
-    position: fixed;
-    top: 30%;
-    left: 40%;
-    background: url('../Images/Spinner-1.gif')no-repeat center white;
-    /*background: url(../Images/ajax-spinloader2.gif) no-repeat center white;*/
-    text-align: center;
-    vertical-align: middle;
-    padding: 10px;
-    font: normal 16px Tahoma, Geneva, sans-serif;
-    /*border: 1px solid #666;*/
-    border:none;
-    margin-left: -50px;
-    margin-top: -50px;
-    z-index: 1234;
-    overflow: auto;
+    position:fixed;
+    width:100%;
+    left:0;right:0;top:0;bottom:0;
+    background-color: rgba(255,255,255,0.7);
+    z-index:9999;
+    display:none; 
 }
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+div#spinn-loader::after {
+   content:'';
+    display:block;
+    position:absolute;
+    left:48%;top:40%;
+    width:40px;height:40px;
+    border-style:solid;
+    border-color:black;
+    border-top-color:transparent;
+    border-width: 4px;
+    border-radius:50%;
+    -webkit-animation: spin .8s linear infinite;
+    animation: spin .8s linear infinite;
+}
+
 
 
 textarea:focus,
@@ -155,7 +181,7 @@ table.dataTable tr.even:hover {
     margin-bottom: 3px;
 }
 .link-chart {
-    color: #6c757d;
+    color: #3781F3
 }
 .link-chart:hover, .link-chart:focus {
     color: #FF5733;

@@ -6,30 +6,12 @@ var phyId = null;
 
 function appointcounter(id, appointdate) {
 
-    //console.log(id);
-    //console.log(appointdate);
 
-
-    $.ajax({
-        type: 'Get',
-        url: '/Appointment/GetAppointCount',
-        ajaxasync: true,
-        data: { id: id, appdate: appointdate },
-        dataType: 'json',
-        cache: false,
-        success: function (data) {
-            count = 0;
-            //debugger;
-
-            if (data !== null) {
-                count = data;
-                $('#appoint-count').html(data);
-            } else {
-
-                $('#appoint-count').html(0);
-            }
-        }
+    $.getJSON('/Appointment/GetAppointCount', { id: id, appdate: appointdate }, function (data) {
+        
+        $('#appoint-count').html(data!=null?data:0);
     });
+
 }
 
 
@@ -67,7 +49,7 @@ $(document).on('click', '#btnconsultationserve', function (e) {
     e.preventDefault();
     var appointdate = moment(new Date()).format('YYYY-MM-DD HH:mm');
 
-    //$('#spinn-loader').show();
+    $('#spinn-loader').show();
 
     Swal.fire({
         title: "Are You Sure ?",
@@ -109,11 +91,11 @@ $(document).on('click', '#btnconsultationserve', function (e) {
 
                     $('#tableAppoint').load(data.url);
 
-                    //setTimeout(function () {
+                    setTimeout(function () {
 
-                    //    $('#spinn-loader').hide();
+                        $('#spinn-loader').hide();
 
-                    //}, 1000);
+                    }, 1000);
 
                     appointcounter($('#hdn_docuserId').val(), appointdate);
                 });

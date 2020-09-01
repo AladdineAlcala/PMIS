@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>Patient Informations System (PMIS) </title>
-
+    <link rel="icon" type="image/png" href="~/Content/dist/img/PMIS.png" />
     <!-- load styles for doctore layout-->
     @Styles.Render("~/Styles/Css")
     @Styles.Render("~/adminstyle")
@@ -25,7 +25,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-success">
-    <div class="container">
+    <div class="container-fluid">
         <a href="#" class="navbar-brand">
             <img src="@Url.Content("~/Content/dist/img/PMIS.png")"
                  alt=""
@@ -100,9 +100,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     <!-- Loader -->
-    <div id="spinn-loader">
-        Loading data Pls. wait....
-    </div>
+    <div id="spinn-loader"></div>
 
 
 <!-- REQUIRED SCRIPTS -->

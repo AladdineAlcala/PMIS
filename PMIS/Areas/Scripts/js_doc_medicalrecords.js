@@ -154,6 +154,7 @@ const patientMedPrescrioption = (recNo) => {
     autocompleteName();
 
 
+
  
 })(jQuery);
 
@@ -252,6 +253,7 @@ $(document).on('click', '#viewchart', function (e) {
 
     loadChart($(this).closest('.post').attr('data-postId'));
 
+    
    
 });
 
@@ -893,5 +895,131 @@ $(document).on('change', '#selectlist-category', function () {
 
        $('#docrecipelistitem').html(prescription);
     });
+
+});
+
+
+$(document).on('click', '#viewmedicalchartdetail', function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    $('#spinn-loader').show();
+
+    var recordno=$(this).closest('.post').attr('data-postId');
+
+
+    $.ajax({
+        type: 'Get',
+        url: '/Doctor/PatientMedicalRecord/GetMedicalChartDetailAsync',
+        data: {recNo: recordno},
+        contentType: 'application/html;charset=utf8',
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+          
+            var modal = $('#modal-viewmedicalchartdetail');
+            modal.find('.modal-body').html(result);
+
+            $('#compose-medicalrecord').summernote({
+                height: 450   //set editable area's height
+                //codemirror: { // codemirror options
+                //    theme: 'monokai'
+                //}
+            });
+
+
+            modal.modal({
+                backdrop: 'static',
+                keyboard: false
+            },
+                'show');
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
+    }).done(function () {
+
+
+        setTimeout(function () {
+
+            $('#spinn-loader').hide();
+
+        }, 1000);
+    });
+
+
+});
+
+
+
+$(document).on('click', '#save-medicalchart-record', function (event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const patientId = $('#patientid').val();
+    const phyId = $('#phyid').val();
+
+    Swal.fire({
+        title: "Are You Sure ?",
+        text: "Confirm Updating Medical Record..",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Proceed operation..!'
+
+    }).then((result) => {
+
+        if (result.value) {
+
+            var formUrl = $('#update-medicalchartRecord').attr('action');
+            var form = $('[id*=update-medicalchartRecord]');
+
+            $.validator.unobtrusive.parse(form);
+            form.validate();
+
+
+            if (form.valid()) {
+
+                $.ajax({
+                    type: 'Post',
+                    url: formUrl,
+                    data: form.serialize(),
+                    datatype: 'json',
+                    cache: false,
+                    success: function (data) {
+
+                        if (data.success) {
+
+                            $("#modal-viewmedicalchartdetail").modal('hide');
+
+                            toast.fire({
+                                type: 'success',
+                                title: 'Record Succesfully Updated.'
+                            });
+                        }
+
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        Swal.fire('Error adding record!', 'Please try again', 'error');
+                    }
+
+                }).done(function () {
+
+                    loadMedicalRecord(patientId, phyId);
+
+
+                });
+
+            }
+
+        }
+    }
+
+    );
+
+
 
 });
