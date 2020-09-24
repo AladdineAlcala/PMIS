@@ -14,7 +14,7 @@ function take_snapshot() {
         saveSnapShot(file);
 
     });
-
+    ``
 
     Webcam.reset();
 
@@ -222,14 +222,14 @@ $(document).ready(function () {
 
             if (result.value) {
 
-                $('#spinn-loader').show();
+              
 
                 var formUrl = $('#form-patient').attr('action');
                 $.validator.unobtrusive.parse(form);
                 form.validate();
 
                 if (form.valid()) {
-
+                    $('#spinn-loader').show();
                     $.ajax({
                         type: 'Post',
                         url: formUrl,
@@ -263,7 +263,7 @@ $(document).ready(function () {
                            
                             
 
-                        }, 1000);
+                        }, 500);
                      
                         window.location.href = '/Patient/ViewProfile/' + data.patId;
                     });
@@ -421,14 +421,14 @@ $(document).on('click', '#btn-updatepatientprofile', function(e) {
                 var id = activeform.attr('id');
                 var form = $('[id*=' + id + ']');
 
-                console.log(form);
+               // console.log(form);
 
                 $.validator.unobtrusive.parse(form);
 
                 form.validate();
 
                 if (form.valid()) {
-
+                    $('#spinn-loader').show();
                     $.ajax({
                         type: 'Post',
                         url: formUrl,
@@ -458,6 +458,17 @@ $(document).on('click', '#btn-updatepatientprofile', function(e) {
                         }
 
                     }).done(function () {
+
+                        setTimeout(function () {
+
+
+                            $('#spinn-loader').hide();
+
+                            // window.location.href = patientProfile.indexPatientProfile;
+
+
+
+                        }, 500);
 
                         window.location.href = "/Patient/Index";
 

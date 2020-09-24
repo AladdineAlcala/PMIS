@@ -4,7 +4,7 @@
 
 <div class="container-fluid" style="min-height: 350px;">
 
-@using (Html.BeginForm("UpdateMedicalRecord", "PatientMedicalRecord", FormMethod.Post, new { role = "form", id = "update-medicalchartRecord" }))
+@using (Html.BeginForm("ModifyPatientRecord", "PatientRecord", FormMethod.Post, new { role = "form", id = "update-medicalchartRecord" }))
 {
     @Html.AntiForgeryToken()
 
@@ -30,3 +30,12 @@
     </div>
 }
 </div>
+
+
+<script>
+    $(function () {
+        
+        console.log('inside a partialview');
+
+    });
+</script>

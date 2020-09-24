@@ -9644,6 +9644,7 @@
       <DependentUpon>Prescription.xsd</DependentUpon>
     </Content>
     <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_GetMedicalChartDetail.cshtml" />
+    <Content Include="Areas\Doctor\Views\PatientMedicalRecord\_MedHistory_paging.cshtml" />
     <None Include="DataSet\Prescription.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -9754,6 +9755,7 @@
     <Content Include="Views\Account\_GetUserProfileInfo.cshtml" />
     <Content Include="Views\Account\_GetInfoLogInUser.cshtml" />
     <Content Include="Views\PatientRecord\_PatientProfile.cshtml" />
+    <None Include="Properties\PublishProfiles\ProductionDeploy.pubxml" />
     <None Include="Properties\PublishProfiles\Test2.pubxml" />
     <None Include="Properties\PublishProfiles\TESTServer-Deply.pubxml" />
     <Content Include="Views\Account\UnauthorizedAccess.cshtml" />
@@ -9768,8 +9770,14 @@
     <Content Include="Views\Shared\Container.cshtml" />
     <Content Include="Views\Patient\_PatientAppointmentListPartialView.cshtml" />
     <Content Include="Views\Account\_ModifyUser.cshtml" />
-    <None Include="Web.TESTServer-Deply.config">
+    <Content Include="Views\PatientRecord\_GetMedicalChartDetail.cshtml" />
+    <None Include="Web.ReleaseDeploy.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.TestDeploy.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="webfonts\fa-brands-400.ttf" />
@@ -9918,6 +9926,15 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Content\LoginTemplate\images\icons\favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDeploy|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

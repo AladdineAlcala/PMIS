@@ -110,6 +110,20 @@ table.dataTable tr.even:hover {
     width: 280px;
 }
 
+span#appoint-count
+{
+    padding:1px 30px;
+    margin-left:10px;
+    margin-bottom:3px;
+    border-radius:4px;
+    border:1px solid #CCD1D1;
+    background:#E5E7E9;
+    color:#0e0d0d;
+    font:bolder Tahoma, Geneva, sans-serif;
+    font-size:1em;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
+
+}
 .required:after
 {
     content: " *";
@@ -243,7 +257,7 @@ table.dataTable tr.even:hover {
 }
 .medical-history {
     margin: 3px;
-    height: 70px;
+    max-height:80px;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -342,6 +356,8 @@ table.dataTable tr.even:hover {
 }
 
 
+
+
 .user-block .texthead,
 .user-block .texticon,
 .user-block .textdate
@@ -365,4 +381,85 @@ table.dataTable tr.even:hover {
      cursor:pointer;
      font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
      font-size:11px;
+}
+.medical-history_container {
+    display: flex;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    height: 90%;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+/*#docmedicalrecord{
+   flex:1;
+   
+}*/
+
+.medical-history_content {
+    -ms-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+.history_paging_container{
+
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    height:50px;
+    margin-top:3px;
+    margin-bottom:3px;
+   
+}
+.pagination{
+    margin:0;
+    padding:0;
+}
+
+/*.paging_content{
+    flex:1;
+}*/
+
+
+.navbar_container {
+    display: flex;
+    width: 700px;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    justify-content: center;
+}
+/*.navbar_content{
+
+    flex:1;
+}*/
+
+#appname{
+    margin-left:10px;
+    text-align:center;
+    font-weight:300;
+    font-size:0.9em;
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    color:rgba(255,255,255,.5) !important;
+
+}
+
+/*.navbar-nav > li {
+    position:relative;
+}
+
+.navbar-light .navbar-nav a .active ::after{
+    border-bottom:5px solid #5bc0eb;
+    position:absolute;
+}*/
+
+.selected{
+
+     border-bottom:4px solid #5bc0eb;
+     font-weight:700;
+     color:rgba(255,255,255,.5) !important;
 }

@@ -1,33 +1,38 @@
 ﻿@using PagedList
 @using PagedList.Mvc
 @using PMIS.Model
+@using PMIS.HelperClass
 @model PagedList<MedicalRecord>
 
-@{
-    if (Model.Count > 0)
-    {
 
-        <input type="hidden" value="@ViewBag.appointNo" id="appointmentNo" />
+<div class="medical-history_content">
 
-        <h4 style="text-align:center">Recent Activity</h4>
-
+    @{
         foreach (var item in Model)
         {
-            <div class="post clearfix" data-postId="@item.RecordNo">
+
+            <div class="post" data-postId="@item.RecordNo">
 
                 <div class="user-block">
 
                     <span class="texthead">
-                        <b>@item.ActivityName</b>
+                        <b>@(Utilities.capfirstletter(item.ActivityName))</b>
                     </span>
+
                     @{
+                        <!-- get number of days pass -->
+
+
                         int _days = DateTime.Now.Subtract(item.RecordDate.Value).Days;
 
-                        var noofdayspass = _days > 0 ? "(" + _days + " day(s) ago )" : " ";
+                        var noofdayspass = _days > 0 ? "(" + _days + " days ago )" : " ";
 
                     }
 
-                    <span class="description pull-right" id="daterecorded"> @($"{item.RecordDate.Value.ToString("D")}  {noofdayspass} ")</span>
+
+                    <span class="description pull-right" id="daterecorded"> @($"{item.RecordDate.Value.ToString("MMMM dd, yyyy")}  {noofdayspass} ")</span>
+
+
                 </div>
                 <!-- /.user-block -->
 
@@ -35,28 +40,25 @@
                     @(new HtmlString(item.RecordDetails))
                 </div>
                 <div class="mailbox-controls text-left">
-                    <a href="#" class="link-chart text-sm mr-2" id="viewchart"><i class="fas fa-binoculars mr-1"></i> View</a>
 
-                    <a href="#" class="link-chart text-sm mr-2" id="modifychart"><i class="fas fa-edit mr-1"></i> Edit</a>
+                    <a href="#" class="link-chart text-sm mr-2" id="modifychart"><i class="fas fa-edit mr-1"></i> View </a>
 
-                    @*<a href="#" class="link-chart text-sm" id="removechart"><i class="far fa-trash mr-1"></i> Remove</a>*@
+                    <a href="#" class="link-chart text-sm mr-2" id="removechart"><i class="fas fa-trash mr-1"></i> Delete </a>
+
                 </div>
             </div>
-            <!-- END POST -->
-        }
+        <!-- END POST -->
+                        }
 
-        <span>Page</span>
+    }
+
+</div>
+
+<div class="history_paging_container">
+    @*<span>Page</span>
         @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
         <span>of</span>
-        @Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("MedicalHistory", new { page=page, patientid = ViewBag.patId, phyId = ViewBag.phyId }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "patmedicalrecord" }))
-    }
-    else
-    {
-        <div class="alert alert-info alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h5><i class="icon fas fa-info"></i> No Record Found </h5>
+        @Model.PageCount*@
 
-        </div>
-    }
-}
+    @Html.PagedListPager(Model, page => Url.Action("MedicalHistory", new { page = page, patientid = ViewBag.patId, phyId = ViewBag.phyId }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "patmedicalrecord" }))
+</div>

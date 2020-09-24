@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using PMIS.Model;
+using System.Globalization;
 
 namespace PMIS.HelperClass
 {
@@ -74,5 +75,11 @@ namespace PMIS.HelperClass
             return dbconnString.ConnectionString;
 
         }
+
+        public static string capfirstletter(string wordstring)
+        {
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(wordstring.ToLower());
+        }
+
     }
 }

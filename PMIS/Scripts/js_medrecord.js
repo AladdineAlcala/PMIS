@@ -20,7 +20,7 @@ function loadMedicalRecord(patId, phyId) {
         cache: false,
         success: function (result) {
 
-            $('#medicalrecord').html(result);
+            $('#patmedicalrecord').html(result);
 
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -58,7 +58,7 @@ function loadChart(recordno) {
         cache: false,
         success: function (result) {
 
-            $('#medicalrecord').html(result);
+            $('#patmedicalrecord').html(result);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             Swal.fire('Error on retrieving record!', 'Please try again', 'error');
@@ -154,6 +154,8 @@ $(function () {
 
 
     $('#get-age').html(getAge($('#patient-info').val()));
+    //console.log($('#compose-medicalrecord').val().length);
+
 
 
     autocompleteName();
@@ -180,7 +182,6 @@ $(document).on('click', '#addActivity', function (e) {
     const patientId = $('#patientid').val();
     const phyId = $('#phyid').val();
     const appno = $('#appointmentNo').val();
-    console.log(appno);
 
     $.ajax({
         type: 'Get',
@@ -267,9 +268,7 @@ $(document).on('click', '#save-record', function (e) {
 
                 }).done(function () {
 
-                    loadMedicalRecord(patientId, phyId, function () {
-
-                    });
+                    loadMedicalRecord(patientId, phyId);
 
 
                 });
@@ -399,18 +398,71 @@ $(document).on('click', '#update-record', function (e) {
 });
 
 
-$(document).on('click', '.post #viewchart', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+//$(document).on('click', '.post #viewchart', function (e) {
+//    e.preventDefault();
+//    e.stopPropagation();
 
-    var pageSelected = $('.pagination').find('li.active').next().text();
+//    var pageSelected = $('.pagination').find('li.active').next().text();
 
-    loadChart($(this).closest('.post').attr('data-postId'));
+//    loadChart($(this).closest('.post').attr('data-postId'));
 
-    var addActivity = document.getElementById('addActivity');
-    addActivity.style.visibility = "hidden";
+//    var addActivity = document.getElementById('addActivity');
+//    addActivity.style.visibility = "hidden";
+
+//});
+
+
+$(document).on('click', '.post #viewchart', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    $('#spinn-loader').show();
+
+    var recordno = $(this).closest('.post').attr('data-postId');
+
+
+    $.ajax({
+        type: 'Get',
+        url: '/PatientRecord/GetMedicalChartDetailAsync',
+        data: { recNo: recordno },
+        contentType: 'application/html;charset=utf8',
+        datatype: 'html',
+        cache: false,
+        success: function (result) {
+
+            var modal = $('#modal-viewmedicalchartdetail');
+            modal.find('.modal-body').html(result);
+
+            $('#compose-medicalrecord').summernote({
+                height: 450   //set editable area's height
+                //codemirror: { // codemirror options
+                //    theme: 'monokai'
+                //}
+            });
+
+
+            modal.modal({
+                backdrop: 'static',
+                keyboard: false
+            },
+                'show');
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            Swal.fire('Error adding record!', 'Please try again', 'error');
+        }
+    }).done(function () {
+
+
+        setTimeout(function () {
+
+            $('#spinn-loader').hide();
+
+        }, 1000);
+    });
+
 
 });
+
 
 $(document).on('click', '#return_to_list', function(e) {
 
@@ -534,7 +586,7 @@ $(document).on('click', '#modalClose', function () {
 
 
 
-$(document).on('click', '#removechart', function (e) {
+$(document).on('click', '.post #removechart', function (e) {
     e.preventDefault();
 
     Swal.fire({
@@ -549,11 +601,13 @@ $(document).on('click', '#removechart', function (e) {
     }).then((result) => {
 
             if (result.value) {
+             
+               //var recordno = $(this).closest('.post').attr('data-postId');
 
                 $.ajax({
                     type: 'Post',
                     url: '/PatientRecord/RemovePatientRecord',
-                    data: { recordId: $(this).parents('.post').attr('data-recorId') },
+                    data: { recordId: $(this).closest('.post').attr('data-postId')},
                     datatype: 'json',
                     cache: false,
                     success: function (data) {
@@ -599,5 +653,19 @@ $(document).on('click', '#view-profile', function (e) {
     e.preventDefault();
 
     window.location.href = '/Patient/ViewProfile/' + $('#patientid').val();
+
+});
+
+
+$(document).on("hidden.bs.modal", '#modal-modifyRecord', function (e) {
+    e.preventDefault();
+
+    $('#spinn-loader').show();
+
+    setTimeout(function () {
+
+        $('#spinn-loader').hide();
+
+    }, 1000);
 
 });

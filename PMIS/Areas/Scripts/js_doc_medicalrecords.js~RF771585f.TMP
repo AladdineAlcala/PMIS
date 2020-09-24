@@ -960,7 +960,6 @@ $(document).on('click', '#update-medicalchart-record', function (event) {
     const patientId = $('#patientid').val();
     const phyId = $('#phyid').val();
 
-
     Swal.fire({
         title: "Are You Sure ?",
         text: "Confirm Updating Medical Record..",
@@ -993,12 +992,14 @@ $(document).on('click', '#update-medicalchart-record', function (event) {
 
                         if (data.success) {
 
-                            $("#modal-viewmedicalchartdetail").modal('hide');
+                            alert(data);
 
-                            toast.fire({
-                                type: 'success',
-                                title: 'Record Succesfully Updated.'
-                            });
+                            //$("#modal-viewmedicalchartdetail").modal('hide');
+
+                            //toast.fire({
+                            //    type: 'success',
+                            //    title: 'Record Succesfully Updated.'
+                            //});
                         }
 
 
@@ -1009,11 +1010,11 @@ $(document).on('click', '#update-medicalchart-record', function (event) {
 
                 }).done(function () {
 
-                    //console.log('patient details updated');
+                    console.log('patient details updated');
 
-                    //console.log(patientId, phyId);
+                    console.log(patientId, phyId);
                     
-                    loadMedicalRecord(patientId, phyId);
+                    //loadMedicalRecord(patientId, phyId);
 
 
                 });

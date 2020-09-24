@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*!
  *   AdminLTE v3.0.1
  *   Author: Colorlib
@@ -19672,6 +19672,7 @@ html.maximized-card {
   color: #666;
   margin-bottom: 15px;
   padding-bottom: 15px;
+  /*width:600px;*/
 }
 
 .post:last-of-type {

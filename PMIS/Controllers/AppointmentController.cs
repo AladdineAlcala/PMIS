@@ -135,7 +135,7 @@ namespace PMIS.Controllers
 
                 if(appointment.Phys_id != null)
 
-                appointHub.SendAppointment(appointment.Phys_id, appointSchedulebydoctor.Where(t => t.PhyId == appointment.Phys_id && t.AppointDate == appointment.AppointDate).ToList());
+                appointHub.SendAppointment(appointment.Phys_id, appointSchedulebydoctor.Where(t => t.PhyId == appointment.Phys_id && t.AppointDate == appointment.AppointDate && !t.BlStat).ToList());
 
 
             }
@@ -218,7 +218,7 @@ namespace PMIS.Controllers
             {
                 var appointment = await _appointmentServices.GetAllAppointmentList();
 
-                count = appointment.Where(t => t.PhyId == id && t.AppointDate.Date==appdate.Date && t.BlStat).ToList().Count;
+                count = appointment.Where(t => t.PhyId == id && t.AppointDate.Date==appdate.Date && !t.BlStat).ToList().Count;
             }
 
             return Json(count, JsonRequestBehavior.AllowGet);

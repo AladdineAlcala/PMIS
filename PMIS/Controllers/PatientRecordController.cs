@@ -351,5 +351,29 @@ namespace PMIS.Controllers
 
             return Json(new {success=true}, JsonRequestBehavior.AllowGet);
         }
+
+
+
+        [HttpGet]
+        public async Task<ActionResult> GetMedicalChartDetailAsync(int recNo)
+        {
+                var medicalRecord = await _patientrecordservices.GetMedicalRecord(recNo);
+
+                var medicalRecordViewModel = new MedicalRecordViewModel()
+                {
+                    RecordNo = recNo,
+                    PatientId = medicalRecord.Pat_Id,
+                    RecordedDate = (DateTime)medicalRecord.RecordDate,
+                    PhyId = medicalRecord.Phys_id,
+                    Desciption = medicalRecord.RecordDetails,
+                    Subject = medicalRecord.ActivityName,
+                    ApppointmentNo = medicalRecord.AppointmentNo == null ? 0 : (int)medicalRecord.AppointmentNo
+
+                };
+
+            return PartialView("_GetMedicalChartDetail", medicalRecordViewModel);
+
+        }
+
     }
 }

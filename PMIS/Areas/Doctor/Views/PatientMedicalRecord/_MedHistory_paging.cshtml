@@ -1,0 +1,6 @@
+﻿
+<span>Page</span>
+@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+<span>of</span>
+@Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("MedicalHistory", new { area = "Doctor", page = page, id = ViewBag.patId, phyId = ViewBag.phyId }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "docmedicalrecord" }))

@@ -26,31 +26,41 @@
                         
                         <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1" style="margin-bottom: 10px;">
 
-                            <div class="row">
-                                
-                                <div class="col-12" id="patmedicalrecord">
+                            <h4 style="text-align:center;margin-bottom:18px;">Recent Activity</h4>
 
+                            <div class="medical-history_container" id="patmedicalrecord">
 
+                                @{
+                                    if (Model.MedicalRecordList.Count > 0)
+                                    {
 
-                                    @{
-                                        Html.RenderPartial("_RecordListPartialView", (PagedList<MedicalRecord>) Model.MedicalRecordList);
+                                        Html.RenderPartial("_RecordListPartialView", (PagedList<MedicalRecord>)Model.MedicalRecordList);
+
                                     }
 
-                                </div>
+                                    else
+                                    {
+                                        <div class="alert alert-info alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            <h5><i class="icon fas fa-info"></i> No Record Found </h5>
+
+                                        </div>
+                                    }
+
+
+
+
+
+                                }
+
 
                             </div>
+
 
                           
                         </div>
                         
-                        <!-- insert pagelist here -->
-                        @*<div class="medical-history-page">
-                            <span>Page</span> @(Model.MedicalRecordList.PageCount < Model.MedicalRecordList.PageNumber ? 0 : Model.MedicalRecordList.PageNumber) <span>of</span> @Model.MedicalRecordList.PageCount
-                            @Html.PagedListPager(Model.MedicalRecordList, page => Url.Action("MedicalHistory", new {page, id = ViewBag.patId, phyId = ViewBag.phyId}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() {HttpMethod = "GET", UpdateTargetId = "medicalrecord"}))
-                        </div>*@
                        
-                        
-                        <!-- end-->
 
                         <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                             
@@ -140,6 +150,26 @@
 </div>
 <!-- /.modal -->
 
+
+<div class="modal fade" id="modal-viewmedicalchartdetail">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Medical History Chart</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 
 @section scripts

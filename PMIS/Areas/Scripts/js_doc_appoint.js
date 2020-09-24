@@ -49,7 +49,7 @@ $(document).on('click', '#btnconsultationserve', function (e) {
     e.preventDefault();
     var appointdate = moment(new Date()).format('YYYY-MM-DD HH:mm');
 
-    $('#spinn-loader').show();
+    
 
     Swal.fire({
         title: "Are You Sure ?",
@@ -62,7 +62,9 @@ $(document).on('click', '#btnconsultationserve', function (e) {
 
     }).then((result) => {
 
-            if (result.value) {
+        if (result.value) {
+
+            $('#spinn-loader').show();
 
                 $.ajax({
                     type: 'Post',
@@ -117,8 +119,6 @@ $(document).on('click', '#view_medicalrecords', function (e) {
 
     e.preventDefault();
     e.stopPropagation();
-
-    //console.log($('#hdn_docuserId').val());
 
     window.location.href = docAppoint.getPatientMedicalHistory.replace("patid", $(this).attr('data-patientId')).replace("phid", $('#hdn_docuserId').val());
 });

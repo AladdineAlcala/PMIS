@@ -7,7 +7,7 @@
         <div class="col-md-10 col-sm-12">
             <div class="card card-fullheight">
                 <div class="card-header">
-                    <h3 class="card-title">Appointment List </h3> <span class="badge bg-primary ml-2 mb-1" id="appoint-count">  </span>
+                    <h3 class="card-title">Appointment List </h3> <span id="appoint-count"> 1 </span>
                     <div class="card-tools">
 
                         <i class="fal fa-calendar-alt"> </i>
@@ -20,14 +20,14 @@
                     <table class="table table-striped table-hover table-sm" id="appoint">
                         <thead>
                         <tr>
-                            <th style="width: 10%;">#</th>
-                            <th style="width: 40%;">Patient Name</th>
+                            <th style="width: 10%;">APT#</th>
+                            <th style="width: 40%;">PATIENT NAME</th>
                             <th>Status</th>
-                            <th class="text-center" style="width: 20%;">Action</th>
+                            <th class="text-center" style="width: 20%;">ACTION</th>
                         </tr>
                         </thead>
                         <tbody id="tableAppoint">
-                            @*@Html.RenderAction("GetAppointmentByDoctor", "DocAppointment",new {area="Doctor",@id= @ViewBag.phyId, @appointmentDate=DateTime.Now});*@
+                           
                         </tbody>
                     </table>
                     
